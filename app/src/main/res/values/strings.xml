@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">JustTheRadio</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bottom_navigation_home_button_label">Home</string>
+    <string name="bottom_navigation_search_button_label">Search</string>
+    <string name="bottom_navigation_favourites_button_label">Favourites</string>
 </resources>
