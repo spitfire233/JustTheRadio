@@ -8,4 +8,5 @@
     <string name="home_fragment_top_text">National radios</string>
     <string name="home_fragment_middle_text">International radios</string>
     <string name="home_fragment_bottom_text">Favourite radios</string>
+    <string name="radio_card_radio_name">radio_name</string>
 </resources>
