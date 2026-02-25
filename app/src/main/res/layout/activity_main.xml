@@ -19,6 +19,17 @@
         app:navGraph = "@navigation/bottom_menu_navigation">
     </androidx.fragment.app.FragmentContainerView>
 
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/main_player_view"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:show_buffering="when_playing"
+        app:show_shuffle_button="false">
+    </androidx.media3.ui.PlayerView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
