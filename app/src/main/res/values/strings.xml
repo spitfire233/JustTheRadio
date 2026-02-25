@@ -5,4 +5,5 @@
     <string name="bottom_navigation_home_button_label">Home</string>
     <string name="bottom_navigation_search_button_label">Search</string>
     <string name="bottom_navigation_favourites_button_label">Favourites</string>
+    <string name="home_fragment_top_text">National radios</string>
 </resources>
