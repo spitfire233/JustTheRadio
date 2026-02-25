@@ -6,4 +6,6 @@
     <string name="bottom_navigation_search_button_label">Search</string>
     <string name="bottom_navigation_favourites_button_label">Favourites</string>
     <string name="home_fragment_top_text">National radios</string>
+    <string name="home_fragment_middle_text">International radios</string>
+    <string name="home_fragment_bottom_text">Favourite radios</string>
 </resources>

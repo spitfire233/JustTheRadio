@@ -8,16 +8,66 @@
     tools:context=".ui.fragments.HomeFragment">
 
     <TextView
+        android:id="@+id/national_radios_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/home_fragment_top_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/md_theme_onBackground"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"
-        android:textColor="@color/md_theme_onBackground"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/national_radios_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/national_radios_text_view"
+        tools:itemCount="6" />
+
+    <TextView
+        android:id="@+id/international_radios_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/home_fragment_middle_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/md_theme_onBackground"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/national_radios_recycler_view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/international_radios_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/international_radios_text_view"
+        tools:itemCount="6" />
+
+    <TextView
+        android:id="@+id/favourite_radios_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/home_fragment_bottom_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/md_theme_onBackground"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/international_radios_recycler_view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favourite_radios_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/favourite_radios_text_view"
+        tools:itemCount="6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
