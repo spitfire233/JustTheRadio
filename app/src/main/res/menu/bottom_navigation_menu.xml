@@ -18,4 +18,10 @@
         android:icon="@drawable/favourites_button_selector"
         android:title="@string/bottom_navigation_favourites_button_label">
     </item>
+    <item
+        android:id="@+id/settingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/bottom_navigation_settings_button_label">
+    </item>
 </menu>

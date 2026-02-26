@@ -20,4 +20,9 @@
         android:name="com.justtheradio.ui.fragments.FavouritesFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.justtheradio.ui.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         radioViewModel.getNationalRadioStations("IT", 0, 64).observe(getViewLifecycleOwner(), l ->{
-            Log.d(TAG, "YAY!");
         });
 
         return inflater.inflate(R.layout.fragment_home, container, false);
