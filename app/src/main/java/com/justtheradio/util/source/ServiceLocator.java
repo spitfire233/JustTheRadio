@@ -29,21 +29,4 @@ public class ServiceLocator {
         return INSTANCE;
     }
 
-    public RadioBrowser getRadioBrowser() throws IOException {
-        RadioBrowser radioBrowser;
-        // Discover the Endpoint
-        Optional<String> endpoint = new EndpointDiscovery(AGENT).discover();
-        // Check if an endpoint was correctly retrieved and build a radio browser
-        if (endpoint.isPresent()) {
-            radioBrowser = new RadioBrowser(
-                    ConnectionParams.builder()
-                            .apiUrl(endpoint.get())
-                            .userAgent(AGENT)
-                            .timeout(TIMEOUT).build());
-        } else {
-            throw new NoEndpointFoundException(NO_ENDPOINT_FOUND_ERROR_MESSAGE);
-        }
-        return radioBrowser;
-    }
-
 }
