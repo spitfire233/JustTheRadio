@@ -17,7 +17,7 @@ public class RadioViewModel extends ViewModel {
     }
 
     public LiveData<List<Station>>
-    getNationalRadioStations(String countryCode, int limit, int offset) {
-        return radioStationsRepository.fetchNationalRadioStations(countryCode, limit, offset);
+    getNationalRadioStations(String countryCode, int offset, int limit) {
+        return radioStationsRepository.fetchNationalRadioStations(countryCode, offset, limit);
     }
 }

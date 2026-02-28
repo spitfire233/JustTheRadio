@@ -23,15 +23,18 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/national_radios_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/international_radios_text_view"
         app:layout_constraintTop_toBottomOf="@+id/national_radios_text_view"
-        tools:itemCount="6" />
+        tools:itemCount="6"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/international_radios_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:text="@string/home_fragment_middle_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
@@ -44,15 +47,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/international_radios_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/favourite_radios_text_view"
         app:layout_constraintTop_toBottomOf="@+id/international_radios_text_view"
         tools:itemCount="6" />
 
     <TextView
         android:id="@+id/favourite_radios_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:text="@string/home_fragment_bottom_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
@@ -65,7 +70,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favourite_radios_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/favourite_radios_text_view"
         tools:itemCount="6" />
