@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.radiobrowser4j)
     implementation(libs.media3.ui)
+    implementation(libs.media3.exoplayer)
     implementation(libs.glide)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
