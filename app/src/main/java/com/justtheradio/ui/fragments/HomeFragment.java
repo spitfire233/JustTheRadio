@@ -8,23 +8,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.carousel.CarouselLayoutManager;
 import com.google.android.material.carousel.CarouselSnapHelper;
-import com.google.android.material.carousel.FullScreenCarouselStrategy;
 import com.google.android.material.carousel.HeroCarouselStrategy;
-import com.google.android.material.carousel.MultiBrowseCarouselStrategy;
-import com.google.android.material.carousel.UncontainedCarouselStrategy;
 import com.justtheradio.R;
 import com.justtheradio.adapter.RadioStationsAdapter;
 import com.justtheradio.repository.RadioStationsRepository;
 import com.justtheradio.util.source.ServiceLocator;
-import com.justtheradio.util.viewmodel.RadioViewModel;
-import com.justtheradio.util.viewmodel.RadioViewModelFactory;
+import com.justtheradio.ui.viewmodel.RadioViewModel;
+import com.justtheradio.ui.viewmodel.RadioViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;

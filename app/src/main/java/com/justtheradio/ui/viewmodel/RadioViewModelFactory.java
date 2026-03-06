@@ -1,4 +1,4 @@
-package com.justtheradio.util.viewmodel;
+package com.justtheradio.ui.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
