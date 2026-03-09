@@ -16,6 +16,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.carousel.MaskableFrameLayout;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.justtheradio.R;
+import com.justtheradio.adapter.listeners.OnClickRadioCardListener;
 
 import java.util.List;
 
@@ -23,19 +24,14 @@ import de.sfuhrm.radiobrowser4j.Station;
 
 public class RadioStationsAdapter extends RecyclerView.Adapter<RadioStationsAdapter.ViewHolder>{
 
-    public interface OnClickListener {
-        public void onFavouriteButtonPressed(int position);
-        public void onRadioItemPressed(Station station);
-    }
-
     private final int layout; // Layout ID for the carousel to use
-    private List<Station> stations; // Stations to adapt
-    private final OnClickListener onClickListener;
+    private final List<Station> stations; // Stations to adapt
+    private final OnClickRadioCardListener onClickListener;
     private Context context;
     private final boolean favouriteButtonEnabled;
 
     public RadioStationsAdapter(int layout, List<Station> stations,
-                                OnClickListener onClickListener,
+                                OnClickRadioCardListener onClickListener,
                                 boolean favouriteButtonEnabled) {
         this.layout = layout;
         this.stations = stations;
