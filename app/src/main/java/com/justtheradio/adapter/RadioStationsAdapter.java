@@ -104,9 +104,8 @@ public class RadioStationsAdapter extends RecyclerView.Adapter<RadioStationsAdap
         Glide.with(holder.getRadioImageView().getContext())
                 .load(station.getFavicon())
                 .into(holder.getRadioImageView());
-        if (favouriteButtonEnabled) {
-            // TODO: Put here logic to handle favourites; it might need a custom model
-        }
+        if (favouriteButtonEnabled)
+            holder.getFavouriteButtonView().setChecked(stations.get(position).isFavourite());
     }
 
     @Override
