@@ -1,11 +1,10 @@
 package com.justtheradio.repository;
 
+import com.justtheradio.model.RadioStation;
+
 import java.util.List;
 
-import de.sfuhrm.radiobrowser4j.Station;
-
 public interface IRadioBrowserResponseCallback {
-    public void onSuccessRetrievingNationalRadioStations(List<Station> stations);
+    public void onSuccessRetrievingNationalRadioStations(List<RadioStation> stations);
     public void onFailureOnBuildingRadioBrowser(Exception exception);
-
 }

@@ -1,8 +1,8 @@
 package com.justtheradio.adapter.listeners;
 
-import de.sfuhrm.radiobrowser4j.Station;
+import com.justtheradio.model.RadioStation;
 
 public interface OnClickRadioCardListener {
     public void onFavouriteButtonPressed(int position);
-    public void onRadioItemPressed(Station station);
+    public void onRadioItemPressed(RadioStation station);
 }

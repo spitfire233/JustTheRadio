@@ -17,6 +17,7 @@ import com.google.android.material.carousel.MaskableFrameLayout;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.justtheradio.R;
 import com.justtheradio.adapter.listeners.OnClickRadioCardListener;
+import com.justtheradio.model.RadioStation;
 
 import java.util.List;
 
@@ -25,12 +26,12 @@ import de.sfuhrm.radiobrowser4j.Station;
 public class RadioStationsAdapter extends RecyclerView.Adapter<RadioStationsAdapter.ViewHolder>{
 
     private final int layout; // Layout ID for the carousel to use
-    private final List<Station> stations; // Stations to adapt
+    private final List<RadioStation> stations; // Stations to adapt
     private final OnClickRadioCardListener onClickListener;
     private Context context;
     private final boolean favouriteButtonEnabled;
 
-    public RadioStationsAdapter(int layout, List<Station> stations,
+    public RadioStationsAdapter(int layout, List<RadioStation> stations,
                                 OnClickRadioCardListener onClickListener,
                                 boolean favouriteButtonEnabled) {
         this.layout = layout;
@@ -95,7 +96,7 @@ public class RadioStationsAdapter extends RecyclerView.Adapter<RadioStationsAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Station station = stations.get(position);
+        Station station = stations.get(position).getStation();
         holder.getRadioNameTextView().setText(station.getName());
         holder.getRadioNameTextView().setSelected(true);
         holder.getRadioImageView().setImageURI(Uri.parse(station.getFavicon()));

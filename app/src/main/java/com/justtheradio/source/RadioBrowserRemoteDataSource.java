@@ -9,7 +9,10 @@ import static com.justtheradio.util.constants.Constants.TIMEOUT;
 
 import android.util.Log;
 
+import com.justtheradio.model.RadioStation;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -42,9 +45,12 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
                 AdvancedSearch advancedSearch = AdvancedSearch.builder()
                         .countryCode(countryCode)
                         .build();
-                List<Station> stations =
+                List<Station> results =
                         radioBrowser.listStationsWithAdvancedSearch(paging, advancedSearch);
-                callback.onSuccessRetrievingNationalRadioStations(stations);
+                List<RadioStation> radioStations = new ArrayList<>();
+                for(Station station : results)
+                    radioStations.add(new RadioStation(station));
+                callback.onSuccessRetrievingNationalRadioStations(radioStations);
             } catch (IOException e) {
                 Log.e(TAG, ERROR_IN_DISCOVERING_ENDPOINT);
                 callback.onFailureOnBuildingRadioBrowser(e);

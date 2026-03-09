@@ -18,6 +18,7 @@ import com.google.android.material.carousel.HeroCarouselStrategy;
 import com.justtheradio.R;
 import com.justtheradio.adapter.RadioStationsAdapter;
 import com.justtheradio.adapter.listeners.OnClickRadioCardListener;
+import com.justtheradio.model.RadioStation;
 import com.justtheradio.repository.RadioStationsRepository;
 import com.justtheradio.util.source.ServiceLocator;
 import com.justtheradio.ui.viewmodel.RadioViewModel;
@@ -26,15 +27,13 @@ import com.justtheradio.ui.viewmodel.RadioViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.sfuhrm.radiobrowser4j.Station;
-
 public class HomeFragment extends Fragment {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     private RadioViewModel radioViewModel;
 
-    private List<Station> stationList;
+    private List<RadioStation> stationList;
 
     private RadioStationsAdapter radioStationsAdapter;
 
@@ -79,7 +78,7 @@ public class HomeFragment extends Fragment {
 
                     }
                     @Override
-                    public void onRadioItemPressed(Station station) {
+                    public void onRadioItemPressed(RadioStation station) {
 
                     }
                 }, false);
