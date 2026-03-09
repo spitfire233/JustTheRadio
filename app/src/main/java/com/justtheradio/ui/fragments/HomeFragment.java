@@ -17,6 +17,7 @@ import com.google.android.material.carousel.CarouselSnapHelper;
 import com.google.android.material.carousel.HeroCarouselStrategy;
 import com.justtheradio.R;
 import com.justtheradio.adapter.RadioStationsAdapter;
+import com.justtheradio.adapter.listeners.OnClickRadioCardListener;
 import com.justtheradio.repository.RadioStationsRepository;
 import com.justtheradio.util.source.ServiceLocator;
 import com.justtheradio.ui.viewmodel.RadioViewModel;
@@ -72,9 +73,10 @@ public class HomeFragment extends Fragment {
 
         radioStationsAdapter =
                 new RadioStationsAdapter(R.layout.carousel_layout, stationList,
-                new RadioStationsAdapter.OnClickListener() {
+                new OnClickRadioCardListener() {
                     @Override
                     public void onFavouriteButtonPressed(int position) {
+
                     }
                     @Override
                     public void onRadioItemPressed(Station station) {
