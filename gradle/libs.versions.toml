@@ -12,6 +12,7 @@ media3Ui = "1.9.2"
 navigationFragment = "2.9.7"
 navigationUi = "2.9.7"
 radiobrowser4j = "3.3.0"
+roomRuntime = "2.8.4"
 
 [libraries]
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
@@ -27,6 +28,7 @@ media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3Ui" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 radiobrowser4j = { module = "de.sfuhrm:radiobrowser4j", version.ref = "radiobrowser4j" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

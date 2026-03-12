@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.media3.ui)
     implementation(libs.media3.exoplayer)
     implementation(libs.glide)
+    implementation(libs.room.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
