@@ -1,7 +1,6 @@
 package com.justtheradio.source;
 
 import static com.justtheradio.util.constants.Constants.AGENT;
-import static com.justtheradio.util.constants.Constants.ERROR_IN_BUILDING_RADIO_BROWSER;
 import static com.justtheradio.util.constants.Constants.ERROR_IN_DISCOVERING_ENDPOINT;
 import static com.justtheradio.util.constants.Constants.NUMBER_OF_RETRIES;
 import static com.justtheradio.util.constants.Constants.RADIO_REQUESTS_THREAD_POOL_SIZE;
@@ -22,7 +21,6 @@ import de.sfuhrm.radiobrowser4j.AdvancedSearch;
 import de.sfuhrm.radiobrowser4j.ConnectionParams;
 import de.sfuhrm.radiobrowser4j.EndpointDiscovery;
 import de.sfuhrm.radiobrowser4j.Paging;
-import de.sfuhrm.radiobrowser4j.Parameter;
 import de.sfuhrm.radiobrowser4j.RadioBrowser;
 import de.sfuhrm.radiobrowser4j.Station;
 
@@ -53,7 +51,7 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
                 callback.onSuccessRetrievingNationalRadioStations(radioStations);
             } catch (IOException e) {
                 Log.e(TAG, ERROR_IN_DISCOVERING_ENDPOINT);
-                callback.onFailureOnBuildingRadioBrowser(e);
+                callback.onFailureFromRemote(e);
             }
         });
     }

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IRadioBrowserResponseCallback {
     public void onSuccessRetrievingNationalRadioStations(List<RadioStation> stations);
-    public void onFailureOnBuildingRadioBrowser(Exception exception);
+    public void onFailureFromRemote(Exception exception);
 }

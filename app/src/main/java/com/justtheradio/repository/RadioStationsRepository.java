@@ -32,7 +32,7 @@ public class RadioStationsRepository implements IRadioBrowserResponseCallback{
     }
 
     @Override
-    public void onFailureOnBuildingRadioBrowser(Exception exception) {
+    public void onFailureFromRemote(Exception exception) {
 
     }
 }
