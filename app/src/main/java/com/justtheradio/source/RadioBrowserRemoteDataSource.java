@@ -31,7 +31,7 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
     private RadioBrowser radioBrowser;
 
     public RadioBrowserRemoteDataSource() {
-        executorService = Executors.newFixedThreadPool(RADIO_REQUESTS_THREAD_POOL_SIZE);
+        executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
     public void getNationalRadios(String countryCode, int offset, int limit) {
