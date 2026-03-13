@@ -8,7 +8,7 @@ import com.justtheradio.source.BaseRadioStationsRemoteDataSource;
 
 import java.util.List;
 
-public class RadioStationsRepository implements IRadioBrowserResponseCallback{
+public class RadioStationsRepository implements IRadioStationsResponseCallback {
     private final MutableLiveData<List<RadioStation>> nationalRadiosMutableLiveData;
     private final BaseRadioStationsRemoteDataSource radioBrowserRemoteDataSource;
 

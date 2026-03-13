@@ -1,13 +1,13 @@
 package com.justtheradio.source;
 
-import com.justtheradio.repository.IRadioBrowserResponseCallback;
+import com.justtheradio.repository.IRadioStationsResponseCallback;
 
 public abstract class BaseRadioStationsRemoteDataSource {
 
     protected static String TAG = BaseRadioStationsRemoteDataSource.class.getSimpleName();
-    protected IRadioBrowserResponseCallback callback;
+    protected IRadioStationsResponseCallback callback;
 
-    public void setCallback(IRadioBrowserResponseCallback callback) {
+    public void setCallback(IRadioStationsResponseCallback callback) {
         this.callback = callback;
     }
 

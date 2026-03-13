@@ -4,7 +4,7 @@ import com.justtheradio.model.RadioStation;
 
 import java.util.List;
 
-public interface IRadioBrowserResponseCallback {
+public interface IRadioStationsResponseCallback {
     public void onSuccessFromRemote(List<RadioStation> stations);
     public void onFailureFromRemote(Exception exception);
 }
