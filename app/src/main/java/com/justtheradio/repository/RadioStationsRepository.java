@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.justtheradio.model.RadioStation;
-import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
+import com.justtheradio.source.BaseRadioStationsRemoteDataSource;
 
 import java.util.List;
 
 public class RadioStationsRepository implements IRadioBrowserResponseCallback{
     private final MutableLiveData<List<RadioStation>> nationalRadiosMutableLiveData;
-    private final BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource;
+    private final BaseRadioStationsRemoteDataSource radioBrowserRemoteDataSource;
 
 
-    public RadioStationsRepository(BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource) {
+    public RadioStationsRepository(BaseRadioStationsRemoteDataSource radioBrowserRemoteDataSource) {
         nationalRadiosMutableLiveData = new MutableLiveData<List<RadioStation>>();
         this.radioBrowserRemoteDataSource = radioBrowserRemoteDataSource;
         radioBrowserRemoteDataSource.setCallback(this);

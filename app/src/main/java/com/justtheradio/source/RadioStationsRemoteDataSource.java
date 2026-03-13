@@ -23,13 +23,13 @@ import de.sfuhrm.radiobrowser4j.Paging;
 import de.sfuhrm.radiobrowser4j.RadioBrowser;
 import de.sfuhrm.radiobrowser4j.Station;
 
-public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSource {
+public class RadioStationsRemoteDataSource extends BaseRadioStationsRemoteDataSource {
 
     private final ExecutorService executorService;
 
     private RadioBrowser radioBrowser;
 
-    public RadioBrowserRemoteDataSource() {
+    public RadioStationsRemoteDataSource() {
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
