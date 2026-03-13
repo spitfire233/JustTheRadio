@@ -3,7 +3,6 @@ package com.justtheradio.source;
 import static com.justtheradio.util.constants.Constants.AGENT;
 import static com.justtheradio.util.constants.Constants.ERROR_IN_DISCOVERING_ENDPOINT;
 import static com.justtheradio.util.constants.Constants.NUMBER_OF_RETRIES;
-import static com.justtheradio.util.constants.Constants.RADIO_REQUESTS_THREAD_POOL_SIZE;
 import static com.justtheradio.util.constants.Constants.TIMEOUT;
 
 import android.util.Log;
@@ -48,7 +47,7 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
                 List<RadioStation> radioStations = new ArrayList<>();
                 for(Station station : results)
                     radioStations.add(new RadioStation(station));
-                callback.onSuccessRetrievingNationalRadioStations(radioStations);
+                callback.onSuccessFromRemote(radioStations);
             } catch (IOException e) {
                 Log.e(TAG, ERROR_IN_DISCOVERING_ENDPOINT);
                 callback.onFailureFromRemote(e);

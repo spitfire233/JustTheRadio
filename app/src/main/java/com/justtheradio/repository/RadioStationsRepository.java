@@ -27,7 +27,7 @@ public class RadioStationsRepository implements IRadioBrowserResponseCallback{
 
 
     @Override
-    public void onSuccessRetrievingNationalRadioStations(List<RadioStation> stations) {
+    public void onSuccessFromRemote(List<RadioStation> stations) {
         nationalRadiosMutableLiveData.postValue(stations);
     }
 

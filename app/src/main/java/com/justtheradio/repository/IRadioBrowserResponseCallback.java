@@ -5,6 +5,6 @@ import com.justtheradio.model.RadioStation;
 import java.util.List;
 
 public interface IRadioBrowserResponseCallback {
-    public void onSuccessRetrievingNationalRadioStations(List<RadioStation> stations);
+    public void onSuccessFromRemote(List<RadioStation> stations);
     public void onFailureFromRemote(Exception exception);
 }
