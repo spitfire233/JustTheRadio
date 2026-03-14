@@ -103,6 +103,8 @@ public class RadioStationsAdapter extends RecyclerView.Adapter<RadioStationsAdap
 
         Glide.with(holder.getRadioImageView().getContext())
                 .load(station.getFavicon())
+                .fallback(R.drawable.justtheradio_logo)
+                .error(R.drawable.justtheradio_logo)
                 .into(holder.getRadioImageView());
         if (favouriteButtonEnabled)
             holder.getFavouriteButtonView().setChecked(stations.get(position).isFavourite());
