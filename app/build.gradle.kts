@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.justtheradio"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.media3.exoplayer)
     implementation(libs.glide)
     implementation(libs.room.runtime)
+    implementation(libs.gson)
+    annotationProcessor(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

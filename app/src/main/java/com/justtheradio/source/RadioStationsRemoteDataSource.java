@@ -33,26 +33,49 @@ public class RadioStationsRemoteDataSource extends BaseRadioStationsRemoteDataSo
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
-    public void getNationalRadios(String countryCode, int offset, int limit) {
+    @Override
+    public void getNationalRadioStations(String countryCode, int offset, int limit) {
         executorService.execute(() -> {
             try {
-                buildRadioBrowser();
-                // Create a paging object to limit results
-                Paging paging = Paging.at(offset, limit);
-                AdvancedSearch advancedSearch = AdvancedSearch.builder()
-                        .countryCode(countryCode)
-                        .build();
-                List<Station> results =
-                        radioBrowser.listStationsWithAdvancedSearch(paging, advancedSearch);
-                List<RadioStation> radioStations = new ArrayList<>();
-                for(Station station : results)
-                    radioStations.add(new RadioStation(station));
-                callback.onSuccessFromRemote(radioStations);
+                callback.onSuccessFetchingNationalRadioStations(
+                        getRadioStations(countryCode, offset, limit)
+                );
             } catch (IOException e) {
                 Log.e(TAG, ERROR_IN_DISCOVERING_ENDPOINT);
-                callback.onFailureFromRemote(e);
+                callback.onFailureFetchingNationalRadioStations(e);
             }
         });
+    }
+
+    @Override
+    public void getInternationalRadioStations(List<String> countryCodes, int offset, int limit) {
+        executorService.execute(() -> {
+            try {
+                List<RadioStation> radioStations = new ArrayList<>();
+                for (String countryCode : countryCodes)
+                    radioStations.addAll(getRadioStations(countryCode, offset, limit));
+                callback.onSuccessFetchingInternationalRadioStations(radioStations);
+            } catch (IOException e) {
+                Log.e(TAG, ERROR_IN_DISCOVERING_ENDPOINT);
+                callback.onFailureFetchingInternationalRadioStations(e);
+            }
+        });
+    }
+
+    private List<RadioStation> getRadioStations(String countryCode,
+                                                int offset, int limit) throws IOException {
+        buildRadioBrowser();
+        // Create a paging object to limit results
+        Paging paging = Paging.at(offset, limit);
+        AdvancedSearch advancedSearch = AdvancedSearch.builder()
+                .countryCode(countryCode)
+                .build();
+        List<Station> results =
+                radioBrowser.listStationsWithAdvancedSearch(paging, advancedSearch);
+        List<RadioStation> radioStations = new ArrayList<>();
+        for(Station station : results)
+            radioStations.add(new RadioStation(station));
+        return radioStations;
     }
 
     // TODO: See if there's a better way to do this; for now, it will do

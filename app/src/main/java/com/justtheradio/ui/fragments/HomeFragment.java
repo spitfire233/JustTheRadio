@@ -19,6 +19,7 @@ import com.justtheradio.R;
 import com.justtheradio.adapter.RadioStationsAdapter;
 import com.justtheradio.adapter.listeners.OnClickRadioCardListener;
 import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.Result;
 import com.justtheradio.repository.RadioStationsRepository;
 import com.justtheradio.util.source.ServiceLocator;
 import com.justtheradio.ui.viewmodel.RadioViewModel;
@@ -86,18 +87,22 @@ public class HomeFragment extends Fragment {
 
         radioViewModel.getNationalRadioStations("IT", 0, 64).observe(
                 getViewLifecycleOwner(),
-                stations -> {
-                    int initialSize = this.stationList.size();
-                    this.stationList.clear();
-                    this.stationList.addAll(stations);
-                    radioStationsAdapter.notifyItemRangeInserted(initialSize, this.stationList.size());
+                result -> {
+                    if(result.isSuccess()) {
+                        int initialSize = this.stationList.size();
+                        this.stationList.clear();
+                        this.stationList.addAll(((Result.Success) result).getRadioStations());
+                        radioStationsAdapter.notifyItemRangeInserted(initialSize, this.stationList.size());
+                    }
                 }
         );
     }
 
     private void initViewModel() {
         RadioStationsRepository radioStationsRepository
-                = ServiceLocator.getInstance().getRadioStationsRepository();
+                = ServiceLocator.getInstance().getRadioStationsRepository(
+                        requireActivity().getApplication()
+                );
         radioViewModel = new ViewModelProvider(
                 requireActivity(),
                 new RadioViewModelFactory(radioStationsRepository)).get(RadioViewModel.class);

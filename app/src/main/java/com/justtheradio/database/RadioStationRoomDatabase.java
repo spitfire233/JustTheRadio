@@ -8,6 +8,7 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.justtheradio.model.RadioStation;
 
@@ -15,13 +16,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {RadioStation.class}, version = RADIO_STATIONS_DATABASE_VERSION, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class RadioStationRoomDatabase extends RoomDatabase {
 
     public abstract RadioStationDAO getRadioStationsDAO();
 
     private static volatile RadioStationRoomDatabase INSTANCE;
 
-    private static final ExecutorService databaseWriteExecutor =
+    public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     public static RadioStationRoomDatabase getDatabase(final Context context) {

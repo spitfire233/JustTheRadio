@@ -4,6 +4,7 @@ import static com.justtheradio.util.constants.Constants.RADIO_STATIONS_DATABASE_
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import de.sfuhrm.radiobrowser4j.Station;
@@ -19,10 +20,16 @@ public class RadioStation {
 
     private boolean isFavourite;
 
+    public RadioStation() {
+
+    }
+
+    @Ignore
     public RadioStation(Station station) {
         this(station, false);
     }
 
+    @Ignore
     public RadioStation(Station station, boolean isFavourite) {
         setStation(station);
         setFavourite(isFavourite);
