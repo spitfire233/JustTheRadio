@@ -8,7 +8,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.justtheradio.model.RadioStation;
-import com.justtheradio.model.StationType;
 
 import java.util.List;
 
@@ -27,8 +26,8 @@ public interface RadioStationDAO {
     @Query("SELECT * FROM RadioStation WHERE isFavourite = 1")
     public List<RadioStation> getFavouriteRadioStations();
 
-    @Query("SELECT * FROM RadioStation WHERE stationType = :stationType LIMIT :limit OFFSET :offset")
-    public List<RadioStation> getRadioStationsByType(int limit, int offset, StationType stationType);
+    @Query("SELECT * FROM RadioStation WHERE station_countryCode = :countryCode LIMIT :limit OFFSET :offset")
+    public List<RadioStation> getRadioStationsByCountry(int limit, int offset, String countryCode);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insert(RadioStation ... radioStations);

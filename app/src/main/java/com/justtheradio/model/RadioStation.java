@@ -1,5 +1,8 @@
 package com.justtheradio.model;
 
+import static com.justtheradio.util.constants.Constants.RADIO_STATIONS_DATABASE_STATION_PREFIX;
+
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,22 +14,18 @@ public class RadioStation {
     @PrimaryKey(autoGenerate = true)
     public long id;
 
+    @Embedded(prefix = RADIO_STATIONS_DATABASE_STATION_PREFIX)
     private Station station;
+
     private boolean isFavourite;
-    private StationType stationType;
 
     public RadioStation(Station station) {
         this(station, false);
     }
 
     public RadioStation(Station station, boolean isFavourite) {
-        this(station, isFavourite, null);
-    }
-
-    public RadioStation(Station station, boolean isFavourite, StationType stationType) {
         setStation(station);
         setFavourite(isFavourite);
-        setStationType(stationType);
     }
 
     public Station getStation() {
@@ -51,14 +50,6 @@ public class RadioStation {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public StationType getStationType() {
-        return stationType;
-    }
-
-    public void setStationType(StationType stationType) {
-        this.stationType = stationType;
     }
 
 }
