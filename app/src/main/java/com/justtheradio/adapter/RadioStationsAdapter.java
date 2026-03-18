@@ -96,13 +96,13 @@ public class RadioStationsAdapter extends RecyclerView.Adapter<RadioStationsAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Station station = stations.get(position).getStation();
+        RadioStation station = stations.get(position);
         holder.getRadioNameTextView().setText(station.getName());
         holder.getRadioNameTextView().setSelected(true);
-        holder.getRadioImageView().setImageURI(Uri.parse(station.getFavicon()));
+        holder.getRadioImageView().setImageURI(Uri.parse(station.getFaviconURL()));
 
         Glide.with(holder.getRadioImageView().getContext())
-                .load(station.getFavicon())
+                .load(station.getFaviconURL())
                 .fallback(R.drawable.justtheradio_logo)
                 .error(R.drawable.justtheradio_logo)
                 .into(holder.getRadioImageView());

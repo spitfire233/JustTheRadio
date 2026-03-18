@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.justtheradio.model.RadioStation;
 
 import java.util.List;
+import java.util.UUID;
 
 @Dao
 public interface RadioStationDAO {
@@ -20,13 +21,13 @@ public interface RadioStationDAO {
     @Query("SELECT * FROM RadioStation LIMIT :limit OFFSET :offset")
     public List<RadioStation> getAll(int limit, int offset);
 
-    @Query("SELECT * FROM RadioStation WHERE id = :id")
-    public RadioStation getRadioStation(long id);
+    @Query("SELECT * FROM RadioStation WHERE stationUUID = :id")
+    public RadioStation getRadioStation(UUID id);
 
     @Query("SELECT * FROM RadioStation WHERE isFavourite = 1")
     public List<RadioStation> getFavouriteRadioStations();
 
-    @Query("SELECT * FROM RadioStation WHERE station_countryCode = :countryCode LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM RadioStation WHERE countryCode = :countryCode LIMIT :limit OFFSET :offset")
     public List<RadioStation> getRadioStationsByCountry(int limit, int offset, String countryCode);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -38,8 +39,8 @@ public interface RadioStationDAO {
     @Delete
     public void delete(RadioStation radioStation);
 
-    @Query("DELETE FROM RadioStation WHERE id = :id")
-    public void deleteByID(long id);
+    @Query("DELETE FROM RadioStation WHERE stationUUID = :id")
+    public void deleteByID(UUID id);
 
     @Query("DELETE FROM RadioStation")
     public void deleteAll();
