@@ -1,9 +1,6 @@
 package com.justtheradio.model;
 
-import static com.justtheradio.util.constants.Constants.RADIO_STATIONS_DATABASE_STATION_PREFIX;
-
 import androidx.annotation.NonNull;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;

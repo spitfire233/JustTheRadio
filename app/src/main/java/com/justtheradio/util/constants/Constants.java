@@ -8,7 +8,6 @@ public class Constants {
     public static final String ERROR_IN_DISCOVERING_ENDPOINT = "Error while trying to discovering an API endpoint!";
     public static final int RADIO_STATIONS_DATABASE_VERSION = 1;
     public static final String RADIO_STATIONS_DATABASE_NAME = "radio_stations_local_db";
-    public static final String RADIO_STATIONS_DATABASE_STATION_PREFIX = "station_";
     public static final String RADIO_STATIONS_DATABASE_ERROR_SAVING = "There was an error in saving the stations in the local database";
 
 
