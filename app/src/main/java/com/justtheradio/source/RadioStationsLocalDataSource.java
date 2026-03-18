@@ -21,6 +21,13 @@ public class RadioStationsLocalDataSource extends BaseRadioStationsLocalDataSour
     public void saveRadioStations(List<RadioStation> radioStationList, boolean isSavingNational) {
         RadioStationRoomDatabase.databaseWriteExecutor.execute(() -> {
             try {
+                List<RadioStation> favourites = radioStationDAO.getFavouriteRadioStations();
+                for(RadioStation favourite: favourites) {
+                    int position = radioStationList.indexOf(favourite);
+                    if(position != -1) {
+                        radioStationList.get(position).setFavourite(favourite.isFavourite());
+                    }
+                }
                 radioStationDAO.insertList(radioStationList);
                 callback.onSuccessSavingFromLocal(radioStationList, isSavingNational);
             } catch (Exception e) {
@@ -29,5 +36,4 @@ public class RadioStationsLocalDataSource extends BaseRadioStationsLocalDataSour
             }
         });
     }
-
 }
