@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -40,6 +41,10 @@ public class IntroFragment extends Fragment {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Strings.main_repository)));
         });
 
+        // Set on click listener to navigate to next fragment
+        MaterialButton startConfigButton = view.findViewById(R.id.startConfigButton);
+        startConfigButton.setOnClickListener(v -> Navigation.findNavController(v)
+                .navigate(R.id.action_introFragment_to_chooseCountryFragment));
         return view;
     }
 }
