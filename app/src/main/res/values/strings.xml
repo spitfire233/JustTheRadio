@@ -3,4 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_string">Welcome to JustTheRadio!</string>
+    <string name="application_logo_description_string">The logo of this application. It represents a stylized orange radio</string>
+    <string name="intro_application_string">Listen and browse radio stations completely without in-app ads!</string>
+    <string name="contribution_button_string">Leave a star and contribute!</string>
+    <string name="powered_by_radiobrowserapi_string">Powered by <a href = "https://www.radio-browser.info/">RadioBrowserAPI</a> </string>
+    <string name="start_app_configuration_button_string">Start app configuration</string>
 </resources>
