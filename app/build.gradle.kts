@@ -40,6 +40,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation(libs.radiobrowser4j)
+    implementation("androidx.lifecycle:lifecycle-*")
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)

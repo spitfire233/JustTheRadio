@@ -10,6 +10,7 @@ constraintlayout = "2.1.4"
 fragment = "1.9.1"
 navigationFragmentKtx = "2.10.2"
 navigationUiKtx = "2.10.2"
+radiobrowser4j = "3.4.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -22,6 +23,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+radiobrowser4j = { module = "de.sfuhrm:radiobrowser4j", version.ref = "radiobrowser4j" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

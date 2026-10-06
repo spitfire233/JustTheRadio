@@ -10,22 +10,10 @@ import android.view.ViewGroup;
 
 import com.justtheradio.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChooseCountryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ChooseCountryFragment extends Fragment {
 
     public ChooseCountryFragment() {
         // Required empty public constructor
-    }
-
-    public static ChooseCountryFragment newInstance(String param1, String param2) {
-        ChooseCountryFragment fragment = new ChooseCountryFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override

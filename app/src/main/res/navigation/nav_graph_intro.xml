@@ -13,6 +13,7 @@
         <action
             android:id="@+id/action_introFragment_to_chooseCountryFragment"
             app:destination="@id/chooseCountryFragment"
+            app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
