@@ -47,4 +47,9 @@ public class IntroFragment extends Fragment {
                 .navigate(R.id.action_introFragment_to_chooseCountryFragment));
         return view;
     }
+
+
+
+
+
 }

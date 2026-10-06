@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_intro" >
         <action
             android:id="@+id/action_introFragment_to_chooseCountryFragment"
-            app:destination="@id/chooseCountryFragment" />
+            app:destination="@id/chooseCountryFragment"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/chooseCountryFragment"
