@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JustTheRadio">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.start.StartActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

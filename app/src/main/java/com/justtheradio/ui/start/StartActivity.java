@@ -1,4 +1,4 @@
-package com.justtheradio;
+package com.justtheradio.ui.start;
 
 import android.os.Bundle;
 
@@ -7,8 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity {
+import com.justtheradio.R;
+
+public class StartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

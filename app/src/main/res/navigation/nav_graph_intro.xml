@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_intro"
+    app:startDestination="@id/introFragment">
+
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.justtheradio.ui.start.fragment.IntroFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro" >
+        <action
+            android:id="@+id/action_introFragment_to_chooseCountryFragment"
+            app:destination="@id/chooseCountryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseCountryFragment"
+        android:name="com.justtheradio.ui.start.fragment.ChooseCountryFragment"
+        android:label="fragment_choose_country"
+        tools:layout="@layout/fragment_choose_country" >
+        <action
+            android:id="@+id/action_chooseCountryFragment_to_chooseRegionFragment"
+            app:destination="@id/chooseRegionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseRegionFragment"
+        android:name="com.justtheradio.ui.start.fragment.ChooseRegionFragment"
+        android:label="fragment_choose_region"
+        tools:layout="@layout/fragment_choose_region" />
+</navigation>
