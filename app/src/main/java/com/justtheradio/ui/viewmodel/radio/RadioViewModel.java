@@ -1,8 +1,10 @@
 package com.justtheradio.ui.viewmodel.radio;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.justtheradio.repository.radiobrowser.RadioRepository;
+import com.justtheradio.model.Result;
+import com.justtheradio.repository.radio.RadioRepository;
 
 public class RadioViewModel extends ViewModel {
 
@@ -11,4 +13,10 @@ public class RadioViewModel extends ViewModel {
     public RadioViewModel(RadioRepository radioRepository) {
         this.radioRepository = radioRepository;
     }
+
+    public MutableLiveData<Result> fetchCountryCodes() {
+        return this.radioRepository.fetchCountryCodes();
+    }
+
+
 }

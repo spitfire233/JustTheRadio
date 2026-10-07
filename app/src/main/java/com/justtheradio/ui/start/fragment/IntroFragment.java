@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.justtheradio.R;
-import com.justtheradio.utils.Constants;
+import com.justtheradio.utils.constant.Constants;
 
 public class IntroFragment extends Fragment {
 
@@ -38,7 +38,7 @@ public class IntroFragment extends Fragment {
         MaterialButton repositoryButton = view.findViewById(R.id.repositoryButton);
 
         repositoryButton.setOnClickListener(v -> {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.main_repository)));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MAIN_REPOSITORY)));
         });
 
         // Set on click listener to navigate to next fragment
