@@ -9,4 +9,5 @@
     <string name="powered_by_radiobrowserapi_string">Powered by <a href = "https://www.radio-browser.info/">RadioBrowserAPI</a> </string>
     <string name="start_app_configuration_button_string">Start app configuration</string>
     <string name="choose_country_string">Choose the country from which you want to listen to the radio stations</string>
+    <string name="flag_of_the_country_content_description_string">Flag of the country</string>
 </resources>
