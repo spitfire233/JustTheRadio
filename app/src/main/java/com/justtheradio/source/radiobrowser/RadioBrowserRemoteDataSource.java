@@ -46,9 +46,9 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
                 Collections.sort(countryCodes);
                 // Security check: remove malformed country codes
                 countryCodes.removeIf(code -> !ISO_PATTERN.matcher(code).matches());
-                this.radioBrowserCallback.onCountryCodesGetSuccess(countryCodes);
+                this.radioCallback.onCountryCodesGetSuccess(countryCodes);
             } catch (IOException | EndpointNotFoundException e) {
-                this.radioBrowserCallback.onFailureFromRemote(e);
+                this.radioCallback.onFailureFromRemote(e);
             }
         });
     }

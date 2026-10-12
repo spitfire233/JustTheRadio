@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.justtheradio.model.Result;
 import com.justtheradio.source.radiobrowser.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.radiobrowser.BaseRadioLocalDataSource;
-import com.justtheradio.source.radiobrowser.callback.RadioBrowserCallback;
+import com.justtheradio.source.radiobrowser.callback.RadioCallback;
 
 import java.util.List;
 
-public class RadioRepository implements RadioBrowserCallback {
+public class RadioRepository implements RadioCallback {
 
     private final BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource;
     private final BaseRadioLocalDataSource radioLocalDataSource;

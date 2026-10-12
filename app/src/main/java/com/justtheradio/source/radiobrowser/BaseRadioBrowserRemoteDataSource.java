@@ -1,13 +1,13 @@
 package com.justtheradio.source.radiobrowser;
 
-import com.justtheradio.source.radiobrowser.callback.RadioBrowserCallback;
+import com.justtheradio.source.radiobrowser.callback.RadioCallback;
 
 public abstract class BaseRadioBrowserRemoteDataSource {
 
-    protected RadioBrowserCallback radioBrowserCallback;
+    protected RadioCallback radioCallback;
 
-    public void setRadioBrowserCallback(RadioBrowserCallback radioBrowserCallback) {
-        this.radioBrowserCallback = radioBrowserCallback;
+    public void setRadioBrowserCallback(RadioCallback radioCallback) {
+        this.radioCallback = radioCallback;
     }
 
     public abstract void getCountryCodes();
