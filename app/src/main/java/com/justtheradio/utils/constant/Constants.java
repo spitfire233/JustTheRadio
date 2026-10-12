@@ -8,5 +8,7 @@ public class Constants {
 
     public static final String ERROR_ENDPOINT_NOT_FOUND = "No endpoint found for agent" + AGENT;
 
+    public static final String FLAG_PATH_FORMAT_STRING = "file:///android_asset/flags/%s.png";
+
 
 }

@@ -1,0 +1,82 @@
+package com.justtheradio.adapter.country;
+
+import static com.justtheradio.utils.constant.Constants.FLAG_PATH_FORMAT_STRING;
+
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.justtheradio.R;
+
+import java.util.List;
+
+public class CountryListRecyclerAdapter extends RecyclerView.Adapter<CountryListRecyclerAdapter.ViewHolder> {
+    private final List<String> countryCodes;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView countryNameTextView;
+        private final ImageView flagImageView;
+        private final CircularProgressIndicator loadingIndicator;
+
+        public ViewHolder(View view) {
+            super(view);
+            countryNameTextView = view.findViewById(R.id.country_list_name_text_view);
+            flagImageView = view.findViewById(R.id.flag_image_view);
+            loadingIndicator = view.findViewById(R.id.flag_loading_indicator);
+        }
+
+        public TextView getCountryNameTextView() {
+            return countryNameTextView;
+        }
+
+        public ImageView getFlagImageView() {
+            return flagImageView;
+        }
+
+        public CircularProgressIndicator getLoadingIndicator() {
+            return loadingIndicator;
+        }
+    }
+
+    public CountryListRecyclerAdapter(List<String> countryCodes) {
+        this.countryCodes = countryCodes;
+
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Context context = holder.itemView.getContext();
+        holder.getCountryNameTextView().setText(countryCodes.get(position));
+        Glide.with(context)
+                .load(Uri.parse(String.format(FLAG_PATH_FORMAT_STRING, countryCodes.get(position).toLowerCase())))
+                .error(new ColorDrawable(context.getColor(R.color.md_theme_errorContainer)))
+                .into(holder.getFlagImageView());
+        holder.getLoadingIndicator().setVisibility(View.INVISIBLE);
+        holder.getFlagImageView().setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public int getItemCount() {
+        return countryCodes.size();
+    }
+
+
+}

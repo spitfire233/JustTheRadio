@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,14 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.justtheradio.R;
+import com.justtheradio.adapter.country.CountryListRecyclerAdapter;
+import com.justtheradio.model.Result;
 import com.justtheradio.repository.radio.RadioRepository;
 import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
 import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
 import com.justtheradio.utils.source.ServiceLocator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChooseCountryFragment extends Fragment {
 
     private RadioViewModel radioViewModel;
+    private final List<String> countryCodes = new ArrayList<>();
+    private RecyclerView recyclerView;
+
+    private CountryListRecyclerAdapter adapter;
 
     public ChooseCountryFragment() {
         // Required empty public constructor
@@ -37,12 +51,34 @@ public class ChooseCountryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_choose_country, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        adapter = new CountryListRecyclerAdapter(countryCodes);
+
+        recyclerView = view.findViewById(R.id.countries_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(adapter);
 
         radioViewModel.fetchCountryCodes().observe(getViewLifecycleOwner(), result-> {
-
+            if (result.isSuccess()) {
+                Result.Success<List<String>> success = (Result.Success<List<String>>) result;
+                List<String> codes = success.getResponse();
+                this.countryCodes.addAll(codes);
+                adapter.notifyItemRangeInserted(0, this.countryCodes.size());
+                view.findViewById(R.id.country_loading_progress_indicator).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.countries_recycler_view).setVisibility(View.VISIBLE);
+            } else {
+                Log.e("TAG", "D:");
+            }
         });
 
 
-        return inflater.inflate(R.layout.fragment_choose_country, container, false);
+
+
     }
 }
