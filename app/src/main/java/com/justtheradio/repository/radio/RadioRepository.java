@@ -32,7 +32,7 @@ public class RadioRepository implements RadioBrowserCallback {
 
     @Override
     public void onCountryCodesGetSuccess(List<String> countryCodes) {
-        Result.Success<String> result = new Result.Success<String>(countryCodes);
+        Result.Success<List<String>> result = new Result.Success<>(countryCodes);
         countryCodesMutableLiveData.postValue(result);
     }
 
