@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.justtheradio.R;
 import com.justtheradio.adapter.country.CountryListRecyclerAdapter;
 import com.justtheradio.model.Result;
@@ -73,12 +73,15 @@ public class ChooseCountryFragment extends Fragment {
                 view.findViewById(R.id.country_loading_progress_indicator).setVisibility(View.INVISIBLE);
                 view.findViewById(R.id.countries_recycler_view).setVisibility(View.VISIBLE);
             } else {
-                Log.e("TAG", "D:");
+                new MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.error_loading_country_codes_title)
+                        .setMessage(R.string.error_loading_country_codes_message)
+                        .setNegativeButton(R.string.error_loading_country_codes_negative_button_text,
+                                (dialog, which) -> {
+                                    requireActivity().finish();
+                                })
+                        .show();
             }
         });
-
-
-
-
     }
 }
