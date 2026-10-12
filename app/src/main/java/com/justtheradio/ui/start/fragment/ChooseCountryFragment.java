@@ -30,7 +30,6 @@ public class ChooseCountryFragment extends Fragment {
 
     private RadioViewModel radioViewModel;
     private final List<String> countryCodes = new ArrayList<>();
-    private RecyclerView recyclerView;
 
     private CountryListRecyclerAdapter adapter;
 
@@ -60,7 +59,7 @@ public class ChooseCountryFragment extends Fragment {
 
         adapter = new CountryListRecyclerAdapter(countryCodes);
 
-        recyclerView = view.findViewById(R.id.countries_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.countries_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
 
