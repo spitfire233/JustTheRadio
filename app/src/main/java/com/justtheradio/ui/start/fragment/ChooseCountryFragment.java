@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.justtheradio.R;
-import com.justtheradio.adapter.country.CountryListRecyclerAdapter;
+import com.justtheradio.adapter.country.ListRecyclerAdapter;
 import com.justtheradio.model.Result;
 import com.justtheradio.repository.radio.RadioRepository;
 import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
@@ -31,7 +31,7 @@ public class ChooseCountryFragment extends Fragment {
     private RadioViewModel radioViewModel;
     private final List<String> countryCodes = new ArrayList<>();
 
-    private CountryListRecyclerAdapter adapter;
+    private ListRecyclerAdapter adapter;
 
     public ChooseCountryFragment() {
         // Required empty public constructor
@@ -57,7 +57,7 @@ public class ChooseCountryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new CountryListRecyclerAdapter(countryCodes);
+        adapter = new ListRecyclerAdapter(countryCodes);
 
         RecyclerView recyclerView = view.findViewById(R.id.countries_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

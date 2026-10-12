@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,8 +20,13 @@ import com.justtheradio.R;
 
 import java.util.List;
 
-public class CountryListRecyclerAdapter extends RecyclerView.Adapter<CountryListRecyclerAdapter.ViewHolder> {
+public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.ViewHolder> {
     private final List<String> countryCodes;
+
+    public interface OnClickListener {
+        public void onItemClick(String country);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView countryNameTextView;
         private final ImageView flagImageView;
@@ -48,7 +52,7 @@ public class CountryListRecyclerAdapter extends RecyclerView.Adapter<CountryList
         }
     }
 
-    public CountryListRecyclerAdapter(List<String> countryCodes) {
+    public ListRecyclerAdapter(List<String> countryCodes) {
         this.countryCodes = countryCodes;
 
     }
