@@ -10,14 +10,14 @@ public abstract class Result {
         return this instanceof Success;
     }
 
-    public static final class Success<T> extends Result{
-        private final Collection<T> response;
+    public static final class Success<C extends Collection<?>> extends Result{
+        private final C response;
 
-        public Success(Collection<T> collection) {
+        public Success(C collection) {
             this.response = collection;
         }
 
-        public Collection<T> getResponse() {
+        public C getResponse() {
             return response;
         }
     }
