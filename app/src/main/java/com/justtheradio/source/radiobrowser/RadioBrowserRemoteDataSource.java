@@ -32,7 +32,7 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
         this.executorService = ServiceLocator.getInstance().getExecutorService();
         this.agent = agent;
         this.timeout = timeout;
-        ISO_PATTERN = Pattern.compile("^[a-z]{2}$");
+        ISO_PATTERN = Pattern.compile("^[A-Z]{2}$");
     }
 
     @Override
