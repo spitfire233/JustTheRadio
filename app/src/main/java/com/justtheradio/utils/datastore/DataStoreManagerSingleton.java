@@ -46,4 +46,5 @@ public class DataStoreManagerSingleton {
                 .map(prefs -> prefs.get(resourceKey))
                 .firstOrError();
     }
+
 }

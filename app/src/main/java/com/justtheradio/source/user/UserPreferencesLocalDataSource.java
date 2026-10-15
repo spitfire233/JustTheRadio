@@ -23,7 +23,7 @@ public class UserPreferencesLocalDataSource extends BaseUserPreferencesLocalData
     public void saveCountryPreference(String key, String country) {
         Disposable disposable = dataStoreManagerSingleton.saveStringResource(key, country)
                 .subscribe(preferences -> userCallback.onSavingUserPreferenceSuccess(),
-                        throwable -> userCallback.onFailureFromLocal(new Exception(throwable)));
+                        throwable -> userCallback.onFailureSavingOnLocal(new Exception(throwable)));
         compositeDisposable.add(disposable);
     }
 
@@ -33,9 +33,10 @@ public class UserPreferencesLocalDataSource extends BaseUserPreferencesLocalData
                 .subscribe(string -> {
                     if (string != null)
                         userCallback.onRetrievingUserPreferenceSuccess(string);
-                    userCallback.onFailureFromLocal(new Exception(NO_KEY_WITH_THAT_NAME_IN_DATASTORE));
+                    else
+                        userCallback.onFailureRetrievingOnLocal(new Exception(NO_KEY_WITH_THAT_NAME_IN_DATASTORE));
                 }, throwable -> {
-                    userCallback.onFailureFromLocal(new Exception(throwable));
+                    userCallback.onFailureRetrievingOnLocal(new Exception(throwable));
                 });
         compositeDisposable.add(disposable);
     }

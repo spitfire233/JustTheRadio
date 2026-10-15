@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JustTheRadio">
         <activity
-            android:name=".ui.intro.IntroActivity"
+            android:name=".ui.StartActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -26,6 +26,10 @@
         </activity>
         <activity
             android:name=".ui.main.MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.intro.IntroActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

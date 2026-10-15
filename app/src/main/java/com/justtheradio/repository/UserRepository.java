@@ -1,7 +1,5 @@
 package com.justtheradio.repository;
 
-import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.justtheradio.model.Result;
@@ -11,39 +9,47 @@ import com.justtheradio.source.user.callback.UserPreferenceCallback;
 public class UserRepository implements UserPreferenceCallback {
 
     private final BaseUserPreferencesLocalDataSource userPreferencesLocalDataSource;
-    private final MutableLiveData<Result> userPreferencesMutableLiveData;
+    private final MutableLiveData<Result> saveMutableLiveData;
+    private final MutableLiveData<Result> getMutableLiveData;
 
     public UserRepository(BaseUserPreferencesLocalDataSource userPreferencesLocalDataSource) {
         this.userPreferencesLocalDataSource = userPreferencesLocalDataSource;
-        userPreferencesMutableLiveData = new MutableLiveData<>();
+        saveMutableLiveData = new MutableLiveData<>();
+        getMutableLiveData = new MutableLiveData<>();
         userPreferencesLocalDataSource.setUserCallback(this);
     }
 
     public MutableLiveData<Result> saveUserPreference(String key, String resource) {
         userPreferencesLocalDataSource.saveCountryPreference(key, resource);
-        return userPreferencesMutableLiveData;
+        return saveMutableLiveData;
     }
 
     public MutableLiveData<Result> getUserPreference(String key) {
         userPreferencesLocalDataSource.getStringResource(key);
-        return userPreferencesMutableLiveData;
+        return getMutableLiveData;
     }
 
     @Override
     public void onSavingUserPreferenceSuccess() {
         Result.Success<Void> success = new Result.Success<>();
-        userPreferencesMutableLiveData.postValue(success);
+        saveMutableLiveData.postValue(success);
     }
 
     @Override
     public void onRetrievingUserPreferenceSuccess(String resource) {
         Result.Success<String> success = new Result.Success<>(resource);
-        userPreferencesMutableLiveData.postValue(success);
+        getMutableLiveData.postValue(success);
     }
 
     @Override
-    public void onFailureFromLocal(Exception exception) {
+    public void onFailureSavingOnLocal(Exception exception) {
         Result.Failure failure = new Result.Failure(exception.getMessage());
-        userPreferencesMutableLiveData.postValue(failure);
+        saveMutableLiveData.postValue(failure);
+    }
+
+    @Override
+    public void onFailureRetrievingOnLocal(Exception exception) {
+        Result.Failure failure = new Result.Failure(exception.getMessage());
+        getMutableLiveData.postValue(failure);
     }
 }
