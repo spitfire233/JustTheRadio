@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.justtheradio.R;
-import com.justtheradio.adapter.country.ListRecyclerAdapter;
+import com.justtheradio.adapter.ListRecyclerAdapter;
 import com.justtheradio.model.Result;
 import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.repository.UserRepository;

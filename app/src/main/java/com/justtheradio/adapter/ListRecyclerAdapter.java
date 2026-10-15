@@ -1,4 +1,4 @@
-package com.justtheradio.adapter.country;
+package com.justtheradio.adapter;
 
 import static com.justtheradio.utils.constant.Constants.FLAG_PATH_FORMAT_STRING;
 
