@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.recyclerview)
+    implementation(libs.datastore.preferences)
     implementation(libs.glide)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)

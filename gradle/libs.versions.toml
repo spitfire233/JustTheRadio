@@ -1,5 +1,6 @@
 [versions]
 agp = "9.4.1"
+datastorePreferences = "1.2.1"
 glide = "5.0.9"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -17,6 +18,7 @@ radiobrowser4j = "3.4.0"
 recyclerview = "1.4.0"
 
 [libraries]
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
