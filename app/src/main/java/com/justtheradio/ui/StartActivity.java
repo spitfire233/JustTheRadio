@@ -5,15 +5,10 @@ import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.splashscreen.SplashScreen;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.justtheradio.R;
 import com.justtheradio.repository.UserRepository;
 import com.justtheradio.ui.intro.IntroActivity;
 import com.justtheradio.ui.main.MainActivity;
