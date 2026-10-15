@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.glide)
     implementation(libs.datastore.preferences.rxjava3)
+    implementation(libs.core.splashscreen)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
