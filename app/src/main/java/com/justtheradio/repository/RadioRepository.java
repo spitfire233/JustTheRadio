@@ -1,27 +1,28 @@
-package com.justtheradio.repository.radio;
+package com.justtheradio.repository;
+
+import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.justtheradio.model.Result;
 import com.justtheradio.source.radiobrowser.BaseRadioBrowserRemoteDataSource;
-import com.justtheradio.source.radiobrowser.BaseRadioLocalDataSource;
+import com.justtheradio.source.user.BaseUserPreferencesLocalDataSource;
 import com.justtheradio.source.radiobrowser.callback.RadioCallback;
+import com.justtheradio.source.user.callback.UserPreferenceCallback;
 
 import java.util.List;
 
 public class RadioRepository implements RadioCallback {
 
     private final BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource;
-    private final BaseRadioLocalDataSource radioLocalDataSource;
     private final MutableLiveData<Result> countryCodesMutableLiveData;
+    private final MutableLiveData<Result> userPreferencesMutableLiveData;
 
-    public RadioRepository(BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource,
-                           BaseRadioLocalDataSource radioLocalDataSource) {
+    public RadioRepository(BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource) {
         this.radioBrowserRemoteDataSource = radioBrowserRemoteDataSource;
-        this.radioLocalDataSource = radioLocalDataSource;
         this.radioBrowserRemoteDataSource.setRadioBrowserCallback(this);
-
         this.countryCodesMutableLiveData = new MutableLiveData<>();
+        this.userPreferencesMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<Result> fetchCountryCodes() {

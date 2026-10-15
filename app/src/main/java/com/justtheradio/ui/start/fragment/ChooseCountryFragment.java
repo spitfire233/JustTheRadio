@@ -1,12 +1,9 @@
 package com.justtheradio.ui.start.fragment;
 
-import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +15,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.justtheradio.R;
 import com.justtheradio.adapter.country.ListRecyclerAdapter;
 import com.justtheradio.model.Result;
-import com.justtheradio.repository.radio.RadioRepository;
+import com.justtheradio.repository.RadioRepository;
+import com.justtheradio.repository.UserRepository;
 import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
 import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
+import com.justtheradio.ui.viewmodel.user.UserViewModel;
+import com.justtheradio.ui.viewmodel.user.UserViewModelFactory;
 import com.justtheradio.utils.source.ServiceLocator;
 
 import org.jspecify.annotations.NonNull;
@@ -32,6 +32,7 @@ import java.util.List;
 public class ChooseCountryFragment extends Fragment {
 
     private RadioViewModel radioViewModel;
+    private UserViewModel userViewModel;
     private final List<String> countryCodes = new ArrayList<>();
 
     private ListRecyclerAdapter adapter;
@@ -43,11 +44,18 @@ public class ChooseCountryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RadioRepository radioRepository = ServiceLocator.getInstance().getRadioRepository();
+        RadioRepository radioRepository = ServiceLocator.getInstance()
+                .getRadioRepository();
+        UserRepository userRepository = ServiceLocator.getInstance()
+                .getUserRepository(requireActivity().getApplication());
         radioViewModel = new ViewModelProvider(
                 requireActivity(),
                 new RadioViewModelFactory(radioRepository))
                 .get(RadioViewModel.class);
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)
+        ).get(UserViewModel.class);
     }
 
     @Override
@@ -61,7 +69,19 @@ public class ChooseCountryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         adapter = new ListRecyclerAdapter(countryCodes, true, itemString -> {
-
+            userViewModel.saveCountryPreference(itemString).observe(getViewLifecycleOwner(),
+                    result -> {
+                            if (result.isSuccess()) {
+                                // TODO: Launch new activity
+                            } else {
+                                new MaterialAlertDialogBuilder(requireContext())
+                                        .setTitle(R.string.error_saving_country_preference_title)
+                                        .setMessage(R.string.error_saving_country_preference_message)
+                                        .setNegativeButton(R.string.error_material_dialogue_close_application_button_text,
+                                                (dialog, which) -> requireActivity().finish())
+                                        .show();
+                            }
+            });
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.countries_recycler_view);
@@ -80,10 +100,8 @@ public class ChooseCountryFragment extends Fragment {
                 new MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.error_loading_country_codes_title)
                         .setMessage(R.string.error_loading_country_codes_message)
-                        .setNegativeButton(R.string.error_loading_country_codes_negative_button_text,
-                                (dialog, which) -> {
-                                    requireActivity().finish();
-                                })
+                        .setNegativeButton(R.string.error_material_dialogue_close_application_button_text,
+                                (dialog, which) -> requireActivity().finish())
                         .show();
             }
         });

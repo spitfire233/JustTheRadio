@@ -11,6 +11,9 @@ public class Constants {
     public static final String FLAG_PATH_FORMAT_STRING = "file:///android_asset/flags/%s.png";
 
     public static final String CHOSEN_COUNTRY_KEY = "country";
+    public static final String NO_KEY_WITH_THAT_NAME_IN_DATASTORE = "No key with that name in local cache!";
+    public static final String DATASTORE_NAME = "datastore";
+
 
 
 }

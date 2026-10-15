@@ -3,11 +3,14 @@ package com.justtheradio.utils.source;
 import static com.justtheradio.utils.constant.Constants.AGENT;
 import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_TIMEOUT_MS;
 
-import com.justtheradio.repository.radio.RadioRepository;
+import android.app.Application;
+
+import com.justtheradio.repository.RadioRepository;
+import com.justtheradio.repository.UserRepository;
 import com.justtheradio.source.radiobrowser.BaseRadioBrowserRemoteDataSource;
-import com.justtheradio.source.radiobrowser.BaseRadioLocalDataSource;
+import com.justtheradio.source.user.BaseUserPreferencesLocalDataSource;
 import com.justtheradio.source.radiobrowser.RadioBrowserRemoteDataSource;
-import com.justtheradio.source.radiobrowser.RadioLocalDataSource;
+import com.justtheradio.source.user.UserPreferencesLocalDataSource;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,10 +43,13 @@ public class ServiceLocator {
     public RadioRepository getRadioRepository() {
         BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource =
                 new RadioBrowserRemoteDataSource(AGENT, RADIO_BROWSER_TIMEOUT_MS);
-        BaseRadioLocalDataSource radioLocalDataSource = new RadioLocalDataSource();
-        return new RadioRepository(radioBrowserRemoteDataSource, radioLocalDataSource);
+        return new RadioRepository(radioBrowserRemoteDataSource);
     }
 
-
+    public UserRepository getUserRepository(Application application) {
+        BaseUserPreferencesLocalDataSource userPreferencesLocalDataSource =
+                new UserPreferencesLocalDataSource(application);
+        return new UserRepository(userPreferencesLocalDataSource);
+    }
 
 }
