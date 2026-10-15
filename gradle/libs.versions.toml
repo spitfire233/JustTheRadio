@@ -1,7 +1,9 @@
 [versions]
 agp = "9.4.1"
+coreCommon = "2.2.0"
 coreSplashscreen = "1.2.0"
 datastorePreferences = "1.2.1"
+espressoCoreVersion = "3.7.0"
 glide = "5.0.9"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -13,15 +15,21 @@ material = "1.10.0"
 activityKtx = "1.8.0"
 constraintlayout = "2.1.4"
 fragment = "1.9.1"
+mockitoCore = "5.24.0"
 navigationFragmentKtx = "2.10.2"
 navigationUiKtx = "2.10.2"
 radiobrowser4j = "3.4.0"
 recyclerview = "1.4.0"
 
 [libraries]
+core-common = { module = "androidx.arch.core:core-common", version.ref = "coreCommon" }
+core-runtime = { module = "androidx.arch.core:core-runtime", version.ref = "coreCommon" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreCommon" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 datastore-preferences-rxjava3 = { module = "androidx.datastore:datastore-preferences-rxjava3", version.ref = "datastorePreferences" }
+espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espressoCoreVersion" }
+espresso-core-v370 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -34,6 +42,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 radiobrowser4j = { module = "de.sfuhrm:radiobrowser4j", version.ref = "radiobrowser4j" }

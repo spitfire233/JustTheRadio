@@ -18,6 +18,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
         release {
             optimization {
@@ -30,7 +31,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    testOptions {
+        unitTests.all {
+            it.jvmArgs("-javaagent:${mockitoAgent.asPath}")
+        }
+    }
 }
+
+val mockitoAgent = configurations.create("mockitoAgent")
 
 dependencies {
     implementation(libs.activity.ktx)
@@ -49,7 +58,16 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.datastore.preferences.rxjava3)
     implementation(libs.core.splashscreen)
+    implementation(libs.core.common)
+    implementation(libs.core.runtime)
     testImplementation(libs.junit)
+    testImplementation(libs.espresso.core.v370)
+    testImplementation(libs.espresso.contrib)
+    testImplementation(libs.core.testing)
+    testImplementation(libs.mockito.core)
+    add("mockitoAgent", libs.mockito.core.get().toString()) {
+        isTransitive = false
+    }
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
 }
