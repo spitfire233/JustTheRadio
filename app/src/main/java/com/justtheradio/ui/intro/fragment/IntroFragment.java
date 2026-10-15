@@ -1,4 +1,4 @@
-package com.justtheradio.ui.start.fragment;
+package com.justtheradio.ui.intro.fragment;
 
 import android.content.Intent;
 import android.net.Uri;

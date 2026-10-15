@@ -1,4 +1,4 @@
-package com.justtheradio.ui.start.fragment;
+package com.justtheradio.ui.intro.fragment;
 
 import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
 

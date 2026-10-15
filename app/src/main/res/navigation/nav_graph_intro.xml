@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.justtheradio.ui.start.fragment.IntroFragment"
+        android:name="com.justtheradio.ui.intro.fragment.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseCountryFragment"
-        android:name="com.justtheradio.ui.start.fragment.ChooseCountryFragment"
+        android:name="com.justtheradio.ui.intro.fragment.ChooseCountryFragment"
         android:label="fragment_choose_country"
         tools:layout="@layout/fragment_choose_country" />
 </navigation>
