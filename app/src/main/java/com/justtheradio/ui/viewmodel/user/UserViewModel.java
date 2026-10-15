@@ -1,5 +1,6 @@
 package com.justtheradio.ui.viewmodel.user;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -13,11 +14,11 @@ public class UserViewModel extends ViewModel {
         this.userRepository = userRepository;
     }
 
-    public MutableLiveData<Result> saveUserPreference(String key, String country) {
+    public LiveData<Result> saveUserPreference(String key, String country) {
         return this.userRepository.saveUserPreference(key, country);
     }
 
-    public MutableLiveData<Result> getUserPreference(String key) {
+    public LiveData<Result> getUserPreference(String key) {
         return this.userRepository.getUserPreference(key);
     }
 

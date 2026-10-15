@@ -1,5 +1,6 @@
 package com.justtheradio.repository;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.justtheradio.model.Result;
@@ -19,12 +20,12 @@ public class UserRepository implements UserPreferenceCallback {
         userPreferencesLocalDataSource.setUserCallback(this);
     }
 
-    public MutableLiveData<Result> saveUserPreference(String key, String resource) {
+    public LiveData<Result> saveUserPreference(String key, String resource) {
         userPreferencesLocalDataSource.saveCountryPreference(key, resource);
         return saveMutableLiveData;
     }
 
-    public MutableLiveData<Result> getUserPreference(String key) {
+    public LiveData<Result> getUserPreference(String key) {
         userPreferencesLocalDataSource.getStringResource(key);
         return getMutableLiveData;
     }
