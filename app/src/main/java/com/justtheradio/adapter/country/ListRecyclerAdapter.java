@@ -21,13 +21,14 @@ import com.justtheradio.R;
 import java.util.List;
 
 public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.ViewHolder> {
-    private final List<String> countryCodes;
+    private final List<String> itemStrings;
+    private final OnClickListener onClickListener;
 
     public interface OnClickListener {
-        public void onItemClick(String country);
+        public void onItemClick(String itemString);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView countryNameTextView;
         private final ImageView flagImageView;
         private final CircularProgressIndicator loadingIndicator;
@@ -37,6 +38,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
             countryNameTextView = view.findViewById(R.id.country_list_name_text_view);
             flagImageView = view.findViewById(R.id.flag_image_view);
             loadingIndicator = view.findViewById(R.id.flag_loading_indicator);
+            view.setOnClickListener(this);
         }
 
         public TextView getCountryNameTextView() {
@@ -50,11 +52,16 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         public CircularProgressIndicator getLoadingIndicator() {
             return loadingIndicator;
         }
+
+        @Override
+        public void onClick(View view) {
+            onClickListener.onItemClick(itemStrings.get(getBindingAdapterPosition()));
+        }
     }
 
-    public ListRecyclerAdapter(List<String> countryCodes) {
-        this.countryCodes = countryCodes;
-
+    public ListRecyclerAdapter(List<String> itemStrings, OnClickListener onClickListener) {
+        this.itemStrings = itemStrings;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -68,9 +75,9 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        holder.getCountryNameTextView().setText(countryCodes.get(position));
+        holder.getCountryNameTextView().setText(itemStrings.get(position));
         Glide.with(context)
-                .load(Uri.parse(String.format(FLAG_PATH_FORMAT_STRING, countryCodes.get(position).toLowerCase())))
+                .load(Uri.parse(String.format(FLAG_PATH_FORMAT_STRING, itemStrings.get(position).toLowerCase())))
                 .error(new ColorDrawable(context.getColor(R.color.md_theme_errorContainer)))
                 .into(holder.getFlagImageView());
         holder.getLoadingIndicator().setVisibility(View.INVISIBLE);
@@ -79,7 +86,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return countryCodes.size();
+        return itemStrings.size();
     }
 
 

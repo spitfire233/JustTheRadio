@@ -8,9 +8,10 @@
     <string name="contribution_button_string">Leave a star and contribute!</string>
     <string name="powered_by_radiobrowserapi_string">Powered by <a href = "https://www.radio-browser.info/">RadioBrowserAPI</a> </string>
     <string name="start_app_configuration_button_string">Start app configuration</string>
-    <string name="choose_country_string">Choose the country from which you want to listen to the radio stations</string>
+    <string name="choose_country_string">Choose the country whose radio broadcasts you want to listen to</string>
     <string name="flag_of_the_country_content_description_string">Flag of the country</string>
     <string name="error_loading_country_codes_title">There was an error while fetching the country codes</string>
     <string name="error_loading_country_codes_message">Please check your internet connection or try later</string>
     <string name="error_loading_country_codes_negative_button_text">Close application</string>
+    <string name="choose_region_string">Choose the region whose radio broadcasts you want to listen to</string>
 </resources>

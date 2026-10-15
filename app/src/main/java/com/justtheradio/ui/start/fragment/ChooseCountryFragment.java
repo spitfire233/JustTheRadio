@@ -1,9 +1,12 @@
 package com.justtheradio.ui.start.fragment;
 
+import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,7 +60,13 @@ public class ChooseCountryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new ListRecyclerAdapter(countryCodes);
+        adapter = new ListRecyclerAdapter(countryCodes, itemString -> {
+            Bundle result = new Bundle();
+            result.putString(CHOSEN_COUNTRY_KEY, itemString);
+            getParentFragmentManager().setFragmentResult(CHOSEN_COUNTRY_KEY, result);
+            Navigation.findNavController(view)
+                    .navigate(R.id.action_chooseCountryFragment_to_chooseRegionFragment);
+        });
 
         RecyclerView recyclerView = view.findViewById(R.id.countries_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

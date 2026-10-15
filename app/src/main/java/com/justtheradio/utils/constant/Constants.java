@@ -10,5 +10,7 @@ public class Constants {
 
     public static final String FLAG_PATH_FORMAT_STRING = "file:///android_asset/flags/%s.png";
 
+    public static final String CHOSEN_COUNTRY_KEY = "country";
+
 
 }
