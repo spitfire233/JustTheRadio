@@ -13,8 +13,12 @@ public class UserViewModel extends ViewModel {
         this.userRepository = userRepository;
     }
 
-    public MutableLiveData<Result> saveCountryPreference(String country) {
-        return this.userRepository.saveCountryPreference(country);
+    public MutableLiveData<Result> saveUserPreference(String key, String country) {
+        return this.userRepository.saveUserPreference(key, country);
+    }
+
+    public MutableLiveData<Result> getUserPreference(String key) {
+        return this.userRepository.getUserPreference(key);
     }
 
 

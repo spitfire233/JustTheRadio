@@ -19,11 +19,15 @@ public class UserRepository implements UserPreferenceCallback {
         userPreferencesLocalDataSource.setUserCallback(this);
     }
 
-    public MutableLiveData<Result> saveCountryPreference(String country) {
-        userPreferencesLocalDataSource.saveCountryPreference(CHOSEN_COUNTRY_KEY, country);
+    public MutableLiveData<Result> saveUserPreference(String key, String resource) {
+        userPreferencesLocalDataSource.saveCountryPreference(key, resource);
         return userPreferencesMutableLiveData;
     }
 
+    public MutableLiveData<Result> getUserPreference(String key) {
+        userPreferencesLocalDataSource.getStringResource(key);
+        return userPreferencesMutableLiveData;
+    }
 
     @Override
     public void onSavingUserPreferenceSuccess() {
@@ -33,7 +37,8 @@ public class UserRepository implements UserPreferenceCallback {
 
     @Override
     public void onRetrievingUserPreferenceSuccess(String resource) {
-
+        Result.Success<String> success = new Result.Success<>(resource);
+        userPreferencesMutableLiveData.postValue(success);
     }
 
     @Override

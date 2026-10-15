@@ -1,5 +1,7 @@
 package com.justtheradio.ui.start.fragment;
 
+import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -69,7 +71,7 @@ public class ChooseCountryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         adapter = new ListRecyclerAdapter(countryCodes, true, itemString -> {
-            userViewModel.saveCountryPreference(itemString).observe(getViewLifecycleOwner(),
+            userViewModel.saveUserPreference(CHOSEN_COUNTRY_KEY, itemString).observe(getViewLifecycleOwner(),
                     result -> {
                             if (result.isSuccess()) {
                                 // TODO: Launch new activity
