@@ -16,13 +16,11 @@ public class RadioRepository implements RadioCallback {
 
     private final BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource;
     private final MutableLiveData<Result> countryCodesMutableLiveData;
-    private final MutableLiveData<Result> userPreferencesMutableLiveData;
 
     public RadioRepository(BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource) {
         this.radioBrowserRemoteDataSource = radioBrowserRemoteDataSource;
         this.radioBrowserRemoteDataSource.setRadioBrowserCallback(this);
         this.countryCodesMutableLiveData = new MutableLiveData<>();
-        this.userPreferencesMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<Result> fetchCountryCodes() {
