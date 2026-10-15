@@ -1,7 +1,6 @@
 package com.justtheradio.ui.viewmodel.user;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.justtheradio.model.Result;

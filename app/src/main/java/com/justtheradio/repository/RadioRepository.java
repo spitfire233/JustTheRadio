@@ -1,14 +1,11 @@
 package com.justtheradio.repository;
 
-import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.justtheradio.model.Result;
 import com.justtheradio.source.radiobrowser.BaseRadioBrowserRemoteDataSource;
-import com.justtheradio.source.user.BaseUserPreferencesLocalDataSource;
 import com.justtheradio.source.radiobrowser.callback.RadioCallback;
-import com.justtheradio.source.user.callback.UserPreferenceCallback;
 
 import java.util.List;
 

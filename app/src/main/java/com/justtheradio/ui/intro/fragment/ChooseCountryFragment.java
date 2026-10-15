@@ -72,22 +72,22 @@ public class ChooseCountryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new ListRecyclerAdapter(countryCodes, true, itemString -> {
-            userViewModel.saveUserPreference(CHOSEN_COUNTRY_KEY, itemString).observe(getViewLifecycleOwner(),
-                    result -> {
-                            if (result.isSuccess()) {
-                                startActivity(new Intent(requireActivity(), MainActivity.class));
-                                requireActivity().finish();
-                            } else {
-                                new MaterialAlertDialogBuilder(requireContext())
-                                        .setTitle(R.string.error_saving_country_preference_title)
-                                        .setMessage(R.string.error_saving_country_preference_message)
-                                        .setNegativeButton(R.string.error_material_dialogue_close_application_button_text,
-                                                (dialog, which) -> requireActivity().finish())
-                                        .show();
-                            }
-            });
-        });
+        adapter = new ListRecyclerAdapter(countryCodes, true,
+                itemString -> userViewModel.saveUserPreference(CHOSEN_COUNTRY_KEY, itemString)
+                        .observe(getViewLifecycleOwner(),
+                result -> {
+                        if (result.isSuccess()) {
+                            startActivity(new Intent(requireActivity(), MainActivity.class));
+                            requireActivity().finish();
+                        } else {
+                            new MaterialAlertDialogBuilder(requireContext())
+                                    .setTitle(R.string.error_saving_country_preference_title)
+                                    .setMessage(R.string.error_saving_country_preference_message)
+                                    .setNegativeButton(R.string.error_material_dialogue_close_application_button_text,
+                                            (dialog, which) -> requireActivity().finish())
+                                    .show();
+                        }
+        }));
 
         RecyclerView recyclerView = view.findViewById(R.id.countries_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

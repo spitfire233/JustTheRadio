@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.repository.UserRepository;
-import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
 
 public class UserViewModelFactory implements ViewModelProvider.Factory {
     private final UserRepository userRepository;

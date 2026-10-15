@@ -35,9 +35,7 @@ public class UserPreferencesLocalDataSource extends BaseUserPreferencesLocalData
                         userCallback.onRetrievingUserPreferenceSuccess(string);
                     else
                         userCallback.onFailureRetrievingOnLocal(new Exception(NO_KEY_WITH_THAT_NAME_IN_DATASTORE));
-                }, throwable -> {
-                    userCallback.onFailureRetrievingOnLocal(new Exception(throwable));
-                });
+                }, throwable -> userCallback.onFailureRetrievingOnLocal(new Exception(throwable)));
         compositeDisposable.add(disposable);
     }
 

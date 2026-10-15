@@ -37,9 +37,8 @@ public class IntroFragment extends Fragment {
         // (for now GitHub, but it will be CodeBerg in the future)
         MaterialButton repositoryButton = view.findViewById(R.id.repositoryButton);
 
-        repositoryButton.setOnClickListener(v -> {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MAIN_REPOSITORY)));
-        });
+        repositoryButton.setOnClickListener(v ->
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MAIN_REPOSITORY))));
 
         // Set on click listener to navigate to next fragment
         MaterialButton startConfigButton = view.findViewById(R.id.startConfigButton);
