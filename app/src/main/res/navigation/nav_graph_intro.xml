@@ -20,14 +20,5 @@
         android:id="@+id/chooseCountryFragment"
         android:name="com.justtheradio.ui.start.fragment.ChooseCountryFragment"
         android:label="fragment_choose_country"
-        tools:layout="@layout/fragment_choose_country" >
-        <action
-            android:id="@+id/action_chooseCountryFragment_to_chooseRegionFragment"
-            app:destination="@id/chooseRegionFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/chooseRegionFragment"
-        android:name="com.justtheradio.ui.start.fragment.ChooseRegionFragment"
-        android:label="fragment_choose_region"
-        tools:layout="@layout/fragment_choose_region" />
+        tools:layout="@layout/fragment_choose_country" />
 </navigation>

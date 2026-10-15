@@ -61,11 +61,7 @@ public class ChooseCountryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         adapter = new ListRecyclerAdapter(countryCodes, true, itemString -> {
-            Bundle result = new Bundle();
-            result.putString(CHOSEN_COUNTRY_KEY, itemString);
-            getParentFragmentManager().setFragmentResult(CHOSEN_COUNTRY_KEY, result);
-            Navigation.findNavController(view)
-                    .navigate(R.id.action_chooseCountryFragment_to_chooseRegionFragment);
+
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.countries_recycler_view);
