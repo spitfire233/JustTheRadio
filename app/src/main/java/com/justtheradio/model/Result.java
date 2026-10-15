@@ -1,7 +1,5 @@
 package com.justtheradio.model;
 
-import java.util.Collection;
-
 public abstract class Result {
 
     private Result() { }
@@ -11,18 +9,18 @@ public abstract class Result {
     }
 
     public static final class Success<C> extends Result{
-        private final C response;
+        private final C data;
 
         public Success(C data) {
-            this.response = data;
+            this.data = data;
         }
 
         public Success() {
             this(null);
         }
 
-        public C getResponse() {
-            return response;
+        public C getData() {
+            return data;
         }
     }
 

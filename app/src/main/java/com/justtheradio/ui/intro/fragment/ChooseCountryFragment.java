@@ -96,7 +96,7 @@ public class ChooseCountryFragment extends Fragment {
         radioViewModel.fetchCountryCodes().observe(getViewLifecycleOwner(), result-> {
             if (result.isSuccess()) {
                 Result.Success<List<String>> success = (Result.Success<List<String>>) result;
-                List<String> codes = success.getResponse();
+                List<String> codes = success.getData();
                 this.countryCodes.addAll(codes);
                 adapter.notifyItemRangeInserted(0, this.countryCodes.size());
                 view.findViewById(R.id.country_loading_progress_indicator).setVisibility(View.INVISIBLE);
