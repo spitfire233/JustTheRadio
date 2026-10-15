@@ -2,6 +2,7 @@ package com.justtheradio.ui.intro.fragment;
 
 import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import com.justtheradio.adapter.ListRecyclerAdapter;
 import com.justtheradio.model.Result;
 import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.repository.UserRepository;
+import com.justtheradio.ui.main.MainActivity;
 import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
 import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
 import com.justtheradio.ui.viewmodel.user.UserViewModel;
@@ -74,7 +76,8 @@ public class ChooseCountryFragment extends Fragment {
             userViewModel.saveUserPreference(CHOSEN_COUNTRY_KEY, itemString).observe(getViewLifecycleOwner(),
                     result -> {
                             if (result.isSuccess()) {
-                                // TODO: Launch new activity
+                                startActivity(new Intent(requireActivity(), MainActivity.class));
+                                requireActivity().finish();
                             } else {
                                 new MaterialAlertDialogBuilder(requireContext())
                                         .setTitle(R.string.error_saving_country_preference_title)
