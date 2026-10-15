@@ -23,6 +23,7 @@ import java.util.List;
 public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.ViewHolder> {
     private final List<String> itemStrings;
     private final OnClickListener onClickListener;
+    private final boolean showFlag;
 
     public interface OnClickListener {
         public void onItemClick(String itemString);
@@ -59,9 +60,11 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         }
     }
 
-    public ListRecyclerAdapter(List<String> itemStrings, OnClickListener onClickListener) {
+    public ListRecyclerAdapter(List<String> itemStrings, boolean showFlag,
+                               OnClickListener onClickListener) {
         this.itemStrings = itemStrings;
         this.onClickListener = onClickListener;
+        this.showFlag = showFlag;
     }
 
     @NonNull
@@ -76,12 +79,18 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
         holder.getCountryNameTextView().setText(itemStrings.get(position));
-        Glide.with(context)
-                .load(Uri.parse(String.format(FLAG_PATH_FORMAT_STRING, itemStrings.get(position).toLowerCase())))
-                .error(new ColorDrawable(context.getColor(R.color.md_theme_errorContainer)))
-                .into(holder.getFlagImageView());
-        holder.getLoadingIndicator().setVisibility(View.INVISIBLE);
-        holder.getFlagImageView().setVisibility(View.VISIBLE);
+        if (showFlag) {
+            Glide.with(context)
+                    .load(Uri.parse(String.format(FLAG_PATH_FORMAT_STRING,
+                            itemStrings.get(position).toLowerCase())))
+                    .error(new ColorDrawable(context.getColor(R.color.md_theme_errorContainer)))
+                    .into(holder.getFlagImageView());
+            holder.getLoadingIndicator().setVisibility(View.INVISIBLE);
+            holder.getFlagImageView().setVisibility(View.VISIBLE);
+        } else {
+            holder.getLoadingIndicator().setVisibility(View.GONE);
+            holder.getFlagImageView().setVisibility(View.GONE);
+        }
     }
 
     @Override

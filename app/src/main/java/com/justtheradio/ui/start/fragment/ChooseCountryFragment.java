@@ -60,7 +60,7 @@ public class ChooseCountryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new ListRecyclerAdapter(countryCodes, itemString -> {
+        adapter = new ListRecyclerAdapter(countryCodes, true, itemString -> {
             Bundle result = new Bundle();
             result.putString(CHOSEN_COUNTRY_KEY, itemString);
             getParentFragmentManager().setFragmentResult(CHOSEN_COUNTRY_KEY, result);
