@@ -29,6 +29,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
+        splashScreen.setKeepOnScreenCondition(() -> !checked);
 
         UserRepository userRepository = ServiceLocator.getInstance()
                 .getUserRepository(getApplication());
@@ -39,6 +40,7 @@ public class StartActivity extends AppCompatActivity {
         ).get(UserViewModel.class);
 
         userViewModel.getUserPreference(CHOSEN_COUNTRY_KEY).observe(this, result -> {
+            checked = true;
             if (result.isSuccess()) // Resource exists
                 startActivity(new Intent(this, MainActivity.class));
             else
