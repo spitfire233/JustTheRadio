@@ -26,7 +26,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     private final boolean showFlag;
 
     public interface OnClickListener {
-        public void onItemClick(String itemString);
+        void onItemClick(String itemString);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
