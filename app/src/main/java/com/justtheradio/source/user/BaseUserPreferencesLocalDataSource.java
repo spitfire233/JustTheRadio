@@ -11,4 +11,5 @@ public abstract class BaseUserPreferencesLocalDataSource {
 
     public abstract void saveCountryPreference(String key, String country);
     public abstract void getStringResource(String key);
+    public abstract void clearDisposables();
 }

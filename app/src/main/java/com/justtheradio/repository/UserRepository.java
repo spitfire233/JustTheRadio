@@ -30,6 +30,10 @@ public class UserRepository implements UserPreferenceCallback {
         return getMutableLiveData;
     }
 
+    public void clearData() {
+
+    }
+
     @Override
     public void onSavingUserPreferenceSuccess() {
         Result.Success<Void> success = new Result.Success<>();

@@ -21,6 +21,8 @@ public class UserViewModel extends ViewModel {
         return this.userRepository.getUserPreference(key);
     }
 
-
-
+    @Override
+    protected void onCleared() {
+        this.userRepository.clearData();
+    }
 }

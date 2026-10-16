@@ -39,4 +39,9 @@ public class UserPreferencesLocalDataSource extends BaseUserPreferencesLocalData
         compositeDisposable.add(disposable);
     }
 
+    @Override
+    public void clearDisposables() {
+        compositeDisposable.clear();
+    }
+
 }
