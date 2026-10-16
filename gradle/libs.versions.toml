@@ -1,5 +1,6 @@
 [versions]
 agp = "9.4.1"
+commonsValidator = "1.11.0"
 coreCommon = "2.2.0"
 coreSplashscreen = "1.2.0"
 datastorePreferences = "1.2.1"
@@ -22,6 +23,7 @@ radiobrowser4j = "3.4.0"
 recyclerview = "1.4.0"
 
 [libraries]
+commons-validator = { module = "commons-validator:commons-validator", version.ref = "commonsValidator" }
 core-common = { module = "androidx.arch.core:core-common", version.ref = "coreCommon" }
 core-runtime = { module = "androidx.arch.core:core-runtime", version.ref = "coreCommon" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -47,6 +49,8 @@ navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fr
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 radiobrowser4j = { module = "de.sfuhrm:radiobrowser4j", version.ref = "radiobrowser4j" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+glide-okhttp3-integration = { group = "com.github.bumptech.glide", name = "okhttp3-integration", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
