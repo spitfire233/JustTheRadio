@@ -18,4 +18,5 @@
     <string name="home_menu_item_string">Home</string>
     <string name="search_menu_item_string">Search</string>
     <string name="settings_menu_item_string">Settings</string>
+    <string name="search_bar_hint_string">Search for radio stations</string>
 </resources>
