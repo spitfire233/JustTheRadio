@@ -15,4 +15,7 @@
     <string name="error_material_dialogue_close_application_button_text">Close application</string>
     <string name="error_saving_country_preference_title">There was an error while saving the country preference</string>
     <string name="error_saving_country_preference_message">Try freeing up some space or contacting the maintainers of the project</string>
+    <string name="favourites_menu_item_string">Favourites</string>
+    <string name="search_menu_item_string">Search</string>
+    <string name="settings_menu_item_string">Settings</string>
 </resources>
