@@ -2,7 +2,7 @@ package com.justtheradio.utils.constant;
 
 public class Constants {
     public static final String MAIN_REPOSITORY = "https://github.com/spitfire233/JustTheRadio";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1";
     public static final String AGENT = "JustTheRadio/" + VERSION;
     public static final int RADIO_BROWSER_TIMEOUT_MS = 5000;
 
