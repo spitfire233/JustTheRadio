@@ -43,7 +43,7 @@ public class RadioStation {
         return UUID;
     }
 
-    public void setUUID(UUID UUID) {
+    public void setUUID(@NonNull UUID UUID) {
         this.UUID = UUID;
     }
 
