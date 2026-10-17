@@ -1,6 +1,8 @@
 package com.justtheradio.utils.glide;
 
 import static com.justtheradio.utils.constant.Constants.BLOCKED_PRIVATE_ADDRESS_ERROR;
+import static com.justtheradio.utils.constant.Constants.GLIDE_CONNECTION_TIMEOUT;
+import static com.justtheradio.utils.constant.Constants.GLIDE_READ_CONNECTION_TIMEOUT;
 
 import android.content.Context;
 
@@ -42,8 +44,8 @@ public class OkHttpGlideModule extends AppGlideModule {
                 .addNetworkInterceptor(new ImageInterceptor())
                 .followRedirects(true)
                 .followSslRedirects(false)
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(GLIDE_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(GLIDE_READ_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
                 .build();
         registry.replace(GlideUrl.class, InputStream.class,
                 new OkHttpUrlLoader.Factory(client));
