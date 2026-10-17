@@ -21,6 +21,7 @@ navigationFragmentKtx = "2.10.2"
 navigationUiKtx = "2.10.2"
 radiobrowser4j = "3.4.0"
 recyclerview = "1.4.0"
+room3Runtime = "3.0.3"
 
 [libraries]
 commons-validator = { module = "commons-validator:commons-validator", version.ref = "commonsValidator" }
@@ -51,6 +52,8 @@ radiobrowser4j = { module = "de.sfuhrm:radiobrowser4j", version.ref = "radiobrow
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 glide-okhttp3-integration = { group = "com.github.bumptech.glide", name = "okhttp3-integration", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+room3-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room3Runtime" }
+room3-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room3Runtime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

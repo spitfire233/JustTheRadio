@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.core.runtime)
     implementation(libs.commons.validator)
     implementation(libs.glide.okhttp3.integration)
+    implementation(libs.room3.runtime)
+    annotationProcessor(libs.room3.compiler)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
     testImplementation(libs.espresso.core.v370)
