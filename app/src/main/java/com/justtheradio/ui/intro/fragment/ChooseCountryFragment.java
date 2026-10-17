@@ -2,6 +2,7 @@ package com.justtheradio.ui.intro.fragment;
 
 import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.justtheradio.R;
-import com.justtheradio.adapter.ListRecyclerAdapter;
+import com.justtheradio.adapter.list.CountryListRecyclerAdapter;
 import com.justtheradio.model.Result;
 import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.repository.UserRepository;
@@ -39,7 +40,7 @@ public class ChooseCountryFragment extends Fragment {
     private UserViewModel userViewModel;
     private final List<String> countryCodes = new ArrayList<>();
 
-    private ListRecyclerAdapter adapter;
+    private CountryListRecyclerAdapter adapter;
 
     public ChooseCountryFragment() {
         // Required empty public constructor
@@ -72,22 +73,21 @@ public class ChooseCountryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new ListRecyclerAdapter(countryCodes, true,
-                itemString -> userViewModel.saveUserPreference(CHOSEN_COUNTRY_KEY, itemString)
-                        .observe(getViewLifecycleOwner(),
-                result -> {
-                        if (result.isSuccess()) {
-                            startActivity(new Intent(requireActivity(), MainActivity.class));
-                            requireActivity().finish();
-                        } else {
-                            new MaterialAlertDialogBuilder(requireContext())
-                                    .setTitle(R.string.error_saving_country_preference_title)
-                                    .setMessage(R.string.error_saving_country_preference_message)
-                                    .setNegativeButton(R.string.error_material_dialogue_close_application_button_text,
-                                            (dialog, which) -> requireActivity().finish())
-                                    .show();
-                        }
-        }));
+        adapter = new CountryListRecyclerAdapter(countryCodes, item ->
+                userViewModel.saveUserPreference(CHOSEN_COUNTRY_KEY, item)
+                .observe(getViewLifecycleOwner(), result -> {
+                    if (result.isSuccess()) {
+                        startActivity(new Intent(requireActivity(), MainActivity.class));
+                        requireActivity().finish();
+                    } else {
+                        showErrorAlertDialog(
+                                requireContext(),
+                                R.string.error_saving_country_preference_title,
+                                R.string.error_saving_country_preference_message,
+                                R.string.error_material_dialogue_close_application_button_text
+                        );
+                    }
+                }));
 
         RecyclerView recyclerView = view.findViewById(R.id.countries_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -102,13 +102,23 @@ public class ChooseCountryFragment extends Fragment {
                 view.findViewById(R.id.country_loading_progress_indicator).setVisibility(View.INVISIBLE);
                 view.findViewById(R.id.countries_recycler_view).setVisibility(View.VISIBLE);
             } else {
-                new MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(R.string.error_loading_country_codes_title)
-                        .setMessage(R.string.error_loading_country_codes_message)
-                        .setNegativeButton(R.string.error_material_dialogue_close_application_button_text,
-                                (dialog, which) -> requireActivity().finish())
-                        .show();
+                showErrorAlertDialog(
+                        requireContext(),
+                        R.string.error_loading_country_codes_title,
+                        R.string.error_loading_country_codes_message,
+                        R.string.error_material_dialogue_close_application_button_text
+                );
             }
         });
     }
+
+    private void showErrorAlertDialog(Context context, int title, int message, int buttonText) {
+        new MaterialAlertDialogBuilder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(buttonText,
+                        ((dialogInterface, i) -> requireActivity().finish()))
+                .show();
+    }
+
 }
