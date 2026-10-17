@@ -57,7 +57,6 @@ public class RadioRepository implements RadioCallback {
         if (Long.parseLong(lastTimeUpdated) >= RADIO_BROWSER_EXPIRED_THRESHOLD) {
             radioBrowserRemoteDataSource.getRadioStationsByCountryWithPaging(country);
         } else {
-            radioBrowserRemoteDataSource.updatePaging();
             radioLocalDataSource.getRadioStationsWithPaging();
         }
     }
@@ -80,8 +79,14 @@ public class RadioRepository implements RadioCallback {
 
     @Override
     public void onGettingRadioStationsFromLocal(List<RadioStation> radioStations) {
-        Result.Success<List<RadioStation>> success = new Result.Success<>(radioStations);
-        this.radiosMutableLiveData.postValue(success);
+        if (radioStations.isEmpty()) {
+            radioBrowserRemoteDataSource.getRadioStationsByCountryWithPaging(country);
+        } else {
+            Result.Success<List<RadioStation>> success = new Result.Success<>(radioStations);
+            radioBrowserRemoteDataSource.updatePaging(radioStations.size());
+            this.radiosMutableLiveData.postValue(success);
+        }
+
     }
 
     @Override

@@ -71,6 +71,7 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
                 radioDAO.insertAll(radioStationList);
                 this.radioCallback.onSavingRadioStationSuccess(radioStationList);
             } catch (Exception e) {
+                // TODO: This might need some disambiguation!
                 this.radioCallback.onFailureFromLocal(e);
             }
         });
@@ -82,7 +83,7 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
             try {
                 List<RadioStation> radioStations =
                         radioDAO.getStationsWithPaging(RADIO_BROWSER_PAGING_LIMIT, offset);
-                offset += RADIO_BROWSER_PAGING_LIMIT;
+                offset += radioStations.size();
                 this.radioCallback.onGettingRadioStationsFromLocal(radioStations);
             } catch (Exception e) {
                 this.radioCallback.onFailureFromLocal(e);

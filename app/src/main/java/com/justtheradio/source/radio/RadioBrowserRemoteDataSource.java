@@ -31,7 +31,7 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
     private final ExecutorService executorService;
     private final String agent;
     private final int timeout;
-    private final Paging paging;
+    private Paging paging;
 
     private final Pattern ISO_PATTERN;
 
@@ -80,7 +80,7 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
                         SecurityUtils.isValidUrl(station.getFavicon(), false))
                         .map(RadioStation::new)
                         .collect(Collectors.toList());
-                updatePaging();
+                updatePaging(stations.size());
                 this.radioCallback.onFetchingRadioStationsSuccess(stations);
             } catch (IOException | EndpointNotFoundException e) {
                 this.radioCallback.onFailureFetchingStationsFromRemote(e);
@@ -89,8 +89,8 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
     }
 
     @Override
-    public void updatePaging() {
-        paging.next();
+    public void updatePaging(int offset) {
+        paging = Paging.at(offset, paging.getLimit());
     }
 
 
