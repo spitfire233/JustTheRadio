@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -63,7 +64,7 @@ dependencies {
     implementation(libs.commons.validator)
     implementation(libs.glide.okhttp3.integration)
     implementation(libs.room3.runtime)
-    annotationProcessor(libs.room3.compiler)
+    ksp(libs.room3.compiler)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
     testImplementation(libs.espresso.core.v370)

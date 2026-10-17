@@ -22,6 +22,7 @@ navigationUiKtx = "2.10.2"
 radiobrowser4j = "3.4.0"
 recyclerview = "1.4.0"
 room3Runtime = "3.0.3"
+ksp = "2.3.4"
 
 [libraries]
 commons-validator = { module = "commons-validator:commons-validator", version.ref = "commonsValidator" }
@@ -55,6 +56,7 @@ glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", versi
 room3-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room3Runtime" }
 room3-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room3Runtime" }
 
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
