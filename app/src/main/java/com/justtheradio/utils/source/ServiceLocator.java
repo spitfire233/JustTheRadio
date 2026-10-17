@@ -1,15 +1,19 @@
 package com.justtheradio.utils.source;
 
 import static com.justtheradio.utils.constant.Constants.AGENT;
+import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_PAGING_LIMIT;
 import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_TIMEOUT_MS;
 
 import android.app.Application;
 
+import com.justtheradio.database.RadioRoomDatabase;
 import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.repository.UserRepository;
-import com.justtheradio.source.radiobrowser.BaseRadioBrowserRemoteDataSource;
+import com.justtheradio.source.radio.BaseRadioBrowserRemoteDataSource;
+import com.justtheradio.source.radio.BaseRadioLocalDataSource;
+import com.justtheradio.source.radio.RadioLocalDataSource;
 import com.justtheradio.source.user.BaseUserPreferencesLocalDataSource;
-import com.justtheradio.source.radiobrowser.RadioBrowserRemoteDataSource;
+import com.justtheradio.source.radio.RadioBrowserRemoteDataSource;
 import com.justtheradio.source.user.UserPreferencesLocalDataSource;
 
 import java.util.concurrent.ExecutorService;
@@ -40,10 +44,21 @@ public class ServiceLocator {
         return executorService;
     }
 
-    public RadioRepository getRadioRepository() {
+    public RadioRoomDatabase getRadioDatabase(Application application) {
+        return RadioRoomDatabase.getInstance(application, getExecutorService());
+    }
+
+
+    public RadioRepository getRadioRepository(Application application) {
         BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource =
-                new RadioBrowserRemoteDataSource(AGENT, RADIO_BROWSER_TIMEOUT_MS);
-        return new RadioRepository(radioBrowserRemoteDataSource);
+                new RadioBrowserRemoteDataSource(
+                        AGENT,
+                        RADIO_BROWSER_TIMEOUT_MS,
+                        RADIO_BROWSER_PAGING_LIMIT
+                );
+        BaseRadioLocalDataSource radioLocalDataSource =
+                new RadioLocalDataSource(application, getRadioDatabase(application));
+        return new RadioRepository(radioBrowserRemoteDataSource, radioLocalDataSource);
     }
 
     public UserRepository getUserRepository(Application application) {

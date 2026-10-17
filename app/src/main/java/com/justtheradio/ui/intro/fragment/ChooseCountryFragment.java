@@ -49,7 +49,7 @@ public class ChooseCountryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RadioRepository radioRepository = ServiceLocator.getInstance()
-                .getRadioRepository();
+                .getRadioRepository(requireActivity().getApplication());
         UserRepository userRepository = ServiceLocator.getInstance()
                 .getUserRepository(requireActivity().getApplication());
         radioViewModel = new ViewModelProvider(

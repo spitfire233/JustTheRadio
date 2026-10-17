@@ -1,9 +1,11 @@
-package com.justtheradio.source.radiobrowser;
+package com.justtheradio.source.radio;
 
 
 import static com.justtheradio.utils.constant.Constants.ERROR_ENDPOINT_NOT_FOUND;
 
 import com.justtheradio.exceptions.EndpointNotFoundException;
+import com.justtheradio.model.radio.RadioStation;
+import com.justtheradio.utils.security.SecurityUtils;
 import com.justtheradio.utils.source.ServiceLocator;
 
 import java.io.IOException;
@@ -14,10 +16,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import de.sfuhrm.radiobrowser4j.AdvancedSearch;
 import de.sfuhrm.radiobrowser4j.ConnectionParams;
 import de.sfuhrm.radiobrowser4j.EndpointDiscovery;
+import de.sfuhrm.radiobrowser4j.Paging;
 import de.sfuhrm.radiobrowser4j.RadioBrowser;
+import de.sfuhrm.radiobrowser4j.Station;
 
 public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSource{
 
@@ -25,14 +31,16 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
     private final ExecutorService executorService;
     private final String agent;
     private final int timeout;
+    private final Paging paging;
 
     private final Pattern ISO_PATTERN;
 
-    public RadioBrowserRemoteDataSource(String agent, int timeout) {
+    public RadioBrowserRemoteDataSource(String agent, int timeout, int limit) {
         this.executorService = ServiceLocator.getInstance().getExecutorService();
         this.agent = agent;
         this.timeout = timeout;
         ISO_PATTERN = Pattern.compile("^[A-Z]{2}$");
+        this.paging = Paging.at(0, limit);
     }
 
     @Override
@@ -46,12 +54,47 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
                 Collections.sort(countryCodes);
                 // Security check: remove malformed country codes
                 countryCodes.removeIf(code -> !ISO_PATTERN.matcher(code).matches());
-                this.radioCallback.onCountryCodesGetSuccess(countryCodes);
+                this.radioCallback.onCountryCodesFetchSuccess(countryCodes);
             } catch (IOException | EndpointNotFoundException e) {
-                this.radioCallback.onFailureFromRemote(e);
+                this.radioCallback.onFailureFetchingCountryCodes(e);
             }
         });
     }
+
+    @Override
+    public void getRadioStationsByCountryWithPaging(String countryCode) {
+        executorService.execute(() -> {
+            try {
+                if (radioBrowser == null)
+                    radioBrowser = buildRadioBrowser(agent, timeout);
+                AdvancedSearch advancedSearch = AdvancedSearch.builder()
+                        .countryCode(countryCode)
+                        .hideBroken(true)
+                        .build();
+                List<RadioStation> stations = radioBrowser
+                        .listStationsWithAdvancedSearch(paging, advancedSearch)
+                        .stream()
+                        .filter(station ->
+                                (SecurityUtils.isValidUrl(station.getUrlResolved(), false)
+                                || SecurityUtils.isValidUrl(station.getUrl(), false)) &&
+                        SecurityUtils.isValidUrl(station.getFavicon(), false))
+                        .map(RadioStation::new)
+                        .collect(Collectors.toList());
+                updatePaging();
+                this.radioCallback.onFetchingRadioStationsSuccess(stations);
+            } catch (IOException | EndpointNotFoundException e) {
+                this.radioCallback.onFailureFetchingStationsFromRemote(e);
+            }
+        });
+    }
+
+    @Override
+    public void updatePaging() {
+        paging.next();
+    }
+
+
+
 
     private RadioBrowser buildRadioBrowser(String agent, int timeout)
             throws IOException, EndpointNotFoundException {
