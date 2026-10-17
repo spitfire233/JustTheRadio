@@ -36,9 +36,9 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
         public ViewHolder(View view) {
             super(view);
-            countryNameTextView = view.findViewById(R.id.country_list_name_text_view);
-            flagImageView = view.findViewById(R.id.flag_image_view);
-            loadingIndicator = view.findViewById(R.id.flag_loading_indicator);
+            countryNameTextView = view.findViewById(R.id.name_text_view);
+            flagImageView = view.findViewById(R.id.image_view);
+            loadingIndicator = view.findViewById(R.id.image_view_loading_indicator);
             view.setOnClickListener(this);
         }
 

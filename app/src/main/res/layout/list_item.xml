@@ -6,7 +6,7 @@
     android:minHeight="?attr/minTouchTargetSize">
 
     <ImageView
-        android:id="@+id/flag_image_view"
+        android:id="@+id/image_view"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:contentDescription="@string/flag_of_the_country_content_description_string"
@@ -20,17 +20,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/flag_loading_indicator"
+        android:id="@+id/image_view_loading_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/flag_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/image_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/country_list_name_text_view"
+        android:id="@+id/name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -38,6 +38,6 @@
         android:maxLines="1"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/flag_image_view"
+        app:layout_constraintStart_toEndOf="@+id/image_view"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
