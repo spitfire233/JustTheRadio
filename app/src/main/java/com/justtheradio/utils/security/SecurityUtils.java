@@ -25,11 +25,17 @@ public final class SecurityUtils {
 
     public static boolean isValidUrl(String url, boolean mustBeHttps) {
         if (url == null || url.isBlank() || url.length() > MAX_LENGTH) return false;
-        try {
-           if (new URI(url.trim()).getUserInfo() != null) return false;
-        } catch (URISyntaxException e) { return false; }
+
         UrlValidator urlValidator = mustBeHttps ? ONLY_HTTPS : HTTP_AND_HTTPS;
-        return urlValidator.isValid(url);
+        if(!urlValidator.isValid(url)) return false;
+
+        try {
+            URI uri = new URI(url);
+            if (uri.getUserInfo() != null || isLocalHost(uri.getHost())) return false;
+        } catch (URISyntaxException e) {
+            return false;
+        }
+        return true;
     }
 
     public static boolean isLocalHost(String host) {
@@ -48,7 +54,6 @@ public final class SecurityUtils {
     }
 
     public static boolean isPrivateAddress(InetAddress address) {
-
         if (address.isAnyLocalAddress() // 0.0.0.0, ::
                 || address.isLoopbackAddress() // 127.0.0.0/8, ::1
                 || address.isLinkLocalAddress() // 169.254.0.0/16, fe80::/10
