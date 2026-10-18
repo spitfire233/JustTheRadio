@@ -9,12 +9,14 @@ import androidx.room3.Database;
 import androidx.room3.Room;
 import androidx.room3.RoomDatabase;
 
+import com.justtheradio.model.RadioRemoteKey;
 import com.justtheradio.model.RadioStation;
 
 import java.util.concurrent.ExecutorService;
 
 
-@Database(entities = {RadioStation.class}, version = ROOM_DATABASE_VERSION, exportSchema = false)
+@Database(entities = {RadioStation.class, RadioRemoteKey.class},
+        version = ROOM_DATABASE_VERSION, exportSchema = false)
 public abstract class RadioRoomDatabase extends RoomDatabase {
 
     public abstract RadioDAO radioDAO();
