@@ -66,7 +66,7 @@ dependencies {
     implementation(libs.room3.runtime)
     implementation(libs.paging.runtime)
     implementation(libs.paging.rxjava3)
-    implementation(libs.room.paging)
+    implementation(libs.room3.paging)
     ksp(libs.room3.compiler)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
