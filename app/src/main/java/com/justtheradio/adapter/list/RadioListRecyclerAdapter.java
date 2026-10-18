@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.justtheradio.R;
-import com.justtheradio.model.radio.RadioStation;
+import com.justtheradio.model.RadioStation;
 
 import java.util.List;
 

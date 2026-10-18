@@ -9,7 +9,7 @@ import androidx.room3.Database;
 import androidx.room3.Room;
 import androidx.room3.RoomDatabase;
 
-import com.justtheradio.model.radio.RadioStation;
+import com.justtheradio.model.RadioStation;
 
 import java.util.concurrent.ExecutorService;
 

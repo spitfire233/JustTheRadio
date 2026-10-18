@@ -7,7 +7,7 @@ import android.app.Application;
 
 import com.justtheradio.database.RadioDAO;
 import com.justtheradio.database.RadioRoomDatabase;
-import com.justtheradio.model.radio.RadioStation;
+import com.justtheradio.model.RadioStation;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 
 import java.util.List;

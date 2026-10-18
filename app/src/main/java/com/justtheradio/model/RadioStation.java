@@ -1,4 +1,4 @@
-package com.justtheradio.model.radio;
+package com.justtheradio.model;
 
 import androidx.annotation.NonNull;
 import androidx.room3.Entity;
@@ -18,6 +18,7 @@ public class RadioStation {
     private String name;
     private String URL;
     private boolean isFavourite;
+    private int position;
 
     public RadioStation() {
         // Required empty constructor
@@ -77,5 +78,13 @@ public class RadioStation {
 
     public void setURL(String URL) {
         this.URL = URL;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

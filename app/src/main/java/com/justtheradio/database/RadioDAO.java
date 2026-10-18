@@ -6,7 +6,7 @@ import androidx.room3.OnConflictStrategy;
 import androidx.room3.Query;
 import androidx.room3.Update;
 
-import com.justtheradio.model.radio.RadioStation;
+import com.justtheradio.model.RadioStation;
 
 import java.util.List;
 

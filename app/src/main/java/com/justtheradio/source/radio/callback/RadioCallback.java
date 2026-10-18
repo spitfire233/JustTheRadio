@@ -1,6 +1,6 @@
 package com.justtheradio.source.radio.callback;
 
-import com.justtheradio.model.radio.RadioStation;
+import com.justtheradio.model.RadioStation;
 
 import java.util.List;
 

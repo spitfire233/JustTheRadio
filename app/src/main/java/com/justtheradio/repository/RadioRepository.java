@@ -3,13 +3,11 @@ package com.justtheradio.repository;
 
 import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_EXPIRED_THRESHOLD;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.justtheradio.model.Result;
-import com.justtheradio.model.radio.RadioStation;
+import com.justtheradio.model.RadioStation;
 import com.justtheradio.source.radio.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.radio.BaseRadioLocalDataSource;
 import com.justtheradio.source.radio.callback.RadioCallback;

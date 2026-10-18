@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 
 import com.justtheradio.R;
 import com.justtheradio.model.Result;
-import com.justtheradio.model.radio.RadioStation;
+import com.justtheradio.model.RadioStation;
 import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.repository.UserRepository;
 import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
