@@ -79,16 +79,6 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
 
     @Override
     public void getRadioStationsWithPaging() {
-        RadioRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
-            try {
-                List<RadioStation> radioStations =
-                        radioDAO.getStationsWithPaging(RADIO_BROWSER_PAGING_LIMIT, offset);
-                offset += radioStations.size();
-                this.radioCallback.onGettingRadioStationsFromLocal(radioStations);
-            } catch (Exception e) {
-                this.radioCallback.onFailureFromLocal(e);
-            }
-        });
     }
 
 
