@@ -27,7 +27,7 @@ public class Constants {
     public static final int RADIO_BROWSER_PAGING_LIMIT = 64;
     public static final long RADIO_BROWSER_EXPIRED_THRESHOLD = 600000; // 10 minutes
 
-    public static final int ROOM_DATABASE_VERSION = 1;
+    public static final int ROOM_DATABASE_VERSION = 2;
     public static final String ROOM_DATABASE_NAME = "radio-db";
 
 
