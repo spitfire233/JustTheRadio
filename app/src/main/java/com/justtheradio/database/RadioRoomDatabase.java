@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutorService;
 public abstract class RadioRoomDatabase extends RoomDatabase {
 
     public abstract RadioDAO radioDAO();
+    public abstract RadioRemoteKeyDAO radioRemoteKeyDAO();
 
     private static volatile RadioRoomDatabase INSTANCE;
     private static ExecutorService databaseWriteExecutor;
