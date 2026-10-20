@@ -42,6 +42,10 @@ android {
 
 val mockitoAgent = configurations.create("mockitoAgent")
 
+ksp {
+    arg("room.generateKotlin", "false")
+}
+
 dependencies {
     implementation(libs.activity.ktx)
     implementation(libs.appcompat)
@@ -63,11 +67,11 @@ dependencies {
     implementation(libs.core.runtime)
     implementation(libs.commons.validator)
     implementation(libs.glide.okhttp3.integration)
-    implementation(libs.room3.runtime)
+    implementation(libs.room.runtime)
     implementation(libs.paging.runtime)
     implementation(libs.paging.rxjava3)
-    implementation(libs.room3.paging)
-    ksp(libs.room3.compiler)
+    implementation(libs.room.paging)
+    ksp(libs.room.compiler)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
     testImplementation(libs.espresso.core.v370)
