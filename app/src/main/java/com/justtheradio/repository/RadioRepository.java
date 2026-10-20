@@ -47,7 +47,7 @@ public class RadioRepository implements RadioCallback {
                 RADIO_BROWSER_PAGING_LIMIT,
                 RADIO_BROWSER_PAGING_LIMIT / 2, // Prefetch distance
                 true,                                        // Enable placeholders
-                RADIO_BROWSER_PAGING_LIMIT                 // Initial loading size
+                RADIO_BROWSER_PAGING_LIMIT * 2                 // Initial loading size
         );
         Pager<Integer, RadioStation> pager = new Pager<>(
                 pagingConfig,
