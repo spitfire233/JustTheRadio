@@ -1,11 +1,20 @@
 package com.justtheradio.model;
 
-import androidx.annotation.NonNull;
-import androidx.room3.Entity;
-import androidx.room3.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity
 public class RadioRemoteKey {
+
+    public RadioRemoteKey() {
+
+    }
+
+    public RadioRemoteKey(int nextOffset, boolean endReached) {
+        setNextOffset(nextOffset);
+        setEndReached(endReached);
+    }
+
     @PrimaryKey private int id = 1;
     private int nextOffset;
     private boolean endReached;

@@ -7,15 +7,20 @@ import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_TIMEOUT_MS
 import android.app.Application;
 
 import com.justtheradio.database.RadioRoomDatabase;
+import com.justtheradio.exceptions.EndpointNotFoundException;
 import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.repository.UserRepository;
 import com.justtheradio.source.radio.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.radio.BaseRadioLocalDataSource;
 import com.justtheradio.source.radio.RadioLocalDataSource;
+import com.justtheradio.source.radio.paging.RadioRemoteMediator;
 import com.justtheradio.source.user.BaseUserPreferencesLocalDataSource;
 import com.justtheradio.source.radio.RadioBrowserRemoteDataSource;
 import com.justtheradio.source.user.UserPreferencesLocalDataSource;
+import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
+import com.justtheradio.utils.radio.RadioBrowserManagerSingleton;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -49,7 +54,7 @@ public class ServiceLocator {
     }
 
 
-    public RadioRepository getRadioRepository(Application application) {
+    public RadioRepository getRadioRepository(Application application) throws EndpointNotFoundException, IOException {
         BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource =
                 new RadioBrowserRemoteDataSource(
                         AGENT,
@@ -58,7 +63,11 @@ public class ServiceLocator {
                 );
         BaseRadioLocalDataSource radioLocalDataSource =
                 new RadioLocalDataSource(application, getRadioDatabase(application));
-        return new RadioRepository(radioBrowserRemoteDataSource, radioLocalDataSource);
+        RadioRemoteMediator radioRemoteMediator = new RadioRemoteMediator(
+                DataStoreManagerSingleton.getInstance(application),
+                RadioBrowserManagerSingleton.getInstance(AGENT, RADIO_BROWSER_TIMEOUT_MS),
+                getRadioDatabase(application));
+        return new RadioRepository(radioBrowserRemoteDataSource, radioLocalDataSource, radioRemoteMediator);
     }
 
     public UserRepository getUserRepository(Application application) {

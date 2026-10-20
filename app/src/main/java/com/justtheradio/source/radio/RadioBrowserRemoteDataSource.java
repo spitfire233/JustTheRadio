@@ -61,33 +61,6 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
     }
 
     @Override
-    public void getRadioStationsByCountryWithPaging(String countryCode) {
-        executorService.execute(() -> {
-            try {
-                if (radioBrowser == null)
-                    radioBrowser = buildRadioBrowser(agent, timeout);
-                AdvancedSearch advancedSearch = AdvancedSearch.builder()
-                        .countryCode(countryCode)
-                        .hideBroken(true)
-                        .build();
-                List<RadioStation> stations = radioBrowser
-                        .listStationsWithAdvancedSearch(paging, advancedSearch)
-                        .stream()
-                        .filter(station ->
-                                (SecurityUtils.isValidUrl(station.getUrlResolved(), false)
-                                || SecurityUtils.isValidUrl(station.getUrl(), false)) &&
-                        SecurityUtils.isValidUrl(station.getFavicon(), false))
-                        .map(RadioStation::new)
-                        .collect(Collectors.toList());
-                updatePaging(stations.size());
-                this.radioCallback.onFetchingRadioStationsSuccess(stations);
-            } catch (IOException | EndpointNotFoundException e) {
-                this.radioCallback.onFailureFetchingStationsFromRemote(e);
-            }
-        });
-    }
-
-    @Override
     public void updatePaging(int offset) {
         paging = Paging.at(offset, paging.getLimit());
     }
