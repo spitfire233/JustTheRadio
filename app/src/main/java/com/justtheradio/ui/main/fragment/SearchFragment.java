@@ -89,7 +89,7 @@ public class SearchFragment extends Fragment {
                     // TODO: Open player
                 }, (station, isFavourite) -> {
             // TODO: Set as favourite
-        }
+            }
         );
 
         radiosRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));

@@ -3,6 +3,8 @@ package com.justtheradio.source.radio.paging;
 import static com.justtheradio.utils.constant.Constants.LAST_TIME_UPDATED_KEY;
 import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_EXPIRED_THRESHOLD;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.OptIn;
 import androidx.paging.ExperimentalPagingApi;
@@ -66,6 +68,7 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
 
 
     private MediatorResult load(LoadType loadType, PagingState<Integer, RadioStation> pagingState) {
+        Log.d("RadioMediator", "load " + loadType + " offset=" + (loadType == LoadType.REFRESH ? 0 : "append"));
         int limit;
         int offset;
 

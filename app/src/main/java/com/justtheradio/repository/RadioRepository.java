@@ -28,7 +28,6 @@ public class RadioRepository implements RadioCallback {
     private final MutableLiveData<Result> countryCodesMutableLiveData;
     private final MutableLiveData<Result> radiosMutableLiveData;
     private final RadioRemoteMediator radioRemoteMediator;
-    private String country = null;
 
     public RadioRepository(BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource,
                             BaseRadioLocalDataSource radioLocalDataSource,
@@ -47,7 +46,7 @@ public class RadioRepository implements RadioCallback {
         PagingConfig pagingConfig = new PagingConfig(
                 RADIO_BROWSER_PAGING_LIMIT,
                 RADIO_BROWSER_PAGING_LIMIT / 2, // Prefetch distance
-                false,                                        // Enable placeholders
+                true,                                        // Enable placeholders
                 RADIO_BROWSER_PAGING_LIMIT                 // Initial loading size
         );
         Pager<Integer, RadioStation> pager = new Pager<>(
