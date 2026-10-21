@@ -94,6 +94,7 @@ public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, 
         RadioStation radioStation = getItem(position);
         if (radioStation != null) {
             holder.getRadioNameTextView().setText(radioStation.getName());
+            holder.getRadioNameTextView().setSelected(true);
             Glide.with(holder.itemView.getContext())
                     .load(radioStation.getFaviconURL())
                     .placeholder(R.drawable.justtheradio_logo)
