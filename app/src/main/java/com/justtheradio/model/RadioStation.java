@@ -1,8 +1,8 @@
 package com.justtheradio.model;
 
 import androidx.annotation.NonNull;
-import androidx.room3.Entity;
-import androidx.room3.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.UUID;
 
@@ -18,13 +18,13 @@ public class RadioStation {
     private String name;
     private String URL;
     private boolean isFavourite;
-    private int position;
+    private int offset;
 
     public RadioStation() {
         // Required empty constructor
     }
 
-    public RadioStation(Station station, boolean isFavourite) {
+    public RadioStation(Station station, boolean isFavourite, int offset) {
         setName(station.getName());
         setFaviconURL(station.getFavicon().trim());
         setFavourite(isFavourite);
@@ -33,10 +33,11 @@ public class RadioStation {
                 station.getUrlResolved() :
                 station.getUrl();
         setURL(url.trim());
+        setOffset(offset);
     }
 
-    public RadioStation(Station station) {
-        this(station, false);
+    public RadioStation(Station station, int offset) {
+        this(station, false, offset);
     }
 
     @NonNull
@@ -80,11 +81,11 @@ public class RadioStation {
         this.URL = URL;
     }
 
-    public int getPosition() {
-        return position;
+    public int getOffset() {
+        return offset;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }

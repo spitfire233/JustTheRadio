@@ -12,7 +12,5 @@ public abstract class BaseRadioBrowserRemoteDataSource {
 
     public abstract void getCountryCodes();
 
-    public abstract void getRadioStationsByCountryWithPaging(String countryCode);
-
     public abstract void updatePaging(int offset);
 }

@@ -5,9 +5,10 @@ import static com.justtheradio.utils.constant.Constants.ROOM_DATABASE_VERSION;
 
 import android.content.Context;
 
-import androidx.room3.Database;
-import androidx.room3.Room;
-import androidx.room3.RoomDatabase;
+import androidx.room.AutoMigration;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
 import com.justtheradio.model.RadioRemoteKey;
 import com.justtheradio.model.RadioStation;

@@ -1,9 +1,10 @@
 package com.justtheradio.source.radio;
 
 import static com.justtheradio.utils.constant.Constants.LAST_TIME_UPDATED_KEY;
-import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_PAGING_LIMIT;
 
 import android.app.Application;
+
+import androidx.paging.PagingSource;
 
 import com.justtheradio.database.RadioDAO;
 import com.justtheradio.database.RadioRoomDatabase;
@@ -43,20 +44,6 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     }
 
     @Override
-    public void getLastTimeFetched() {
-        Disposable disposable = dataStoreManager.getStringResource(LAST_TIME_UPDATED_KEY)
-                .subscribe(pref -> {
-                    if (pref != null)
-                        this.radioCallback.onLastTimeUpdatedGetSuccess(pref);
-                    else
-                        this.radioCallback.onLastTimeUpdatedNotPresent();
-                }, throwable -> {
-                    this.radioCallback.onLastTimeUpdatedNotPresent();
-                });
-        disposables.add(disposable);
-    }
-
-    @Override
     public void saveRadioStations(List<RadioStation> radioStationList) {
         RadioRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
             try {
@@ -78,7 +65,8 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     }
 
     @Override
-    public void getRadioStationsWithPaging() {
+    public PagingSource<Integer, RadioStation> getRadioDAOPagingSource() {
+        return radioDAO.pagingSource();
     }
 
 

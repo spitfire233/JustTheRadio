@@ -22,7 +22,7 @@ navigationUiKtx = "2.10.2"
 pagingRxjava3 = "3.5.3"
 radiobrowser4j = "3.4.0"
 recyclerview = "1.4.0"
-room3Runtime = "3.0.3"
+room = "2.8.5"
 ksp = "2.3.4"
 
 [libraries]
@@ -56,9 +56,9 @@ radiobrowser4j = { module = "de.sfuhrm:radiobrowser4j", version.ref = "radiobrow
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 glide-okhttp3-integration = { group = "com.github.bumptech.glide", name = "okhttp3-integration", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
-room3-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room3Runtime" }
-room3-paging = { module = "androidx.room3:room3-paging", version.ref = "room3Runtime" }
-room3-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room3Runtime" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 
 
 [plugins]

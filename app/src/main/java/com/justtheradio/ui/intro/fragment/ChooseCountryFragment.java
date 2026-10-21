@@ -49,18 +49,22 @@ public class ChooseCountryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RadioRepository radioRepository = ServiceLocator.getInstance()
-                .getRadioRepository(requireActivity().getApplication());
-        UserRepository userRepository = ServiceLocator.getInstance()
-                .getUserRepository(requireActivity().getApplication());
-        radioViewModel = new ViewModelProvider(
-                requireActivity(),
-                new RadioViewModelFactory(radioRepository))
-                .get(RadioViewModel.class);
-        userViewModel = new ViewModelProvider(
-                requireActivity(),
-                new UserViewModelFactory(userRepository)
-        ).get(UserViewModel.class);
+        try {
+            RadioRepository radioRepository = ServiceLocator.getInstance()
+                    .getRadioRepository(requireActivity().getApplication());
+            UserRepository userRepository = ServiceLocator.getInstance()
+                    .getUserRepository(requireActivity().getApplication());
+            radioViewModel = new ViewModelProvider(
+                    requireActivity(),
+                    new RadioViewModelFactory(radioRepository))
+                    .get(RadioViewModel.class);
+            userViewModel = new ViewModelProvider(
+                    requireActivity(),
+                    new UserViewModelFactory(userRepository)
+            ).get(UserViewModel.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e); // TODO: Fatal error
+        }
     }
 
     @Override

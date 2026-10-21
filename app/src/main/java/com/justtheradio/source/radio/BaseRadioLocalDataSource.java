@@ -1,5 +1,7 @@
 package com.justtheradio.source.radio;
 
+import androidx.paging.PagingSource;
+
 import com.justtheradio.model.RadioStation;
 import com.justtheradio.source.radio.callback.RadioCallback;
 
@@ -14,11 +16,9 @@ public abstract class BaseRadioLocalDataSource {
 
     public abstract void saveLastTimeFetched(long lastTimeUpdated);
 
-    public abstract void getLastTimeFetched();
-
     public abstract void saveRadioStations(List<RadioStation> radioStationList);
 
-    public abstract void getRadioStationsWithPaging();
+    public abstract PagingSource<Integer, RadioStation> getRadioDAOPagingSource();
 
     public abstract void onDestroy();
 }
