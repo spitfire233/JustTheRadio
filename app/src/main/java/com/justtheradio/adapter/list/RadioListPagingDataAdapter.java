@@ -100,6 +100,7 @@ public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, 
                     .error(R.drawable.justtheradio_logo)
                     .into(holder.getFaviconImageView());
             holder.getFavouriteCheckBox().setChecked(radioStation.isFavourite());
+            holder.getFavouriteCheckBox().setVisibility(View.VISIBLE);
             holder.getCircularProgressIndicator().setVisibility(View.GONE);
             holder.getFaviconImageView().setVisibility(View.VISIBLE);
 
