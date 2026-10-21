@@ -26,8 +26,7 @@ public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, 
     private final OnFavouriteChangedListener<RadioStation> onFavouriteChangedListener;
     private final OnItemClickListener<RadioStation> onItemClickListener;
 
-    public RadioListPagingDataAdapter(List<RadioStation> radioStations,
-                                      OnItemClickListener<RadioStation> onItemClickListener,
+    public RadioListPagingDataAdapter(OnItemClickListener<RadioStation> onItemClickListener,
                                       OnFavouriteChangedListener<RadioStation> onFavouriteChangedListener) {
         super(DIFF_CALLBACK);
         this.onItemClickListener = onItemClickListener;

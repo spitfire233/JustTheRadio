@@ -84,7 +84,7 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RadioListPagingDataAdapter adapter = new RadioListPagingDataAdapter(stations,
+        RadioListPagingDataAdapter adapter = new RadioListPagingDataAdapter(
                 stations -> {
                     // TODO: Open player
                 }, (station, isFavourite) -> {
