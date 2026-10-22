@@ -1,9 +1,7 @@
-package com.justtheradio.source.radio.paging;
+package com.justtheradio.mediator;
 
 import static com.justtheradio.utils.constant.Constants.LAST_TIME_UPDATED_KEY;
 import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_EXPIRED_THRESHOLD;
-
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.OptIn;

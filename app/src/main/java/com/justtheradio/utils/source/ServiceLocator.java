@@ -13,7 +13,7 @@ import com.justtheradio.repository.UserRepository;
 import com.justtheradio.source.radio.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.radio.BaseRadioLocalDataSource;
 import com.justtheradio.source.radio.RadioLocalDataSource;
-import com.justtheradio.source.radio.paging.RadioRemoteMediator;
+import com.justtheradio.mediator.RadioRemoteMediator;
 import com.justtheradio.source.user.BaseUserPreferencesLocalDataSource;
 import com.justtheradio.source.radio.RadioBrowserRemoteDataSource;
 import com.justtheradio.source.user.UserPreferencesLocalDataSource;
