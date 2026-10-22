@@ -4,8 +4,6 @@ package com.justtheradio.source.radio;
 import static com.justtheradio.utils.constant.Constants.ERROR_ENDPOINT_NOT_FOUND;
 
 import com.justtheradio.exceptions.EndpointNotFoundException;
-import com.justtheradio.model.RadioStation;
-import com.justtheradio.utils.security.SecurityUtils;
 import com.justtheradio.utils.source.ServiceLocator;
 
 import java.io.IOException;
@@ -16,13 +14,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import de.sfuhrm.radiobrowser4j.AdvancedSearch;
 import de.sfuhrm.radiobrowser4j.ConnectionParams;
 import de.sfuhrm.radiobrowser4j.EndpointDiscovery;
 import de.sfuhrm.radiobrowser4j.Paging;
 import de.sfuhrm.radiobrowser4j.RadioBrowser;
+import de.sfuhrm.radiobrowser4j.Station;
 
 public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSource{
 
@@ -61,12 +59,15 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
     }
 
     @Override
-    public void updatePaging(int offset) {
-        paging = Paging.at(offset, paging.getLimit());
+    public List<Station> getRadioStationsByCountryWithPaging(String country, int offset, int limit) throws IOException, EndpointNotFoundException {
+        if (radioBrowser == null)
+            radioBrowser = buildRadioBrowser(agent, timeout);
+        AdvancedSearch searchParams = AdvancedSearch.builder()
+                .countryCode(country)
+                .hideBroken(true)
+                .build();
+        return radioBrowser.listStationsWithAdvancedSearch(Paging.at(offset, limit), searchParams);
     }
-
-
-
 
     private RadioBrowser buildRadioBrowser(String agent, int timeout)
             throws IOException, EndpointNotFoundException {

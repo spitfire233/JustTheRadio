@@ -18,7 +18,6 @@ import com.justtheradio.source.user.BaseUserPreferencesLocalDataSource;
 import com.justtheradio.source.radio.RadioBrowserRemoteDataSource;
 import com.justtheradio.source.user.UserPreferencesLocalDataSource;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
-import com.justtheradio.utils.radio.RadioBrowserManagerSingleton;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -65,8 +64,8 @@ public class ServiceLocator {
                 new RadioLocalDataSource(application, getRadioDatabase(application));
         RadioRemoteMediator radioRemoteMediator = new RadioRemoteMediator(
                 DataStoreManagerSingleton.getInstance(application),
-                RadioBrowserManagerSingleton.getInstance(AGENT, RADIO_BROWSER_TIMEOUT_MS),
-                getRadioDatabase(application));
+                radioBrowserRemoteDataSource,
+                radioLocalDataSource);
         return new RadioRepository(radioBrowserRemoteDataSource, radioLocalDataSource, radioRemoteMediator);
     }
 

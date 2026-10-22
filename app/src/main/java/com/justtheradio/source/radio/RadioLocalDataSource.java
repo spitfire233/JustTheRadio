@@ -4,10 +4,12 @@ import static com.justtheradio.utils.constant.Constants.LAST_TIME_UPDATED_KEY;
 
 import android.app.Application;
 
+import androidx.datastore.preferences.core.Preferences;
 import androidx.paging.PagingSource;
 
 import com.justtheradio.database.RadioDAO;
 import com.justtheradio.database.RadioRoomDatabase;
+import com.justtheradio.model.RadioRemoteKey;
 import com.justtheradio.model.RadioStation;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 
@@ -16,13 +18,12 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
 
     private final RadioDAO radioDAO;
-    private RadioRoomDatabase radioRoomDatabase;
     private final DataStoreManagerSingleton dataStoreManager;
     private final CompositeDisposable disposables;
     private int offset;
@@ -35,13 +36,37 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     }
 
     @Override
-    public void saveLastTimeFetched(long lastTimeUpdated) {
-        Disposable disposable = dataStoreManager
-                .saveStringResource(LAST_TIME_UPDATED_KEY,Long.toString(lastTimeUpdated))
-                .subscribe(pref -> { },
-                        throwable -> { } );
-        disposables.add(disposable);
+    public Single<Preferences> saveLastTimeFetched(long lastTimeUpdated) {
+        return dataStoreManager.saveStringResource(LAST_TIME_UPDATED_KEY, Long.toString(lastTimeUpdated));
     }
+
+    @Override
+    public Single<String> getLastTimeFetched() {
+        return dataStoreManager.getStringResource(LAST_TIME_UPDATED_KEY);
+    }
+
+    @Override
+    public RadioRemoteKey getRadioRemoteKey() {
+        return radioDAO.getRadioRemoteKey();
+    }
+
+    @Override
+    public void savePage(boolean isRefresh, List<RadioStation> stations, RadioRemoteKey key) {
+        radioDAO.savePage(isRefresh, stations, key);
+    }
+
+    @Override
+    public List<RadioStation> getFavouriteStations() {
+        return radioDAO.getFavouriteStations();
+    }
+
+    @Override
+    public void getFavouriteStationsAsync() {
+
+    }
+
+
+
 
     @Override
     public void saveRadioStations(List<RadioStation> radioStationList) {

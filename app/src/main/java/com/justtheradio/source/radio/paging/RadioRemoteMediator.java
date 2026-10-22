@@ -12,11 +12,11 @@ import androidx.paging.LoadType;
 import androidx.paging.PagingState;
 import androidx.paging.rxjava3.RxRemoteMediator;
 
-import com.justtheradio.database.RadioRoomDatabase;
 import com.justtheradio.model.RadioRemoteKey;
 import com.justtheradio.model.RadioStation;
+import com.justtheradio.source.radio.BaseRadioBrowserRemoteDataSource;
+import com.justtheradio.source.radio.BaseRadioLocalDataSource;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
-import com.justtheradio.utils.radio.RadioBrowserManagerSingleton;
 import com.justtheradio.utils.security.SecurityUtils;
 
 import java.util.ArrayList;
@@ -33,17 +33,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation> {
 
     private String country;
-    private final RadioRoomDatabase database;
     private final DataStoreManagerSingleton datastore;
-    private final RadioBrowserManagerSingleton radioBrowserManagerSingleton;
-
+    private final BaseRadioBrowserRemoteDataSource remote;
+    private final BaseRadioLocalDataSource local;
 
     public RadioRemoteMediator(DataStoreManagerSingleton datastore,
-                               RadioBrowserManagerSingleton radioBrowserManagerSingleton,
-                               RadioRoomDatabase radioDAO) {
+                               BaseRadioBrowserRemoteDataSource remote,
+                               BaseRadioLocalDataSource local) {
         this.datastore = datastore;
-        this.database = radioDAO;
-        this.radioBrowserManagerSingleton = radioBrowserManagerSingleton;
+        this.local = local;
+        this.remote = remote;
     }
 
 
@@ -68,7 +67,6 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
 
 
     private MediatorResult load(LoadType loadType, PagingState<Integer, RadioStation> pagingState) {
-        Log.d("RadioMediator", "load " + loadType + " offset=" + (loadType == LoadType.REFRESH ? 0 : "append"));
         int limit;
         int offset;
 
@@ -80,7 +78,7 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
             case PREPEND: // We never prepend
                 return new MediatorResult.Success(true);
             default: // append
-                RadioRemoteKey radioRemoteKey = database.radioDAO().getRadioRemoteKey();
+                RadioRemoteKey radioRemoteKey = local.getRadioRemoteKey();
                 if (radioRemoteKey == null || radioRemoteKey.isEndReached())
                     return new MediatorResult.Success(true);
                 offset = radioRemoteKey.getNextOffset();
@@ -90,13 +88,12 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
         try {
             // Get the raw radio stations page, determine
             // if we have reached the end of the results and the next offset:
-            List<Station> raw =
-                    radioBrowserManagerSingleton.getStationsByCountryWithPaging(country, offset, limit);
+            List<Station> raw = remote.getRadioStationsByCountryWithPaging(country, offset, limit);
             boolean isEndReached = raw.size() < limit;
             int nextOffset = offset + raw.size();
 
             // Construct radio list to insert in local cache
-            Set<UUID> favouriteUUIDs = database.radioDAO().getFavouriteStations()
+            Set<UUID> favouriteUUIDs = local.getFavouriteStations()
                     .stream()
                     .map(RadioStation::getUUID)
                     .collect(Collectors.toSet());
@@ -112,11 +109,9 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
             }
             RadioRemoteKey newKey = new RadioRemoteKey(nextOffset, isEndReached);
             boolean isRefresh = loadType == LoadType.REFRESH;
-            database.radioDAO().savePage(isRefresh, toInsert, newKey);
-            if (isRefresh) {
-                datastore.saveStringResource(LAST_TIME_UPDATED_KEY, Long.toString(System.currentTimeMillis()))
-                        .blockingSubscribe();
-            }
+            local.savePage(isRefresh, toInsert, newKey);
+            if (isRefresh)
+                local.saveLastTimeFetched(System.currentTimeMillis());
             return new MediatorResult.Success(isEndReached);
         } catch (Exception e) {
             return new MediatorResult.Error(e);
