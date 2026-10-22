@@ -59,15 +59,23 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
     }
 
     @Override
-    public List<Station> getRadioStationsByCountryWithPaging(String country, int offset, int limit) throws IOException, EndpointNotFoundException {
+    public List<Station> getRadioStationsByCountry(String country, int offset, int limit) throws IOException, EndpointNotFoundException {
+        return getRadioStationsByCountry(country, null, offset, limit);
+    }
+
+    @Override
+    public List<Station> getRadioStationsByCountry(String country, String query, int offset, int limit) throws IOException, EndpointNotFoundException {
         if (radioBrowser == null)
             radioBrowser = buildRadioBrowser(agent, timeout);
         AdvancedSearch searchParams = AdvancedSearch.builder()
                 .countryCode(country)
                 .hideBroken(true)
+                .name(query)
                 .build();
         return radioBrowser.listStationsWithAdvancedSearch(Paging.at(offset, limit), searchParams);
     }
+
+
 
     private RadioBrowser buildRadioBrowser(String agent, int timeout)
             throws IOException, EndpointNotFoundException {

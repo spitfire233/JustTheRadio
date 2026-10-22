@@ -18,5 +18,7 @@ public abstract class BaseRadioBrowserRemoteDataSource {
 
     public abstract void getCountryCodes();
 
-    public abstract List<Station> getRadioStationsByCountryWithPaging(String country, int offset, int limit) throws IOException, EndpointNotFoundException;
+    public abstract List<Station> getRadioStationsByCountry(String country, int offset, int limit) throws IOException, EndpointNotFoundException;
+
+    public abstract List<Station> getRadioStationsByCountry(String country, String query, int offset, int limit) throws IOException, EndpointNotFoundException;
 }

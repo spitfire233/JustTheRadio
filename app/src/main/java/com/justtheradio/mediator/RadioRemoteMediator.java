@@ -86,7 +86,7 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
         try {
             // Get the raw radio stations page, determine
             // if we have reached the end of the results and the next offset:
-            List<Station> raw = remote.getRadioStationsByCountryWithPaging(country, offset, limit);
+            List<Station> raw = remote.getRadioStationsByCountry(country, offset, limit);
             boolean isEndReached = raw.size() < limit;
             int nextOffset = offset + raw.size();
 
