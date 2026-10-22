@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.justtheradio.R;
-import com.justtheradio.adapter.list.RadioListPagingDataAdapter;
+import com.justtheradio.adapter.RadioListPagingDataAdapter;
 import com.justtheradio.model.Result;
 import com.justtheradio.model.RadioStation;
 import com.justtheradio.repository.RadioRepository;
@@ -87,9 +86,7 @@ public class SearchFragment extends Fragment {
         RadioListPagingDataAdapter adapter = new RadioListPagingDataAdapter(
                 stations -> {
                     // TODO: Open player
-                }, (station, isFavourite) -> {
-            // TODO: Set as favourite
-            }
+                }
         );
 
         radiosRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));

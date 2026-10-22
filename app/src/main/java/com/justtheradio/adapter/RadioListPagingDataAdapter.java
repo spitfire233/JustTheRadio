@@ -1,4 +1,4 @@
-package com.justtheradio.adapter.list;
+package com.justtheradio.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,39 +12,29 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.justtheradio.R;
-import com.justtheradio.adapter.listener.OnFavouriteChangedListener;
 import com.justtheradio.adapter.listener.OnItemClickListener;
 import com.justtheradio.model.RadioStation;
 
-import java.util.List;
-
 public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, RadioListPagingDataAdapter.RadioViewHolder> {
 
-    private final OnFavouriteChangedListener<RadioStation> onFavouriteChangedListener;
     private final OnItemClickListener<RadioStation> onItemClickListener;
 
-    public RadioListPagingDataAdapter(OnItemClickListener<RadioStation> onItemClickListener,
-                                      OnFavouriteChangedListener<RadioStation> onFavouriteChangedListener) {
+    public RadioListPagingDataAdapter(OnItemClickListener<RadioStation> onItemClickListener) {
         super(DIFF_CALLBACK);
         this.onItemClickListener = onItemClickListener;
-        this.onFavouriteChangedListener = onFavouriteChangedListener;
     }
 
     public static class RadioViewHolder extends RecyclerView.ViewHolder {
         private final TextView radioNameTextView;
         private final ImageView faviconImageView;
         private final CircularProgressIndicator circularProgressIndicator;
-        private final MaterialCheckBox favouriteCheckBox;
-
         public RadioViewHolder(@NonNull View itemView) {
             super(itemView);
             radioNameTextView = itemView.findViewById(R.id.name_text_view);
             faviconImageView = itemView.findViewById(R.id.image_view);
             circularProgressIndicator = itemView.findViewById(R.id.image_view_loading_indicator);
-            favouriteCheckBox = itemView.findViewById(R.id.favourite_checkbox);
         }
 
         public TextView getRadioNameTextView() {
@@ -57,10 +47,6 @@ public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, 
 
         public CircularProgressIndicator getCircularProgressIndicator() {
             return circularProgressIndicator;
-        }
-
-        public MaterialCheckBox getFavouriteCheckBox() {
-            return favouriteCheckBox;
         }
     }
 
@@ -99,19 +85,12 @@ public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, 
                     .placeholder(R.drawable.justtheradio_logo)
                     .error(R.drawable.justtheradio_logo)
                     .into(holder.getFaviconImageView());
-            holder.getFavouriteCheckBox().setChecked(radioStation.isFavourite());
-            holder.getFavouriteCheckBox().setVisibility(View.VISIBLE);
             holder.getCircularProgressIndicator().setVisibility(View.GONE);
             holder.getFaviconImageView().setVisibility(View.VISIBLE);
 
             holder.itemView.setOnClickListener(view -> {
                 if (onItemClickListener != null)
                     onItemClickListener.onItemClick(radioStation);
-            });
-            holder.getFavouriteCheckBox().setOnCheckedChangeListener(null); // Prevent duplicate calls
-            holder.getFavouriteCheckBox().setOnCheckedChangeListener((button, isChecked) -> {
-                if (onFavouriteChangedListener != null)
-                    onFavouriteChangedListener.onFavouriteStatusChanged(radioStation, isChecked);
             });
         }
     }
