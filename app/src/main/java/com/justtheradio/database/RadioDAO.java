@@ -39,9 +39,6 @@ public interface RadioDAO {
     void insertAll(List<RadioStation> radioStations);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    int insert(RadioStation radioStation);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertOrReplace(RadioRemoteKey radioRemoteKey);
     @Query("SELECT * FROM RadioRemoteKey WHERE id = 1")
     RadioRemoteKey getRadioRemoteKey();
