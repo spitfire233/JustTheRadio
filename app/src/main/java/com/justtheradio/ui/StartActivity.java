@@ -1,7 +1,5 @@
 package com.justtheradio.ui;
 
-import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.justtheradio.repository.UserRepository;
+import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.ui.intro.IntroActivity;
 import com.justtheradio.ui.main.MainActivity;
-import com.justtheradio.ui.viewmodel.user.UserViewModel;
-import com.justtheradio.ui.viewmodel.user.UserViewModelFactory;
+import com.justtheradio.ui.viewmodel.RadioViewModel;
+import com.justtheradio.ui.viewmodel.RadioViewModelFactory;
 import com.justtheradio.utils.source.ServiceLocator;
 
 public class StartActivity extends AppCompatActivity {
@@ -26,21 +24,22 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         splashScreen.setKeepOnScreenCondition(() -> !checked);
 
-        UserRepository userRepository = ServiceLocator.getInstance()
-                .getUserRepository(getApplication());
 
-        UserViewModel userViewModel = new ViewModelProvider(
+        RadioRepository radioRepository = ServiceLocator.getInstance().getRadioRepository(
+                getApplication()
+        );
+
+        RadioViewModel radioViewModel = new ViewModelProvider(
                 this,
-                new UserViewModelFactory(userRepository)
-        ).get(UserViewModel.class);
+                new RadioViewModelFactory(radioRepository)
+        ).get(RadioViewModel.class);
 
-        userViewModel.getUserPreference(CHOSEN_COUNTRY_KEY).observe(this, result -> {
+        radioViewModel.getCountryPreference().observe(this, result -> {
             checked = true;
-            if (result.isSuccess()) // Resource exists
+            if (result.isSuccess())
                 startActivity(new Intent(this, MainActivity.class));
             else
                 startActivity(new Intent(this, IntroActivity.class));
-            finish();
         });
 
     }

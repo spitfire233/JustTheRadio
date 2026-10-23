@@ -7,19 +7,14 @@ import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_TIMEOUT_MS
 import android.app.Application;
 
 import com.justtheradio.database.RadioRoomDatabase;
-import com.justtheradio.exceptions.EndpointNotFoundException;
 import com.justtheradio.repository.RadioRepository;
-import com.justtheradio.repository.UserRepository;
-import com.justtheradio.source.radio.BaseRadioBrowserRemoteDataSource;
-import com.justtheradio.source.radio.BaseRadioLocalDataSource;
-import com.justtheradio.source.radio.RadioLocalDataSource;
+import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
+import com.justtheradio.source.BaseRadioLocalDataSource;
+import com.justtheradio.source.RadioLocalDataSource;
 import com.justtheradio.mediator.RadioRemoteMediator;
-import com.justtheradio.source.user.BaseUserPreferencesLocalDataSource;
-import com.justtheradio.source.radio.RadioBrowserRemoteDataSource;
-import com.justtheradio.source.user.UserPreferencesLocalDataSource;
+import com.justtheradio.source.RadioBrowserRemoteDataSource;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -53,7 +48,7 @@ public class ServiceLocator {
     }
 
 
-    public RadioRepository getRadioRepository(Application application) throws EndpointNotFoundException, IOException {
+    public RadioRepository getRadioRepository(Application application) {
         BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource =
                 new RadioBrowserRemoteDataSource(
                         AGENT,
@@ -67,12 +62,6 @@ public class ServiceLocator {
                 radioBrowserRemoteDataSource,
                 radioLocalDataSource);
         return new RadioRepository(radioBrowserRemoteDataSource, radioLocalDataSource, radioRemoteMediator);
-    }
-
-    public UserRepository getUserRepository(Application application) {
-        BaseUserPreferencesLocalDataSource userPreferencesLocalDataSource =
-                new UserPreferencesLocalDataSource(application);
-        return new UserRepository(userPreferencesLocalDataSource);
     }
 
 }

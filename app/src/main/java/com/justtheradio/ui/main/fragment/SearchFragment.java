@@ -1,7 +1,5 @@
 package com.justtheradio.ui.main.fragment;
 
-import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,11 +18,8 @@ import com.justtheradio.adapter.RadioListPagingDataAdapter;
 import com.justtheradio.model.Result;
 import com.justtheradio.model.RadioStation;
 import com.justtheradio.repository.RadioRepository;
-import com.justtheradio.repository.UserRepository;
-import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
-import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
-import com.justtheradio.ui.viewmodel.user.UserViewModel;
-import com.justtheradio.ui.viewmodel.user.UserViewModelFactory;
+import com.justtheradio.ui.viewmodel.RadioViewModel;
+import com.justtheradio.ui.viewmodel.RadioViewModelFactory;
 import com.justtheradio.utils.source.ServiceLocator;
 
 import org.jspecify.annotations.NonNull;
@@ -35,7 +30,6 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-    private UserViewModel userViewModel;
     private RadioViewModel radioViewModel;
 
     private CircularProgressIndicator circularProgressIndicator;
@@ -51,23 +45,12 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            UserRepository userRepository = ServiceLocator.getInstance()
-                    .getUserRepository(requireActivity().getApplication());
-            userViewModel = new ViewModelProvider(
-                    requireActivity(),
-                    new UserViewModelFactory(userRepository)
-            ).get(UserViewModel.class);
-
-            RadioRepository radioRepository = ServiceLocator.getInstance()
-                    .getRadioRepository(requireActivity().getApplication());
-            radioViewModel = new ViewModelProvider(
-                    requireActivity(),
-                    new RadioViewModelFactory(radioRepository)
-            ).get(RadioViewModel.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e); // TODO: Fatal exception!
-        }
+        RadioRepository radioRepository = ServiceLocator.getInstance()
+                .getRadioRepository(requireActivity().getApplication());
+        radioViewModel = new ViewModelProvider(
+                requireActivity(),
+                new RadioViewModelFactory(radioRepository)
+        ).get(RadioViewModel.class);
     }
 
     @Override
@@ -92,7 +75,7 @@ public class SearchFragment extends Fragment {
         radiosRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         radiosRecyclerView.setAdapter(adapter);
 
-        userViewModel.getUserPreference(CHOSEN_COUNTRY_KEY).observe(getViewLifecycleOwner(),
+        radioViewModel.getCountryPreference().observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                         Result.Success<String> success = (Result.Success<String>) result;

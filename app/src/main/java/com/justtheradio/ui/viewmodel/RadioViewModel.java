@@ -1,4 +1,4 @@
-package com.justtheradio.ui.viewmodel.radio;
+package com.justtheradio.ui.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -27,6 +27,14 @@ public class RadioViewModel extends ViewModel {
             );
         }
         return radioStations;
+    }
+
+    public LiveData<Result> saveCountryPreference(String country) {
+        return this.radioRepository.saveCountryPreference(country);
+    }
+
+    public LiveData<Result> getCountryPreference() {
+        return this.radioRepository.getCountryPreference();
     }
 
 

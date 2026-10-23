@@ -12,8 +12,8 @@ import androidx.paging.rxjava3.RxRemoteMediator;
 
 import com.justtheradio.model.RadioRemoteKey;
 import com.justtheradio.model.RadioStation;
-import com.justtheradio.source.radio.BaseRadioBrowserRemoteDataSource;
-import com.justtheradio.source.radio.BaseRadioLocalDataSource;
+import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
+import com.justtheradio.source.BaseRadioLocalDataSource;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 import com.justtheradio.utils.security.SecurityUtils;
 

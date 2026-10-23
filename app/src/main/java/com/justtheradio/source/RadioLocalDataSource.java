@@ -1,6 +1,8 @@
-package com.justtheradio.source.radio;
+package com.justtheradio.source;
 
+import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
 import static com.justtheradio.utils.constant.Constants.LAST_TIME_UPDATED_KEY;
+import static com.justtheradio.utils.constant.Constants.NO_KEY_WITH_THAT_NAME_IN_DATASTORE;
 
 import android.app.Application;
 
@@ -14,12 +16,10 @@ import com.justtheradio.model.RadioStation;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
 
@@ -65,28 +65,28 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
 
     }
 
-
-
+    @Override
+    public void saveCountryPreference(String country) {
+        Disposable disposable = dataStoreManager.saveStringResource(CHOSEN_COUNTRY_KEY, country)
+                .subscribe(preferences -> this.radioCallback.onSavingCountryPreferenceSuccess(),
+                        throwable -> this.radioCallback.onFailureSavingCountryPreference(new Exception(throwable)));
+        disposables.add(disposable);
+    }
 
     @Override
-    public void saveRadioStations(List<RadioStation> radioStationList) {
-        RadioRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
-            try {
-                List<RadioStation> favouriteStations = radioDAO.getFavouriteStations();
-                Set<UUID> favouriteUUIDs = favouriteStations.stream()
-                        .map(RadioStation::getUUID)
-                        .collect(Collectors.toSet());
-                for (RadioStation radioStation : radioStationList) { // Avg O(n + m)
-                    if (favouriteUUIDs.contains(radioStation.getUUID()))
-                        radioStation.setFavourite(true);
-                }
-                radioDAO.insertAll(radioStationList);
-                this.radioCallback.onSavingRadioStationSuccess(radioStationList);
-            } catch (Exception e) {
-                // TODO: This might need some disambiguation!
-                this.radioCallback.onFailureFromLocal(e);
-            }
-        });
+    public void getCountryPreferenceAsync() {
+        Disposable disposable = dataStoreManager.getStringResource(CHOSEN_COUNTRY_KEY)
+                .subscribe(string -> {
+                    if (string != null)
+                        this.radioCallback.onGettingCountryPreferenceSuccess(string);
+                    else
+                        this.radioCallback.onFailureGettingCountryPreference(new Exception(NO_KEY_WITH_THAT_NAME_IN_DATASTORE));
+                }, throwable -> this.radioCallback.onFailureGettingCountryPreference(new Exception(throwable)));
+        disposables.add(disposable);
+    }
+
+    public Single<String> getCountryPreference() {
+        return dataStoreManager.getStringResource(CHOSEN_COUNTRY_KEY);
     }
 
     @Override

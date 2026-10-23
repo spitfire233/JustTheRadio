@@ -1,7 +1,7 @@
-package com.justtheradio.source.radio;
+package com.justtheradio.source;
 
 import com.justtheradio.exceptions.EndpointNotFoundException;
-import com.justtheradio.source.radio.callback.RadioCallback;
+import com.justtheradio.source.callback.RadioCallback;
 
 import java.io.IOException;
 import java.util.List;

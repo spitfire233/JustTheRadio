@@ -1,11 +1,11 @@
-package com.justtheradio.source.radio;
+package com.justtheradio.source;
 
 import androidx.datastore.preferences.core.Preferences;
 import androidx.paging.PagingSource;
 
 import com.justtheradio.model.RadioRemoteKey;
 import com.justtheradio.model.RadioStation;
-import com.justtheradio.source.radio.callback.RadioCallback;
+import com.justtheradio.source.callback.RadioCallback;
 
 import java.util.List;
 
@@ -30,7 +30,9 @@ public abstract class BaseRadioLocalDataSource {
 
     public abstract void getFavouriteStationsAsync();
 
-    public abstract void saveRadioStations(List<RadioStation> radioStationList);
+    public abstract void saveCountryPreference(String country);
+
+    public abstract void getCountryPreferenceAsync();
 
     public abstract PagingSource<Integer, RadioStation> getRadioDAOPagingSource();
 

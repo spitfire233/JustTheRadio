@@ -1,7 +1,5 @@
 package com.justtheradio.ui.intro.fragment;
 
-import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,12 +18,9 @@ import com.justtheradio.R;
 import com.justtheradio.adapter.CountryListRecyclerAdapter;
 import com.justtheradio.model.Result;
 import com.justtheradio.repository.RadioRepository;
-import com.justtheradio.repository.UserRepository;
 import com.justtheradio.ui.main.MainActivity;
-import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
-import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
-import com.justtheradio.ui.viewmodel.user.UserViewModel;
-import com.justtheradio.ui.viewmodel.user.UserViewModelFactory;
+import com.justtheradio.ui.viewmodel.RadioViewModel;
+import com.justtheradio.ui.viewmodel.RadioViewModelFactory;
 import com.justtheradio.utils.source.ServiceLocator;
 
 import org.jspecify.annotations.NonNull;
@@ -37,7 +32,6 @@ import java.util.List;
 public class ChooseCountryFragment extends Fragment {
 
     private RadioViewModel radioViewModel;
-    private UserViewModel userViewModel;
     private final List<String> countryCodes = new ArrayList<>();
 
     private CountryListRecyclerAdapter adapter;
@@ -49,22 +43,12 @@ public class ChooseCountryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            RadioRepository radioRepository = ServiceLocator.getInstance()
-                    .getRadioRepository(requireActivity().getApplication());
-            UserRepository userRepository = ServiceLocator.getInstance()
-                    .getUserRepository(requireActivity().getApplication());
-            radioViewModel = new ViewModelProvider(
-                    requireActivity(),
-                    new RadioViewModelFactory(radioRepository))
-                    .get(RadioViewModel.class);
-            userViewModel = new ViewModelProvider(
-                    requireActivity(),
-                    new UserViewModelFactory(userRepository)
-            ).get(UserViewModel.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e); // TODO: Fatal error
-        }
+        RadioRepository radioRepository = ServiceLocator.getInstance()
+                .getRadioRepository(requireActivity().getApplication());
+        radioViewModel = new ViewModelProvider(
+                requireActivity(),
+                new RadioViewModelFactory(radioRepository))
+                .get(RadioViewModel.class);
     }
 
     @Override
@@ -77,8 +61,8 @@ public class ChooseCountryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new CountryListRecyclerAdapter(countryCodes, item ->
-                userViewModel.saveUserPreference(CHOSEN_COUNTRY_KEY, item)
+        adapter = new CountryListRecyclerAdapter(countryCodes, country ->
+                radioViewModel.saveCountryPreference(country)
                 .observe(getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
                         startActivity(new Intent(requireActivity(), MainActivity.class));

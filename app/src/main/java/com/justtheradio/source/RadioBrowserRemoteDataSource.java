@@ -1,4 +1,4 @@
-package com.justtheradio.source.radio;
+package com.justtheradio.source;
 
 
 import static com.justtheradio.utils.constant.Constants.ERROR_ENDPOINT_NOT_FOUND;
