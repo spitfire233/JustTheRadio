@@ -18,7 +18,7 @@ public class RadioStation {
     private String name;
     private String URL;
     private boolean isFavourite;
-    private int offset;
+    private int position;
 
     public RadioStation() {
         // Required empty constructor
@@ -33,7 +33,7 @@ public class RadioStation {
                 station.getUrlResolved() :
                 station.getUrl();
         setURL(url.trim());
-        setOffset(offset);
+        setPosition(offset);
     }
 
     public RadioStation(Station station, int offset) {
@@ -81,11 +81,11 @@ public class RadioStation {
         this.URL = URL;
     }
 
-    public int getOffset() {
-        return offset;
+    public int getPosition() {
+        return position;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public void setPosition(int offset) {
+        this.position = offset;
     }
 }

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Dao
 public interface RadioDAO {
 
-    @Query("SELECT * FROM RadioStation ORDER BY offset ASC")
+    @Query("SELECT * FROM RadioStation ORDER BY position ASC")
     PagingSource<Integer, RadioStation> pagingSource();
 
     @Query("DELETE FROM RadioStation WHERE isFavourite = 0")
@@ -38,8 +38,8 @@ public interface RadioDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<RadioStation> radioStations);
 
-    @Update
-    int updateRadioStation(RadioStation radioStation);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    int insert(RadioStation radioStation);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertOrReplace(RadioRemoteKey radioRemoteKey);
