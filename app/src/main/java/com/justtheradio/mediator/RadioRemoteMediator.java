@@ -30,7 +30,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 @OptIn(markerClass = ExperimentalPagingApi.class)
 public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation> {
 
-    private String country;
     private final DataStoreManagerSingleton datastore;
     private final BaseRadioBrowserRemoteDataSource remote;
     private final BaseRadioLocalDataSource local;
@@ -84,6 +83,7 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
         }
 
         try {
+            String country = local.getCountryPreference().blockingGet();
             // Get the raw radio stations page, determine
             // if we have reached the end of the results and the next offset:
             List<Station> raw = remote.getRadioStationsByCountry(country, offset, limit);
@@ -123,9 +123,4 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
                 || SecurityUtils.isValidUrl(station.getUrl(), false)) &&
                 SecurityUtils.isValidUrl(station.getFavicon(), true);
     }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
 }

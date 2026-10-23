@@ -34,6 +34,8 @@ public abstract class BaseRadioLocalDataSource {
 
     public abstract void getCountryPreferenceAsync();
 
+    public abstract Single<String> getCountryPreference();
+
     public abstract PagingSource<Integer, RadioStation> getRadioDAOPagingSource();
 
     public abstract void onDestroy();

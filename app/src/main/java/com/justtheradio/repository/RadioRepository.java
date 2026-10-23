@@ -47,7 +47,6 @@ public class RadioRepository implements RadioCallback {
     }
 
     public LiveData<PagingData<RadioStation>> getRadioStations(String country) {
-        radioRemoteMediator.setCountry(country);
         PagingConfig pagingConfig = new PagingConfig(
                 RADIO_BROWSER_PAGING_LIMIT,
                 RADIO_BROWSER_PAGING_LIMIT / 2, // Prefetch distance
