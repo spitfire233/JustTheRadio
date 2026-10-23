@@ -109,7 +109,8 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
             boolean isRefresh = loadType == LoadType.REFRESH;
             local.savePage(isRefresh, toInsert, newKey);
             if (isRefresh)
-                local.saveLastTimeFetched(System.currentTimeMillis());
+                local.saveLastTimeFetched(System.currentTimeMillis())
+                        .blockingSubscribe();
             return new MediatorResult.Success(isEndReached);
         } catch (Exception e) {
             return new MediatorResult.Error(e);
