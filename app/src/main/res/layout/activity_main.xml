@@ -17,8 +17,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph = "@navigation/nav_graph_main_menu">
-
     </androidx.fragment.app.FragmentContainerView>
+
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/player_view"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:controller_layout_id="@layout/player_layout"
+        app:layout_constraintBottom_toTopOf="@+id/menu_bottom_navigation_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:show_timeout="0"
+        android:background="@color/md_theme_secondaryContainer"
+        app:surface_type="none"
+        app:shutter_background_color="@android:color/transparent"
+        app:use_artwork="false"
+
+        >
+
+    </androidx.media3.ui.PlayerView>
+
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,6 +48,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/main_menu" />
+
+
+
     
     
     

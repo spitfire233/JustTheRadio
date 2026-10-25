@@ -19,4 +19,6 @@
     <string name="search_menu_item_string">Search</string>
     <string name="settings_menu_item_string">Settings</string>
     <string name="search_bar_hint_string">Search for radio stations</string>
+    <string name="radio_logo_player_view_description">Radio logo</string>
+    <string name="play_pause_button_content_description">Play/pause button</string>
 </resources>
