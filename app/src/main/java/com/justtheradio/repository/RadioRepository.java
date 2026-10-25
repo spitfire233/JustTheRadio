@@ -28,7 +28,6 @@ public class RadioRepository implements RadioCallback {
     private final BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource;
     private final BaseRadioLocalDataSource radioLocalDataSource;
     private final MutableLiveData<Result> countryCodesMutableLiveData;
-    private final MutableLiveData<Result> radiosMutableLiveData;
     private final MutableLiveData<Result> cacheRetrieveMutableLiveData;
     private final MutableLiveData<Result> cacheSavingMutableLiveData;
     private final RadioRemoteMediator radioRemoteMediator;
@@ -43,7 +42,6 @@ public class RadioRepository implements RadioCallback {
         this.radioLocalDataSource.setCallback(this);
 
         this.countryCodesMutableLiveData = new MutableLiveData<>();
-        this.radiosMutableLiveData = new MutableLiveData<>();
         this.cacheRetrieveMutableLiveData = new MutableLiveData<>();
         this.cacheSavingMutableLiveData = new MutableLiveData<>();
         this.radioRemoteMediator = radioRemoteMediator;
@@ -78,8 +76,6 @@ public class RadioRepository implements RadioCallback {
         );
         return PagingRx.getFlowable(pager);
     }
-
-
 
     public LiveData<Result> fetchCountryCodes() {
         radioBrowserRemoteDataSource.getCountryCodes();
