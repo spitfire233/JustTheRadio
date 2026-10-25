@@ -21,7 +21,7 @@ import de.sfuhrm.radiobrowser4j.Station;
 @Dao
 public interface RadioDAO {
 
-    @Query("SELECT * FROM RadioStation")
+    @Query("SELECT * FROM RadioStation ORDER BY id ASC")
     PagingSource<Integer, RadioStation> pagingSource();
 
     @Upsert

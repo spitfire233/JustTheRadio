@@ -7,12 +7,15 @@ import androidx.room.PrimaryKey;
 
 import java.util.UUID;
 
+import javax.annotation.processing.Generated;
+
 import de.sfuhrm.radiobrowser4j.Station;
 
 @Entity
 public class RadioStation {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    int ID;
     @NonNull
     private UUID UUID;
     private String faviconURL;
@@ -77,5 +80,14 @@ public class RadioStation {
 
     public void setURL(String URL) {
         this.URL = URL;
+    }
+
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }
