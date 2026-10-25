@@ -71,16 +71,16 @@ dependencies {
     implementation(libs.paging.runtime)
     implementation(libs.paging.rxjava3)
     implementation(libs.room.paging)
+    implementation(libs.okhttp)
     ksp(libs.room.compiler)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
-    testImplementation(libs.espresso.core.v370)
+    testImplementation(libs.espresso.core)
     testImplementation(libs.espresso.contrib)
     testImplementation(libs.core.testing)
     testImplementation(libs.mockito.core)
     add("mockitoAgent", libs.mockito.core.get().toString()) {
         isTransitive = false
     }
-    androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
 }
