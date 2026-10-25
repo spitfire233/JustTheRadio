@@ -17,7 +17,7 @@ import java.util.UUID;
 @Dao
 public interface RadioDAO {
 
-    @Query("SELECT * FROM RadioStation ORDER BY position ASC")
+    @Query("SELECT * FROM RadioStation")
     PagingSource<Integer, RadioStation> pagingSource();
 
     @Query("DELETE FROM RadioStation WHERE isFavourite = 0")
