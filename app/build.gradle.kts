@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.paging.rxjava3)
     implementation(libs.room.paging)
     implementation(libs.okhttp)
+    implementation("androidx.lifecycle:lifecycle-reactivestreams:2.11.0")
     ksp(libs.room.compiler)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)

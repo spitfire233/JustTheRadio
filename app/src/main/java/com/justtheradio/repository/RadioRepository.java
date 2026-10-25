@@ -9,15 +9,19 @@ import androidx.paging.Pager;
 import androidx.paging.PagingConfig;
 import androidx.paging.PagingData;
 import androidx.paging.PagingLiveData;
+import androidx.paging.rxjava3.PagingRx;
 
 import com.justtheradio.model.Result;
 import com.justtheradio.model.RadioStation;
+import com.justtheradio.paging.RadioSearchPagingSource;
 import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.BaseRadioLocalDataSource;
 import com.justtheradio.source.callback.RadioCallback;
-import com.justtheradio.mediator.RadioRemoteMediator;
+import com.justtheradio.paging.RadioRemoteMediator;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Flowable;
 
 public class RadioRepository implements RadioCallback {
 
@@ -30,7 +34,7 @@ public class RadioRepository implements RadioCallback {
     private final RadioRemoteMediator radioRemoteMediator;
 
     public RadioRepository(BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource,
-                            BaseRadioLocalDataSource radioLocalDataSource,
+                           BaseRadioLocalDataSource radioLocalDataSource,
                            RadioRemoteMediator radioRemoteMediator) {
         this.radioBrowserRemoteDataSource = radioBrowserRemoteDataSource;
         this.radioLocalDataSource = radioLocalDataSource;
@@ -42,11 +46,10 @@ public class RadioRepository implements RadioCallback {
         this.radiosMutableLiveData = new MutableLiveData<>();
         this.cacheRetrieveMutableLiveData = new MutableLiveData<>();
         this.cacheSavingMutableLiveData = new MutableLiveData<>();
-
         this.radioRemoteMediator = radioRemoteMediator;
     }
 
-    public LiveData<PagingData<RadioStation>> getRadioStations(String country) {
+    public Flowable<PagingData<RadioStation>> getRadioStations() {
         PagingConfig pagingConfig = new PagingConfig(
                 RADIO_BROWSER_PAGING_LIMIT,
                 RADIO_BROWSER_PAGING_LIMIT / 2, // Prefetch distance
@@ -59,8 +62,23 @@ public class RadioRepository implements RadioCallback {
                 radioRemoteMediator,
                 radioLocalDataSource::getRadioDAOPagingSource
         );
-        return PagingLiveData.getLiveData(pager);
+        return PagingRx.getFlowable(pager);
     }
+
+    public Flowable<PagingData<RadioStation>> searchStations(String query) {
+        PagingConfig pagingConfig = new PagingConfig(
+                RADIO_BROWSER_PAGING_LIMIT,
+                RADIO_BROWSER_PAGING_LIMIT / 2,
+                true,
+                RADIO_BROWSER_PAGING_LIMIT * 2
+        );
+        Pager<Integer, RadioStation> pager = new Pager<>(
+                pagingConfig,
+                () -> new RadioSearchPagingSource(radioBrowserRemoteDataSource, radioLocalDataSource, query)
+        );
+        return PagingRx.getFlowable(pager);
+    }
+
 
 
     public LiveData<Result> fetchCountryCodes() {

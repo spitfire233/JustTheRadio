@@ -11,7 +11,7 @@ import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.BaseRadioLocalDataSource;
 import com.justtheradio.source.RadioLocalDataSource;
-import com.justtheradio.mediator.RadioRemoteMediator;
+import com.justtheradio.paging.RadioRemoteMediator;
 import com.justtheradio.source.RadioBrowserRemoteDataSource;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 

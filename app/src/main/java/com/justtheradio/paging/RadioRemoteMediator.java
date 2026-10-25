@@ -1,4 +1,4 @@
-package com.justtheradio.mediator;
+package com.justtheradio.paging;
 
 import static com.justtheradio.utils.constant.Constants.LAST_TIME_UPDATED_KEY;
 import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_EXPIRED_THRESHOLD;
@@ -15,6 +15,7 @@ import com.justtheradio.model.RadioStation;
 import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.BaseRadioLocalDataSource;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
+import com.justtheradio.utils.radio.RadioStationMapper;
 import com.justtheradio.utils.security.SecurityUtils;
 
 import java.util.ArrayList;
@@ -98,13 +99,13 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
 
             List<RadioStation> toInsert = new ArrayList<>();
             for (int i = 0; i < raw.size(); i++) {
-                Station station = raw.get(i);
-                if (isValid( station))
-                    toInsert.add(
-                            new RadioStation(station, favouriteUUIDs.contains(station.getStationUUID()),
-                                    offset+ i)
-                    );
+                RadioStation radioStation = RadioStationMapper.toRadioStation(raw.get(i));
+                if (radioStation != null) {
+                    radioStation.setFavourite(favouriteUUIDs.contains(radioStation.getUUID()));
+                    toInsert.add(radioStation);
+                }
             }
+
             RadioRemoteKey newKey = new RadioRemoteKey(nextOffset, isEndReached);
             boolean isRefresh = loadType == LoadType.REFRESH;
             local.savePage(isRefresh, toInsert, newKey);
@@ -116,11 +117,5 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
             return new MediatorResult.Error(e);
         }
 
-    }
-
-    private boolean isValid(Station station) {
-        return (SecurityUtils.isValidUrl(station.getUrlResolved(), false)
-                || SecurityUtils.isValidUrl(station.getUrl(), false)) &&
-                SecurityUtils.isValidUrl(station.getFavicon(), true);
     }
 }

@@ -24,12 +24,10 @@ import de.sfuhrm.radiobrowser4j.Station;
 
 public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSource{
 
-    private RadioBrowser radioBrowser = null;
+    private volatile RadioBrowser radioBrowser = null;
     private final ExecutorService executorService;
     private final String agent;
     private final int timeout;
-    private Paging paging;
-
     private final Pattern ISO_PATTERN;
 
     public RadioBrowserRemoteDataSource(String agent, int timeout, int limit) {
@@ -37,7 +35,6 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
         this.agent = agent;
         this.timeout = timeout;
         ISO_PATTERN = Pattern.compile("^[A-Z]{2}$");
-        this.paging = Paging.at(0, limit);
     }
 
     @Override
@@ -77,7 +74,7 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
 
 
 
-    private RadioBrowser buildRadioBrowser(String agent, int timeout)
+    private synchronized RadioBrowser buildRadioBrowser(String agent, int timeout)
             throws IOException, EndpointNotFoundException {
         // Discover the endpoint
         Optional<String> endpoint = new EndpointDiscovery(agent).discover();
@@ -93,6 +90,7 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
                 .build()
         );
     }
+
 
 
 }

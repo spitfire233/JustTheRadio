@@ -8,17 +8,27 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
+import androidx.room.Upsert;
+
 import com.justtheradio.model.RadioRemoteKey;
 import com.justtheradio.model.RadioStation;
 
 import java.util.List;
 import java.util.UUID;
 
+import de.sfuhrm.radiobrowser4j.Station;
+
 @Dao
 public interface RadioDAO {
 
     @Query("SELECT * FROM RadioStation")
     PagingSource<Integer, RadioStation> pagingSource();
+
+    @Upsert
+    void upsertStations(List<RadioStation> stations);
+
+    @Upsert
+    void upsertStation(RadioStation station);
 
     @Query("DELETE FROM RadioStation WHERE isFavourite = 0")
     void deleteNonFavourites();
@@ -45,14 +55,24 @@ public interface RadioDAO {
     @Query("DELETE FROM RadioRemoteKey")
     void clearKey();
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertFavourite(RadioStation radioStation);
+
     @Transaction
     default void savePage(boolean refresh, List<RadioStation> page, RadioRemoteKey radioRemoteKey) {
         if (refresh) {
             deleteNonFavourites();
             clearKey();
         }
-        insertAll(page);
+        upsertStations(page);
         insertOrReplace(radioRemoteKey);
     }
+
+    @Transaction
+    default void saveFavourite(RadioStation radioStation) {
+        upsertStation(radioStation);
+        insertFavourite(radioStation);
+    }
+
 
 }
