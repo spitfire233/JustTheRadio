@@ -23,6 +23,7 @@ import okio.Okio;
 import okio.Source;
 
 public class ImageInterceptor implements Interceptor {
+    @NonNull
     @Override
     public Response intercept(Chain chain) throws IOException {
         HttpUrl url = chain.request().url();
@@ -32,7 +33,7 @@ public class ImageInterceptor implements Interceptor {
         Response response = chain.proceed(chain.request());
         ResponseBody responseBody = response.body();
 
-        if (responseBody == null || response.isRedirect() || !response.isSuccessful())
+        if (response.isRedirect() || !response.isSuccessful())
             return response;
 
         MediaType type = responseBody.contentType();
@@ -49,8 +50,9 @@ public class ImageInterceptor implements Interceptor {
 
         // Also cap the body when Content-Length is missing or lies
         ResponseBody limited = ResponseBody.create(
-                type, declared, Okio.buffer(new LimitedSource(responseBody.source()))
+                Okio.buffer(new LimitedSource(responseBody.source())), type, declared
         );
+
         return response.newBuilder().body(limited).build();
 
     }

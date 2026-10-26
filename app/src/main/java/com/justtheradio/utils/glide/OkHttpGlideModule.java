@@ -15,6 +15,7 @@ import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
 import com.justtheradio.utils.network.ImageInterceptor;
+import com.justtheradio.utils.network.SafeDns;
 import com.justtheradio.utils.security.SecurityUtils;
 
 import java.io.InputStream;
@@ -29,18 +30,12 @@ import okhttp3.OkHttpClient;
 @GlideModule
 public class OkHttpGlideModule extends AppGlideModule {
 
-    public static final Dns DNS  = hostname -> {
-        List<InetAddress> addresses = Dns.SYSTEM.lookup(hostname);
-        for (InetAddress address : addresses)
-            if (SecurityUtils.isPrivateAddress(address))
-                throw new UnknownHostException(BLOCKED_PRIVATE_ADDRESS_ERROR + hostname);
-        return addresses;
-    };
+
 
     @Override
     public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
         OkHttpClient client = new OkHttpClient().newBuilder()
-                .dns(DNS)
+                .dns(SafeDns.getDNS())
                 .addNetworkInterceptor(new ImageInterceptor())
                 .followRedirects(true)
                 .followSslRedirects(false)

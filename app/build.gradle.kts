@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.lifecycle.reactivestreams)
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.exoplayer.dash)
+    implementation(libs.media3.datasource.okhttp)
     implementation(libs.media3.ui)
     implementation(libs.media3.ui.compose.material3)
     ksp(libs.room.compiler)
