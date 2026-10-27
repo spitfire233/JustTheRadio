@@ -7,6 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.OptIn;
 import androidx.media3.common.AudioAttributes;
 import androidx.media3.common.C;
+import androidx.media3.common.ForwardingPlayer;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.Player;
 import androidx.media3.common.util.UnstableApi;
 import androidx.media3.datasource.DataSource;
 import androidx.media3.datasource.DefaultDataSource;
@@ -25,6 +28,7 @@ import okhttp3.OkHttpClient;
 
 public class PlayerSessionService extends MediaSessionService {
     private MediaSession session = null;
+    boolean pausedSinceLastPlay = false;
 
     @OptIn(markerClass = UnstableApi.class)
     @Override
@@ -49,7 +53,36 @@ public class PlayerSessionService extends MediaSessionService {
                 .setHandleAudioBecomingNoisy(true)
                 .setWakeMode(C.WAKE_MODE_NETWORK)
                 .build();
-        session = new MediaSession.Builder(this, exoPlayer).build();
+
+        exoPlayer.addListener(new Player.Listener() {
+            @Override
+            public void onPlayWhenReadyChanged(boolean playWhenReady, int reason) {
+                if (!playWhenReady)
+                    pausedSinceLastPlay = true;
+            }
+        });
+
+        Player livePlayer = new ForwardingPlayer(exoPlayer) {
+            @Override
+            public void play() {
+                MediaItem item = getCurrentMediaItem();
+                if (item != null && pausedSinceLastPlay) {
+                    pausedSinceLastPlay = false;
+                    setMediaItem(item, true);
+                    prepare();
+                }
+                super.play();
+            }
+
+            @Override
+            public void setPlayWhenReady(boolean playWhenReady) {
+                if (playWhenReady)
+                    play();
+                else
+                    super.setPlayWhenReady(false);
+            }
+        };
+        session = new MediaSession.Builder(this, livePlayer).build();
     }
 
     @Nullable

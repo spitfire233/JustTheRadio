@@ -23,6 +23,7 @@
         android:id="@+id/player_view"
         android:layout_width="0dp"
         android:layout_height="100dp"
+        android:visibility="gone"
         app:controller_layout_id="@layout/player_layout"
         app:layout_constraintBottom_toTopOf="@+id/menu_bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"

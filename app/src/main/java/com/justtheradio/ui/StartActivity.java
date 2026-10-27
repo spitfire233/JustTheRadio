@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.ui.intro.IntroActivity;
 import com.justtheradio.ui.main.MainActivity;
-import com.justtheradio.ui.viewmodel.RadioViewModel;
-import com.justtheradio.ui.viewmodel.RadioViewModelFactory;
+import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
+import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
 import com.justtheradio.utils.source.ServiceLocator;
 
 public class StartActivity extends AppCompatActivity {

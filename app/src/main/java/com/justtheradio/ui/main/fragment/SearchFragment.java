@@ -23,8 +23,10 @@ import com.justtheradio.adapter.RadioListPagingDataAdapter;
 import com.justtheradio.model.Result;
 import com.justtheradio.model.RadioStation;
 import com.justtheradio.repository.RadioRepository;
-import com.justtheradio.ui.viewmodel.RadioViewModel;
-import com.justtheradio.ui.viewmodel.RadioViewModelFactory;
+import com.justtheradio.ui.viewmodel.player.PlayerViewModel;
+import com.justtheradio.ui.viewmodel.player.PlayerViewModelFactory;
+import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
+import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
 import com.justtheradio.utils.source.ServiceLocator;
 
 import org.jspecify.annotations.NonNull;
@@ -38,6 +40,7 @@ import kotlin.Unit;
 public class SearchFragment extends Fragment {
 
     private RadioViewModel radioViewModel;
+    private PlayerViewModel playerViewModel;
 
     private CircularProgressIndicator circularProgressIndicator;
     private RecyclerView radiosRecyclerView;
@@ -59,6 +62,11 @@ public class SearchFragment extends Fragment {
                 requireActivity(),
                 new RadioViewModelFactory(radioRepository)
         ).get(RadioViewModel.class);
+
+        playerViewModel = new ViewModelProvider(
+                requireActivity(),
+                new PlayerViewModelFactory()
+        ).get(PlayerViewModel.class);
     }
 
     @Override
@@ -76,9 +84,7 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RadioListPagingDataAdapter adapter = new RadioListPagingDataAdapter(
-                stations -> {
-                    // TODO: Open player
-                }
+                station -> playerViewModel.setRadioStation(station)
         );
 
         radiosRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));

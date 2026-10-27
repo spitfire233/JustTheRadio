@@ -1,11 +1,10 @@
-package com.justtheradio.ui.viewmodel;
+package com.justtheradio.ui.viewmodel.radio;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelKt;
 import androidx.paging.PagingData;
-import androidx.paging.PagingLiveData;
 import androidx.paging.rxjava3.PagingRx;
 
 import com.justtheradio.model.RadioStation;

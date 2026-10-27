@@ -33,7 +33,7 @@ public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, 
         public RadioViewHolder(@NonNull View itemView) {
             super(itemView);
             radioNameTextView = itemView.findViewById(R.id.name_text_view);
-            faviconImageView = itemView.findViewById(R.id.image_view);
+            faviconImageView = itemView.findViewById(R.id.radio_image_view);
             circularProgressIndicator = itemView.findViewById(R.id.image_view_loading_indicator);
         }
 

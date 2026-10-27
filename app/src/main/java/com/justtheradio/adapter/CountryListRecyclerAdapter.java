@@ -39,7 +39,7 @@ public class CountryListRecyclerAdapter
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.name_text_view);
-            imageView = itemView.findViewById(R.id.image_view);
+            imageView = itemView.findViewById(R.id.radio_image_view);
             circularProgressIndicator = itemView.findViewById(R.id.image_view_loading_indicator);
         }
         public TextView getTextView() {

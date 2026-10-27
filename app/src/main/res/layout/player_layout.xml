@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp">
     <ImageView
-        android:id="@+id/image_view"
+        android:id="@+id/player_radio_image_view"
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:contentDescription="@string/radio_logo_player_view_description"
