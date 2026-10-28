@@ -35,17 +35,17 @@ public class CountryListRecyclerAdapter
     /**
      * Listener to handle user interaction with the elements of the list
      */
-    private final OnItemClickListener<String> onItemClickListener;
+    private final OnItemClickListener<String> clickListener;
     /**
      * Constructor for the CountryListRecyclerAdapter class
      * @param countries The list of countries to bind
-     * @param onItemClickListener A listener to handle user interaction with the elements of the
+     * @param clickListener A listener to handle user interaction with the elements of the
      *                            list
      */
     public CountryListRecyclerAdapter(List<String> countries,
-                                      OnItemClickListener<String> onItemClickListener) {
+                                      OnItemClickListener<String> clickListener) {
         this.countries = countries;
-        this.onItemClickListener = onItemClickListener;
+        this.clickListener = clickListener;
     }
     /**
      * {@link RecyclerView.ViewHolder} implementation that holds references to the UI components of
@@ -55,45 +55,45 @@ public class CountryListRecyclerAdapter
         /**
          * The text view that contains the country name
          */
-        private final TextView textView;
+        private final TextView countryCodeTextView;
         /**
          * The image view that contains the flag of the country
          */
-        private final ImageView imageView;
+        private final ImageView flagImageView;
         /**
          * A progress indicator to visualize a loading state for the country flag image view
          */
-        private final CircularProgressIndicator circularProgressIndicator;
+        private final CircularProgressIndicator imageProgressIndicator;
         /**
          * Constructor for the ViewHolder class
          * @param itemView The view for the individual list item
          */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.name_text_view);
-            imageView = itemView.findViewById(R.id.radio_image_view);
-            circularProgressIndicator = itemView.findViewById(R.id.image_view_loading_indicator);
+            countryCodeTextView = itemView.findViewById(R.id.name_text_view);
+            flagImageView = itemView.findViewById(R.id.radio_image_view);
+            imageProgressIndicator = itemView.findViewById(R.id.image_view_loading_indicator);
         }
         /**
          * Getter method for the country name {@link TextView}
          * @return The country name {@link TextView}
          */
-        public TextView getTextView() {
-            return textView;
+        public TextView getCountryCodeTextView() {
+            return countryCodeTextView;
         }
         /**
          * Getter method for the country flag {@link ImageView}
          * @return The country flag {@link ImageView}
          */
-        public ImageView getImageView() {
-            return imageView;
+        public ImageView getFlagImageView() {
+            return flagImageView;
         }
         /**
          * Getter method for the {@link CircularProgressIndicator} for the flag image view
          * @return The {@link CircularProgressIndicator}
          */
-        public CircularProgressIndicator getCircularProgressIndicator() {
-            return circularProgressIndicator;
+        public CircularProgressIndicator getImageProgressIndicator() {
+            return imageProgressIndicator;
         }
     }
     /**
@@ -118,32 +118,32 @@ public class CountryListRecyclerAdapter
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Context context = holder.imageView.getContext(); // Get the current context
+        Context context = holder.flagImageView.getContext(); // Get the current context
         String country = countries.get(position); // Get the country at this position in the list
         // Display the country code in the text view
-        holder.getTextView().setText(country);
+        holder.getCountryCodeTextView().setText(country);
 
         // Set a listener for when the list item is clicked/tapped
         holder.itemView.setOnClickListener(v -> {
-            if (onItemClickListener != null)
+            if (clickListener != null)
                 // Call the implemented onClickListener
-                onItemClickListener.onItemClick(country);
+                clickListener.onItemClick(country);
         });
 
         // Prepare an error drawable in case Glide fails to load a flag into the image view
         ColorDrawable errorDrawable = new ColorDrawable(
-                holder.getImageView().getContext().getColor(R.color.md_theme_errorContainer)
+                holder.getFlagImageView().getContext().getColor(R.color.md_theme_errorContainer)
         );
 
         // Load the country flag with Glide
         Glide.with(context)
                 .load(String.format(FLAG_PATH_FORMAT_STRING, country.toLowerCase()))
                 .error(errorDrawable)
-                .into(holder.getImageView());
+                .into(holder.getFlagImageView());
 
         // Hide the progress indicator and show the flag image view
-        holder.getCircularProgressIndicator().setVisibility(View.GONE);
-        holder.getImageView().setVisibility(View.VISIBLE);
+        holder.getImageProgressIndicator().setVisibility(View.GONE);
+        holder.getFlagImageView().setVisibility(View.VISIBLE);
     }
 
     /**
