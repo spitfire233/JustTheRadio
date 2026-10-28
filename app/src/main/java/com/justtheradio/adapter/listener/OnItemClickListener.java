@@ -1,7 +1,7 @@
 package com.justtheradio.adapter.listener;
 
 
-/***
+/**
  * Listener interface to handle user interaction with the items presented in the UI.
  * @param <T> The type of object contained in the UI element clicked by the user.
  */
