@@ -22,21 +22,20 @@
     <androidx.media3.ui.PlayerView
         android:id="@+id/player_view"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:visibility="gone"
+        app:hide_on_touch="false"
         app:controller_layout_id="@layout/player_layout"
         app:layout_constraintBottom_toTopOf="@+id/menu_bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:show_timeout="0"
-        android:background="@color/md_theme_secondaryContainer"
         app:surface_type="none"
         app:shutter_background_color="@android:color/transparent"
-        app:use_artwork="false"
-
-        >
-
-    </androidx.media3.ui.PlayerView>
+        app:use_artwork="false" />
 
 
 

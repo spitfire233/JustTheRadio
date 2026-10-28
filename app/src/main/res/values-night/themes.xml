@@ -47,4 +47,7 @@
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
     </style>
+    <style name="Theme.JustTheRadio.Player.Logo." parent="">
+        <item name="cornerSize">12dp</item>
+    </style>
 </resources>

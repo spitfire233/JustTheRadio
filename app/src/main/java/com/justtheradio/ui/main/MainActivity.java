@@ -4,15 +4,18 @@ import android.content.ComponentName;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.common.MediaItem;
-import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.common.util.NonNullApi;
+import androidx.media3.common.util.UnstableApi;
 import androidx.media3.session.MediaController;
 import androidx.media3.session.SessionToken;
 import androidx.media3.ui.PlayerView;
@@ -33,8 +36,9 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MediaController controller;
     PlayerViewModel playerViewModel;
+    private ListenableFuture<MediaController> future;
+    private PlayerView playerView;
 
 
 
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         ).get(PlayerViewModel.class);
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     @Override
     protected void onStart() {
         super.onStart();
@@ -74,33 +79,44 @@ public class MainActivity extends AppCompatActivity {
                 new ComponentName(getApplicationContext(), PlayerSessionService.class)
         );
 
-        PlayerView playerView = findViewById(R.id.player_view);
-
-        ListenableFuture<MediaController> future = new MediaController.Builder(
+        future = new MediaController.Builder(
                 getApplicationContext(), sessionToken
         ).buildAsync();
 
         future.addListener(() -> {
             try {
-                controller = future.get();
+                MediaController controller = future.get();
+                playerView = findViewById(R.id.player_view);
                 playerView.setPlayer(controller);
+                playerViewModel.getSelectedRadioStation().observe(this, station -> {
+                    TextView textView = findViewById(R.id.player_station_name_text_view);
+                    textView.setText(station.getName());
+                    textView.setSelected(true);
+                    ImageView imageView = findViewById(R.id.player_radio_image_view);
+                    Glide.with(this)
+                            .load(station.getFaviconURL())
+                            .placeholder(R.drawable.justtheradio_logo)
+                            .into(imageView);
+                    playerView.setVisibility(View.VISIBLE);
+                    playerView.showController();
+                    MediaItem item = MediaItem.fromUri(station.getURL());
+                    controller.setMediaItem(item);
+                    controller.prepare();
+                    controller.play();
+                });
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }, MoreExecutors.directExecutor());
-
-        playerViewModel.getSelectedRadioStation().observe(this, station -> {
-            ImageView imageView = findViewById(R.id.player_radio_image_view);
-            Glide.with(this)
-                    .load(station.getFaviconURL())
-                    .placeholder(R.drawable.justtheradio_logo)
-                    .into(imageView);
-            playerView.setVisibility(View.VISIBLE);
-            MediaItem item = MediaItem.fromUri(station.getURL());
-            controller.setMediaItem(item);
-            controller.prepare();
-            controller.play();
-        });
     }
 
+    @Override
+    protected void onStop() {
+        if (future != null) {
+            MediaController.releaseFuture(future);
+            future = null;
+        }
+        playerView.setPlayer(null);
+        super.onStop();
+    }
 }
