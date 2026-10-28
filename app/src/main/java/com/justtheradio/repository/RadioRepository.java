@@ -162,7 +162,7 @@ public class RadioRepository implements RadioCallback {
     }
 
     @Override
-    public void onFailureModifyingStationSavedStATE(Exception e) {
+    public void onFailureModifyingStationSavedState(Exception e) {
         Result.Failure result = new Result.Failure(e.getMessage());
         savingMutableLiveData.postValue(result);
     }

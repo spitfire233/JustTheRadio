@@ -12,5 +12,5 @@ public interface RadioCallback {
     void onFailureFetchingCountryCodes(Exception exception);
     void onFailureSavingCountryPreference(Exception exception);
     void onFailureGettingCountryPreference(Exception exception);
-    void onFailureModifyingStationSavedStATE(Exception e);
+    void onFailureModifyingStationSavedState(Exception e);
 }

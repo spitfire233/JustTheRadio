@@ -110,7 +110,7 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
                 radioDAO.insertFavourite(favouriteStation);
                 radioCallback.onRadioStationModifiedFavouriteStateSuccess(favouriteStation);
             } catch (Exception e) {
-                radioCallback.onFailureModifyingStationSavedStATE(e);
+                radioCallback.onFailureModifyingStationSavedState(e);
             }
         });
     }
@@ -122,7 +122,7 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
                 radioDAO.deleteFavourite(station.getUUID());
                 radioCallback.onRadioStationModifiedFavouriteStateSuccess(station);
             } catch (Exception e) {
-                radioCallback.onFailureModifyingStationSavedStATE(e);
+                radioCallback.onFailureModifyingStationSavedState(e);
             }
         });
     }
