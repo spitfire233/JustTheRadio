@@ -32,23 +32,16 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     private final RadioDAO radioDAO;
     private final DataStoreManagerSingleton dataStoreManager;
     private final CompositeDisposable disposables;
-    private int offset;
 
     public RadioLocalDataSource(Application application, RadioRoomDatabase radioRoomDatabase) {
         this.radioDAO = radioRoomDatabase.radioDAO();
         dataStoreManager = DataStoreManagerSingleton.getInstance(application);
         disposables = new CompositeDisposable();
-        offset = 0;
     }
 
     @Override
     public Single<Preferences> saveLastTimeFetched(long lastTimeUpdated) {
         return dataStoreManager.saveStringResource(LAST_TIME_UPDATED_KEY, Long.toString(lastTimeUpdated));
-    }
-
-    @Override
-    public Single<String> getLastTimeFetched() {
-        return dataStoreManager.getStringResource(LAST_TIME_UPDATED_KEY);
     }
 
     @Override

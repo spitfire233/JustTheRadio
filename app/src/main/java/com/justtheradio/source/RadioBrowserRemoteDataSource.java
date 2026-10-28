@@ -72,8 +72,6 @@ public class RadioBrowserRemoteDataSource extends BaseRadioBrowserRemoteDataSour
         return radioBrowser.listStationsWithAdvancedSearch(Paging.at(offset, limit), searchParams);
     }
 
-
-
     private synchronized RadioBrowser buildRadioBrowser(String agent, int timeout)
             throws IOException, EndpointNotFoundException {
         // Discover the endpoint

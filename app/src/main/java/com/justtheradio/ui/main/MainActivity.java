@@ -107,26 +107,23 @@ public class MainActivity extends AppCompatActivity {
         radioViewModel.getFavouriteUUIDs().observe(this, f -> refreshHeart.run());
 
         radioViewModel.getSavingResultLiveData().observe(this, result -> {
-            String message;
             if (result.isSuccess()) {
                 Result.Success<BaseRadioStation> success = ((Result.Success) result);
                 BaseRadioStation station = success.getData();
-                if (station instanceof FavouriteStation) {
-                    message = String.format("Successfully saved %s as favourite", station.getName());
-                } else {
-                    message = String.format("Successfully removed %s from favourites", station.getName());
-                }
+                String message = station instanceof FavouriteStation
+                        ? String.format(getResources().getString(R.string.successfully_saved_radio_station), station.getName())
+                        : String.format(getResources().getString(R.string.successfully_removed_radio_station), station.getName());
                 Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
                 toast.show();
             } else {
-                Result.Failure failure = ((Result.Failure) result);
-                message = String.format("Successfully saved %s as favourite", failure.getMessage());
+                String message =
+                        getResources().getString(R.string.error_while_modifying_station_saved_state)
+                        + ":" +((Result.Failure) result).getMessage();
                 Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
     }
-
     @OptIn(markerClass = UnstableApi.class)
     @Override
     protected void onStart() {

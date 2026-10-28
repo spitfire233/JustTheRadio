@@ -25,8 +25,6 @@ public abstract class BaseRadioLocalDataSource {
 
     public abstract Single<Preferences> saveLastTimeFetched(long lastTimeUpdated);
 
-    public abstract Single<String> getLastTimeFetched();
-
     public abstract RadioRemoteKey getRadioRemoteKey();
 
     public abstract void savePage(boolean isRefresh, List<RadioStation> stations, RadioRemoteKey key);

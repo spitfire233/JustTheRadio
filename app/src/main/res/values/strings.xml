@@ -21,4 +21,7 @@
     <string name="search_bar_hint_string">Search for radio stations</string>
     <string name="radio_logo_player_view_description">Radio logo</string>
     <string name="play_pause_button_content_description">Play/pause button</string>
+    <string name="successfully_saved_radio_station">Successfully saved %s as favourite</string>
+    <string name="successfully_removed_radio_station">Successfully removed %s from favourites</string>
+    <string name="error_while_modifying_station_saved_state">There was an error while performing this operation!</string>
 </resources>
