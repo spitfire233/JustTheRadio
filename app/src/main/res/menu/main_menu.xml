@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/homeFragment"
-        android:title="@string/home_menu_item_string"
-        android:icon="@drawable/home_selector" />
+        android:title="@string/favourite_menu_item_string"
+        android:icon="@drawable/favourite_selector" />
     <item
         android:id="@+id/searchFragment"
         android:title="@string/search_menu_item_string"

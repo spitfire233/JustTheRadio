@@ -9,6 +9,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Upsert;
 
+import com.justtheradio.model.radio.BaseRadioStation;
 import com.justtheradio.model.radio.FavouriteStation;
 import com.justtheradio.model.radio.RadioRemoteKey;
 import com.justtheradio.model.radio.RadioStation;

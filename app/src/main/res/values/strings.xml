@@ -15,7 +15,7 @@
     <string name="error_material_dialogue_close_application_button_text">Close application</string>
     <string name="error_saving_country_preference_title">There was an error while saving the country preference</string>
     <string name="error_saving_country_preference_message">Try freeing up some space or contacting the maintainers of the project</string>
-    <string name="home_menu_item_string">Home</string>
+    <string name="favourite_menu_item_string">Favourites</string>
     <string name="search_menu_item_string">Search</string>
     <string name="settings_menu_item_string">Settings</string>
     <string name="search_bar_hint_string">Search for radio stations</string>
@@ -24,4 +24,5 @@
     <string name="successfully_saved_radio_station">Successfully saved %s as favourite</string>
     <string name="successfully_removed_radio_station">Successfully removed %s from favourites</string>
     <string name="error_while_modifying_station_saved_state">There was an error while performing this operation!</string>
+    <string name="no_favourites_yet_text_string">No favourites yet</string>
 </resources>
