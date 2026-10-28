@@ -8,11 +8,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.Pager;
 import androidx.paging.PagingConfig;
 import androidx.paging.PagingData;
-import androidx.paging.PagingLiveData;
 import androidx.paging.rxjava3.PagingRx;
 
 import com.justtheradio.model.Result;
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.BaseRadioStation;
+import com.justtheradio.model.radio.FavouriteStation;
+import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.paging.RadioSearchPagingSource;
 import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.BaseRadioLocalDataSource;
@@ -20,6 +21,8 @@ import com.justtheradio.source.callback.RadioCallback;
 import com.justtheradio.paging.RadioRemoteMediator;
 
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import io.reactivex.rxjava3.core.Flowable;
 
@@ -30,6 +33,7 @@ public class RadioRepository implements RadioCallback {
     private final MutableLiveData<Result> countryCodesMutableLiveData;
     private final MutableLiveData<Result> cacheRetrieveMutableLiveData;
     private final MutableLiveData<Result> cacheSavingMutableLiveData;
+    private final MutableLiveData<Result> savingMutableLiveData;
     private final RadioRemoteMediator radioRemoteMediator;
 
     public RadioRepository(BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource,
@@ -44,6 +48,8 @@ public class RadioRepository implements RadioCallback {
         this.countryCodesMutableLiveData = new MutableLiveData<>();
         this.cacheRetrieveMutableLiveData = new MutableLiveData<>();
         this.cacheSavingMutableLiveData = new MutableLiveData<>();
+        this.savingMutableLiveData = new MutableLiveData<>();
+
         this.radioRemoteMediator = radioRemoteMediator;
     }
 
@@ -77,6 +83,27 @@ public class RadioRepository implements RadioCallback {
         return PagingRx.getFlowable(pager);
     }
 
+    public Flowable<Set<UUID>> observeFavouriteUUIDs() {
+        return radioLocalDataSource.observeFavouriteUUIDs();
+    }
+
+    // for the future favourites screen
+    public Flowable<List<FavouriteStation>> observeFavourites() {
+        return radioLocalDataSource.observeFavourites();
+    }
+
+    public void addFavourite(BaseRadioStation station) {
+        radioLocalDataSource.addFavourite(station);
+    }
+
+    public void removeFavourite(BaseRadioStation station) {
+        radioLocalDataSource.removeFavourite(station);
+    }
+
+    public LiveData<Result> getSavingResultLiveData() {
+        return savingMutableLiveData;
+    }
+
     public LiveData<Result> fetchCountryCodes() {
         radioBrowserRemoteDataSource.getCountryCodes();
         return countryCodesMutableLiveData;
@@ -91,7 +118,6 @@ public class RadioRepository implements RadioCallback {
         radioLocalDataSource.getCountryPreferenceAsync();
         return cacheRetrieveMutableLiveData;
     }
-
 
     @Override
     public void onCountryCodesFetchSuccess(List<String> countryCodes) {
@@ -118,6 +144,12 @@ public class RadioRepository implements RadioCallback {
     }
 
     @Override
+    public void onRadioStationModifiedFavouriteStateSuccess(BaseRadioStation station) {
+        Result.Success<BaseRadioStation> result = new Result.Success<>(station);
+        savingMutableLiveData.postValue(result);
+    }
+
+    @Override
     public void onFailureSavingCountryPreference(Exception exception) {
         Result.Failure result = new Result.Failure(exception.getMessage());
         cacheSavingMutableLiveData.postValue(result);
@@ -127,5 +159,11 @@ public class RadioRepository implements RadioCallback {
     public void onFailureGettingCountryPreference(Exception exception) {
         Result.Failure result = new Result.Failure(exception.getMessage());
         cacheRetrieveMutableLiveData.postValue(result);
+    }
+
+    @Override
+    public void onFailureModifyingStationSavedStATE(Exception e) {
+        Result.Failure result = new Result.Failure(e.getMessage());
+        savingMutableLiveData.postValue(result);
     }
 }

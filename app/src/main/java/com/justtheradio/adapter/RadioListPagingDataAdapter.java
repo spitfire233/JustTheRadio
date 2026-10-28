@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.justtheradio.R;
 import com.justtheradio.adapter.listener.OnItemClickListener;
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.RadioStation;
 
 public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, RadioListPagingDataAdapter.RadioViewHolder> {
 
@@ -58,8 +58,7 @@ public class RadioListPagingDataAdapter extends PagingDataAdapter<RadioStation, 
 
         @Override
         public boolean areContentsTheSame(@NonNull RadioStation oldItem, @NonNull RadioStation newItem) {
-            return oldItem.isFavourite() == newItem.isFavourite() &&
-                    oldItem.getName().equals(newItem.getName()) &&
+            return oldItem.getName().equals(newItem.getName()) &&
                     oldItem.getURL().equals(newItem.getURL()) &&
                     oldItem.getFaviconURL().equals(newItem.getFaviconURL());
         }

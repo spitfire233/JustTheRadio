@@ -3,12 +3,17 @@ package com.justtheradio.source;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.paging.PagingSource;
 
-import com.justtheradio.model.RadioRemoteKey;
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.BaseRadioStation;
+import com.justtheradio.model.radio.FavouriteStation;
+import com.justtheradio.model.radio.RadioRemoteKey;
+import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.source.callback.RadioCallback;
 
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 public abstract class BaseRadioLocalDataSource {
@@ -26,10 +31,6 @@ public abstract class BaseRadioLocalDataSource {
 
     public abstract void savePage(boolean isRefresh, List<RadioStation> stations, RadioRemoteKey key);
 
-    public abstract List<RadioStation> getFavouriteStations();
-
-    public abstract void getFavouriteStationsAsync();
-
     public abstract void saveCountryPreference(String country);
 
     public abstract void getCountryPreferenceAsync();
@@ -37,6 +38,14 @@ public abstract class BaseRadioLocalDataSource {
     public abstract Single<String> getCountryPreference();
 
     public abstract PagingSource<Integer, RadioStation> getRadioDAOPagingSource();
+
+    public abstract Flowable<Set<UUID>> observeFavouriteUUIDs();
+
+    public abstract Flowable<List<FavouriteStation>> observeFavourites();
+
+    public abstract void addFavourite(BaseRadioStation station);
+
+    public abstract void removeFavourite(BaseRadioStation station);
 
     public abstract void onDestroy();
 }

@@ -5,18 +5,18 @@ import static com.justtheradio.utils.constant.Constants.ROOM_DATABASE_VERSION;
 
 import android.content.Context;
 
-import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.justtheradio.model.RadioRemoteKey;
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.FavouriteStation;
+import com.justtheradio.model.radio.RadioRemoteKey;
+import com.justtheradio.model.radio.RadioStation;
 
 import java.util.concurrent.ExecutorService;
 
 
-@Database(entities = {RadioStation.class, RadioRemoteKey.class},
+@Database(entities = {RadioStation.class, RadioRemoteKey.class, FavouriteStation.class},
         version = ROOM_DATABASE_VERSION, exportSchema = false)
 public abstract class RadioRoomDatabase extends RoomDatabase {
 

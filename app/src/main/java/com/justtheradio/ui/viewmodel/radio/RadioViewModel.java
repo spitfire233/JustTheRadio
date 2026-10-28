@@ -7,9 +7,13 @@ import androidx.lifecycle.ViewModelKt;
 import androidx.paging.PagingData;
 import androidx.paging.rxjava3.PagingRx;
 
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.BaseRadioStation;
+import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.model.Result;
 import com.justtheradio.repository.RadioRepository;
+
+import java.util.Set;
+import java.util.UUID;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.processors.BehaviorProcessor;
@@ -19,6 +23,7 @@ public class RadioViewModel extends ViewModel {
     private final RadioRepository radioRepository;
     private final BehaviorProcessor<String> query = BehaviorProcessor.createDefault("");
     private final LiveData<PagingData<RadioStation>> radioStations;
+    private final LiveData<Set<UUID>> favouriteUUIDs;
 
     public RadioViewModel(RadioRepository radioRepository) {
         this.radioRepository = radioRepository;
@@ -29,6 +34,7 @@ public class RadioViewModel extends ViewModel {
                           : radioRepository.searchStations(q));
         radioStations = LiveDataReactiveStreams.fromPublisher(
                 PagingRx.cachedIn(flow, ViewModelKt.getViewModelScope(this)));
+        favouriteUUIDs = LiveDataReactiveStreams.fromPublisher(radioRepository.observeFavouriteUUIDs());
     }
 
     public void setQuery(String query) {
@@ -45,6 +51,19 @@ public class RadioViewModel extends ViewModel {
 
     public LiveData<Result> getCountryPreference() {
         return this.radioRepository.getCountryPreference();
+    }
+
+    public LiveData<Set<UUID>> getFavouriteUUIDs() {
+        return favouriteUUIDs;
+    }
+
+    public void setFavourite(BaseRadioStation station, boolean favourite) {
+        if (favourite) radioRepository.addFavourite(station);
+        else radioRepository.removeFavourite(station);
+    }
+
+    public LiveData<Result> getSavingResultLiveData() {
+        return radioRepository.getSavingResultLiveData();
     }
 
 

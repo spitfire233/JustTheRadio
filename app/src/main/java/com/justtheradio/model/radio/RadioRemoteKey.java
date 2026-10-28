@@ -1,6 +1,7 @@
-package com.justtheradio.model;
+package com.justtheradio.model.radio;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -10,6 +11,7 @@ public class RadioRemoteKey {
 
     }
 
+    @Ignore
     public RadioRemoteKey(int nextOffset, boolean endReached) {
         setNextOffset(nextOffset);
         setEndReached(endReached);

@@ -1,13 +1,11 @@
 package com.justtheradio.paging;
 
-import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.paging.PagingState;
 import androidx.paging.rxjava3.RxPagingSource;
 
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.BaseRadioLocalDataSource;
 import com.justtheradio.utils.radio.RadioStationMapper;
@@ -52,17 +50,10 @@ public class RadioSearchPagingSource extends RxPagingSource<Integer, RadioStatio
 
         List<RadioStation> page = new ArrayList<>();
 
-        Set<UUID> favouriteUUIDS = local.getFavouriteStations()
-                .stream()
-                .map(RadioStation::getUUID)
-                .collect(Collectors.toSet());
-
         for (Station station : raw) {
-            RadioStation mapped = RadioStationMapper.toRadioStation(station);
-            if (mapped != null) {
-                mapped.setFavourite(favouriteUUIDS.contains(mapped.getUUID()));
+            RadioStation mapped = RadioStationMapper.fromStationToRadioStationModel(station);
+            if (mapped != null)
                 page.add(mapped);
-            }
         }
         Integer nextKey = raw.size() < limit ? null : offset + raw.size();
         return new LoadResult.Page<>(page, null, nextKey);

@@ -10,13 +10,12 @@ import androidx.paging.LoadType;
 import androidx.paging.PagingState;
 import androidx.paging.rxjava3.RxRemoteMediator;
 
-import com.justtheradio.model.RadioRemoteKey;
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.RadioRemoteKey;
+import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.BaseRadioLocalDataSource;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 import com.justtheradio.utils.radio.RadioStationMapper;
-import com.justtheradio.utils.security.SecurityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +46,16 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
     @NonNull
     @Override
     public Single<InitializeAction> initializeSingle() {
-        return datastore.getStringResource(LAST_TIME_UPDATED_KEY)
-                .map(lastTimeUpdated -> System.currentTimeMillis() - Long.parseLong(lastTimeUpdated) >= RADIO_BROWSER_EXPIRED_THRESHOLD
-                        ? InitializeAction.LAUNCH_INITIAL_REFRESH
-                        : InitializeAction.SKIP_INITIAL_REFRESH)
-                .onErrorReturnItem(InitializeAction.LAUNCH_INITIAL_REFRESH);
+        return Single.fromCallable(() -> local.getRadioRemoteKey() == null)
+                .subscribeOn(Schedulers.io())
+                .flatMap(noKey -> {
+                    if (noKey) return Single.just(InitializeAction.LAUNCH_INITIAL_REFRESH);
+                    return datastore.getStringResource(LAST_TIME_UPDATED_KEY)
+                            .map(last -> System.currentTimeMillis() - Long.parseLong(last)
+                                    >= RADIO_BROWSER_EXPIRED_THRESHOLD
+                                    ? InitializeAction.LAUNCH_INITIAL_REFRESH
+                                    : InitializeAction.SKIP_INITIAL_REFRESH);
+                });
     }
 
     @NonNull
@@ -91,21 +95,12 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
             boolean isEndReached = raw.size() < limit;
             int nextOffset = offset + raw.size();
 
-            // Construct radio list to insert in local cache
-            Set<UUID> favouriteUUIDs = local.getFavouriteStations()
-                    .stream()
-                    .map(RadioStation::getUUID)
-                    .collect(Collectors.toSet());
-
             List<RadioStation> toInsert = new ArrayList<>();
-            for (int i = 0; i < raw.size(); i++) {
-                RadioStation radioStation = RadioStationMapper.toRadioStation(raw.get(i));
-                if (radioStation != null) {
-                    radioStation.setFavourite(favouriteUUIDs.contains(radioStation.getUUID()));
-                    toInsert.add(radioStation);
-                }
+            for (Station station : raw) {
+                RadioStation mapped = RadioStationMapper.fromStationToRadioStationModel(station);
+                if (mapped != null)
+                    toInsert.add(mapped);
             }
-
             RadioRemoteKey newKey = new RadioRemoteKey(nextOffset, isEndReached);
             boolean isRefresh = loadType == LoadType.REFRESH;
             local.savePage(isRefresh, toInsert, newKey);

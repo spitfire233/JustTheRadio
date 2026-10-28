@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.OptIn;
@@ -25,21 +26,31 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.justtheradio.R;
+import com.justtheradio.model.Result;
+import com.justtheradio.model.radio.BaseRadioStation;
+import com.justtheradio.model.radio.FavouriteStation;
 import com.justtheradio.player.PlayerSessionService;
+import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.ui.viewmodel.player.PlayerViewModel;
 import com.justtheradio.ui.viewmodel.player.PlayerViewModelFactory;
+import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
+import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
+import com.justtheradio.utils.source.ServiceLocator;
 
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    PlayerViewModel playerViewModel;
+    private PlayerViewModel playerViewModel;
+    private RadioViewModel radioViewModel;
     private ListenableFuture<MediaController> future;
     private PlayerView playerView;
-
 
 
     @Override
@@ -68,6 +79,52 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 new PlayerViewModelFactory()
         ).get(PlayerViewModel.class);
+
+        RadioRepository radioRepository = ServiceLocator.getInstance().getRadioRepository(getApplication());
+
+        radioViewModel = new ViewModelProvider(
+                this,
+                new RadioViewModelFactory(radioRepository)
+        ).get(RadioViewModel.class);
+
+        playerView = findViewById(R.id.player_view);
+        MaterialCheckBox favouriteCheckBox = playerView.findViewById(R.id.favourite_button);
+
+        favouriteCheckBox.setOnClickListener(v -> {
+            BaseRadioStation station = playerViewModel.getSelectedRadioStation().getValue();
+            if (station != null)
+                radioViewModel.setFavourite(station, favouriteCheckBox.isChecked());
+        });
+
+        Runnable refreshHeart = () -> {
+            BaseRadioStation station = playerViewModel.getSelectedRadioStation().getValue();
+            Set<UUID> favourites = radioViewModel.getFavouriteUUIDs().getValue();
+            if (station != null && favourites != null)
+                favouriteCheckBox.setChecked(favourites.contains(station.getUUID()));
+        };
+
+        playerViewModel.getSelectedRadioStation().observe(this, s -> refreshHeart.run());
+        radioViewModel.getFavouriteUUIDs().observe(this, f -> refreshHeart.run());
+
+        radioViewModel.getSavingResultLiveData().observe(this, result -> {
+            String message;
+            if (result.isSuccess()) {
+                Result.Success<BaseRadioStation> success = ((Result.Success) result);
+                BaseRadioStation station = success.getData();
+                if (station instanceof FavouriteStation) {
+                    message = String.format("Successfully saved %s as favourite", station.getName());
+                } else {
+                    message = String.format("Successfully removed %s from favourites", station.getName());
+                }
+                Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                Result.Failure failure = ((Result.Failure) result);
+                message = String.format("Successfully saved %s as favourite", failure.getMessage());
+                Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
     @OptIn(markerClass = UnstableApi.class)
@@ -86,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         future.addListener(() -> {
             try {
                 MediaController controller = future.get();
-                playerView = findViewById(R.id.player_view);
                 playerView.setPlayer(controller);
                 playerViewModel.getSelectedRadioStation().observe(this, station -> {
                     TextView textView = findViewById(R.id.player_station_name_text_view);

@@ -11,12 +11,18 @@ import androidx.paging.PagingSource;
 
 import com.justtheradio.database.RadioDAO;
 import com.justtheradio.database.RadioRoomDatabase;
-import com.justtheradio.model.RadioRemoteKey;
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.BaseRadioStation;
+import com.justtheradio.model.radio.FavouriteStation;
+import com.justtheradio.model.radio.RadioRemoteKey;
+import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -55,15 +61,6 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
         radioDAO.savePage(isRefresh, stations, key);
     }
 
-    @Override
-    public List<RadioStation> getFavouriteStations() {
-        return radioDAO.getFavouriteStations();
-    }
-
-    @Override
-    public void getFavouriteStationsAsync() {
-
-    }
 
     @Override
     public void saveCountryPreference(String country) {
@@ -95,7 +92,40 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
         return radioDAO.pagingSource();
     }
 
+    @Override
+    public Flowable<Set<UUID>> observeFavouriteUUIDs() {
+        return radioDAO.observeFavouritesUUIDs().map(HashSet::new);
+    }
 
+    @Override
+    public Flowable<List<FavouriteStation>> observeFavourites() {
+        return radioDAO.observeFavourites();
+    }
+
+    @Override
+    public void addFavourite(BaseRadioStation station) {
+        RadioRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
+            try {
+                FavouriteStation favouriteStation = new FavouriteStation(station, System.currentTimeMillis());
+                radioDAO.insertFavourite(favouriteStation);
+                radioCallback.onRadioStationModifiedFavouriteStateSuccess(favouriteStation);
+            } catch (Exception e) {
+                radioCallback.onFailureModifyingStationSavedStATE(e);
+            }
+        });
+    }
+
+    @Override
+    public void removeFavourite(BaseRadioStation station) {
+        RadioRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
+            try {
+                radioDAO.deleteFavourite(station.getUUID());
+                radioCallback.onRadioStationModifiedFavouriteStateSuccess(station);
+            } catch (Exception e) {
+                radioCallback.onFailureModifyingStationSavedStATE(e);
+            }
+        });
+    }
 
     @Override
     public void onDestroy() {

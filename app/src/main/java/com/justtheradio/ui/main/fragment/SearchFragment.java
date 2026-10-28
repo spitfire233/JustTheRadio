@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.justtheradio.R;
 import com.justtheradio.adapter.RadioListPagingDataAdapter;
 import com.justtheradio.model.Result;
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.ui.viewmodel.player.PlayerViewModel;
 import com.justtheradio.ui.viewmodel.player.PlayerViewModelFactory;

@@ -2,7 +2,7 @@ package com.justtheradio.utils.radio;
 
 import androidx.annotation.Nullable;
 
-import com.justtheradio.model.RadioStation;
+import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.utils.security.SecurityUtils;
 
 import de.sfuhrm.radiobrowser4j.Station;
@@ -10,7 +10,7 @@ import de.sfuhrm.radiobrowser4j.Station;
 public final class RadioStationMapper {
 
     @Nullable
-    public static RadioStation toRadioStation(Station raw) {
+    public static RadioStation fromStationToRadioStationModel(Station raw) {
         RadioStation radioStation = null;
         String resolved = raw.getUrlResolved();
         String unresolved = raw.getUrl();
@@ -25,5 +25,4 @@ public final class RadioStationMapper {
         }
         return radioStation;
     }
-
 }

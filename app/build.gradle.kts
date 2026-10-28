@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.paging.runtime)
     implementation(libs.paging.rxjava3)
     implementation(libs.room.paging)
+    implementation("androidx.room:room-rxjava3:2.8.5")
     implementation(libs.okhttp)
     implementation(libs.lifecycle.reactivestreams)
     implementation(libs.media3.exoplayer)
