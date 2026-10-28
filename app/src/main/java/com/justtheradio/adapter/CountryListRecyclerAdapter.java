@@ -65,7 +65,7 @@ public class CountryListRecyclerAdapter
          */
         private final CircularProgressIndicator imageProgressIndicator;
         /**
-         * Constructor for the ViewHolder class
+         * Constructor for the {@link ViewHolder} class
          * @param itemView The view for the individual list item
          */
         public ViewHolder(@NonNull View itemView) {
