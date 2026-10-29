@@ -1,5 +1,5 @@
 [versions]
-agp = "9.4.1"
+agp = "9.5.0"
 commonsValidator = "1.11.0"
 coreCommon = "2.2.0"
 coreSplashscreen = "1.2.0"
@@ -25,7 +25,7 @@ pagingRxjava3 = "3.5.3"
 radiobrowser4j = "3.4.0"
 recyclerview = "1.4.0"
 room = "2.8.5"
-ksp = "2.3.4"
+ksp = "2.3.6"
 
 [libraries]
 commons-validator = { module = "commons-validator:commons-validator", version.ref = "commonsValidator" }
@@ -69,6 +69,7 @@ glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", versi
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
+room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "room" }
 
 
 [plugins]
