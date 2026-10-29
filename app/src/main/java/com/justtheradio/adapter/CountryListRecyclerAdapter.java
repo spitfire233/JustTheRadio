@@ -37,7 +37,7 @@ public class CountryListRecyclerAdapter
      */
     private final OnItemClickListener<String> clickListener;
     /**
-     * Constructor for the CountryListRecyclerAdapter class
+     * Constructor for the {@link CountryListRecyclerAdapter} class
      * @param countries The list of countries to bind
      * @param clickListener A listener to handle user interaction with the elements of the
      *                            list
@@ -53,7 +53,7 @@ public class CountryListRecyclerAdapter
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         /**
-         * The text view that contains the country name
+         * The text view that contains the name of the country
          */
         private final TextView countryCodeTextView;
         /**

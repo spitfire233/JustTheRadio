@@ -28,7 +28,7 @@ public class RadioCardAdapter extends ListAdapter<FavouriteStation, RadioCardAda
      */
     private final OnItemClickListener<FavouriteStation> clickListener;
     /**
-     * Constructor for the RadioCardAdapter class
+     * Constructor for the {@link RadioCardAdapter} class
      * @param clickListener A listener to handle user interaction with each card
      */
     public RadioCardAdapter(OnItemClickListener<FavouriteStation> clickListener) {
