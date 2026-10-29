@@ -30,6 +30,8 @@ public class Constants {
     public static final int ROOM_DATABASE_VERSION = 1;
     public static final String ROOM_DATABASE_NAME = "radio-db";
 
+    public static final int OKHTTP_CONNECTION_TIMEOUT = 10; // Seconds
+    public static final int OKHTTP_READ_TIMEOUT = 30; // Seconds
 
 
 }
