@@ -11,7 +11,7 @@ import java.util.UUID;
 public abstract class BaseRadioStation {
     /** Unique identifier of the station */
     @NonNull
-    private UUID uuid;
+    private UUID UUID;
     /** URL of the station's logo. */
     private String faviconURL;
     /** Name of the station. */
@@ -23,14 +23,14 @@ public abstract class BaseRadioStation {
      * @param uuid the unique identifier of the station, never null
      */
     public void setUUID(@NonNull UUID uuid) {
-        this.uuid = uuid;
+        this.UUID = uuid;
     }
     /** Getter method for the station's unique identifier
      * @return The unique {@link UUID} of the station
      */
     @NonNull
     public UUID getUUID() {
-        return uuid;
+        return UUID;
     }
     /** Setter method for the station's logo URL
      * @param faviconURL The URL of the station's favicon

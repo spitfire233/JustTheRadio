@@ -15,7 +15,7 @@ public class RadioStation extends BaseRadioStation{
      * Auto-generated primary key.
      */
     @PrimaryKey(autoGenerate = true)
-    int id;
+    private int ID;
     /**
      * Empty constructor for {@link RadioStation}.
      * Required by Room to create instances when reading from the database.
@@ -41,13 +41,13 @@ public class RadioStation extends BaseRadioStation{
      * @param id The station's ID
      */
     public void setID(int id) {
-        this.id = id;
+        this.ID = id;
     }
     /**
      * Getter for the station's ID
      * @return The station's ID
      */
     public int getID() {
-        return id;
+        return ID;
     }
 }
