@@ -112,17 +112,17 @@ public class RadioCardAdapter extends ListAdapter<FavouriteStation, RadioCardAda
         if (station != null) {
             // Load the radio logo into the image view with Glide
             Glide.with(context)
-                    .load(getItem(position).getFaviconURL())
+                    .load(station.getFaviconURL())
                     .placeholder(R.drawable.justtheradio_logo)
                     .error(R.drawable.justtheradio_logo)
                     .into(holder.getRadioLogoImageView());
             // Set the text in the text view to the radio name
-            holder.getRadioNameTextView().setText(getItem(position).getName());
+            holder.getRadioNameTextView().setText(station.getName());
 
             // Set the onClickListener to utilize the provided implementation
             holder.getCardView().setOnClickListener(view -> {
                 if (clickListener != null)
-                    clickListener.onItemClick(getItem(position));
+                    clickListener.onItemClick(station);
             });
         }
     }
