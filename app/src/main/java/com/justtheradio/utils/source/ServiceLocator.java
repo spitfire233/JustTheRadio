@@ -52,7 +52,7 @@ public class ServiceLocator {
         BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource =
                 new RadioBrowserRemoteDataSource(
                         AGENT,
-                        RADIO_BROWSER_PAGING_LIMIT
+                        RADIO_BROWSER_TIMEOUT_MS
                 );
         BaseRadioLocalDataSource radioLocalDataSource =
                 new RadioLocalDataSource(application, getRadioDatabase(application));

@@ -90,7 +90,6 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     public void savePage(boolean isRefresh, List<RadioStation> stations, RadioRemoteKey key) {
         radioDAO.savePage(isRefresh, stations, key);
     }
-
     /**
      * Implementation of {@link BaseRadioLocalDataSource#saveCountryPreference(String)}.
      * The outcome is reported through the {@link com.justtheradio.source.callback.RadioCallback}
@@ -101,10 +100,16 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     public void saveCountryPreference(String country) {
         Disposable disposable = datastore.saveStringResource(CHOSEN_COUNTRY_KEY, country)
                 .subscribe(preferences -> this.radioCallback.onSavingCountryPreferenceSuccess(),
-                        throwable -> this.radioCallback.onFailureSavingCountryPreference(new Exception(throwable)));
+                        throwable -> this.radioCallback.onFailureSavingCountryPreference(
+                                new Exception(throwable))
+                );
         disposables.add(disposable);
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#getCountryPreferenceAsync()}.
+     * Reads the chosen country from the DataStore.
+     * The outcome is reported through the {@link com.justtheradio.source.callback.RadioCallback}
+     */
     @Override
     public void getCountryPreferenceAsync() {
         Disposable disposable = datastore.getStringResource(CHOSEN_COUNTRY_KEY)
@@ -112,33 +117,65 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
                     if (string != null)
                         this.radioCallback.onGettingCountryPreferenceSuccess(string);
                     else
-                        this.radioCallback.onFailureGettingCountryPreference(new Exception(NO_KEY_WITH_THAT_NAME_IN_DATASTORE));
-                }, throwable -> this.radioCallback.onFailureGettingCountryPreference(new Exception(throwable)));
+                        this.radioCallback.onFailureGettingCountryPreference(
+                                new Exception(NO_KEY_WITH_THAT_NAME_IN_DATASTORE)
+                        );
+                }, throwable -> this.radioCallback.onFailureGettingCountryPreference(
+                        new Exception(throwable))
+                );
         disposables.add(disposable);
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#getCountryPreference()}.
+     * Reads the chosen country from the DataStore, returning the result as a reactive
+     * stream
+     *
+     * @return A {@link Single} emitting the saved country code
+     */
     @Override
     public Single<String> getCountryPreference() {
         return datastore.getStringResource(CHOSEN_COUNTRY_KEY);
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#getRadioDAOPagingSource()}.
+     * Provides the {@link PagingSource} that reads the cached stations from the database.
+     * This is blocking call and should not be called from the main thread
+     * @return A new {@link PagingSource} created by the DAO
+     */
     @Override
     public PagingSource<Integer, RadioStation> getRadioDAOPagingSource() {
         return radioDAO.pagingSource();
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#observeFavouriteUUIDs()}.
+     * Observes the identifiers of the favourite stations.
+     * The list emitted by the DAO is converted into a {@link Set}.
+     * @return A {@link Flowable} emitting the set of favourite station UUIDs every time it changes
+     */
     @Override
     public Flowable<Set<UUID>> observeFavouriteUUIDs() {
         return radioDAO.observeFavouritesUUIDs().map(HashSet::new);
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#observeFavourites()}.
+     * Observes the full list of favourite stations.
+     * @return A {@link Flowable} emitting the list of favourites every time it changes
+     */
     @Override
     public Flowable<List<FavouriteStation>> observeFavourites() {
         return radioDAO.observeFavourites();
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#addFavourite(BaseRadioStation)}.
+     * Adds a station to the favourites, on the database write executor. The station is saved
+     * together with the time at which it was added. The outcome of the operation is reported
+     * through the {@link com.justtheradio.source.callback.RadioCallback RadioCallback}
+     *
+     * @param station The station to mark as favourite
+     */
     @Override
     public void addFavourite(BaseRadioStation station) {
+        assert RadioRoomDatabase.getDatabaseWriteExecutor() != null;
         RadioRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
             try {
                 FavouriteStation favouriteStation = new FavouriteStation(station, System.currentTimeMillis());
@@ -149,9 +186,16 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
             }
         });
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#removeFavourite(BaseRadioStation)}.
+     * Removes a station from the favourites, on the database write executor. The outcome is
+     * reported through the {@link com.justtheradio.source.callback.RadioCallback RadioCallback}
+     *
+     * @param station The station to remove from the favourites
+     */
     @Override
     public void removeFavourite(BaseRadioStation station) {
+        assert RadioRoomDatabase.getDatabaseWriteExecutor() != null;
         RadioRoomDatabase.getDatabaseWriteExecutor().execute(() -> {
             try {
                 radioDAO.deleteFavourite(station.getUUID());
@@ -161,12 +205,13 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
             }
         });
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#onDestroy()}
+     * Cancels the pending DataStore subscriptions, so that no callback is invoked after the
+     * data source is no longer needed.
+     */
     @Override
     public void onDestroy() {
         this.disposables.clear();
     }
-
-
-
 }
