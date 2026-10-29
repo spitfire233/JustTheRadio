@@ -31,7 +31,6 @@ public class RadioStationDiff {
             public boolean areItemsTheSame(@NonNull T oldItem, @NonNull T newItem) {
                 return oldItem.getUUID().equals(newItem.getUUID());
             }
-
             /**
              * Compares the data of the station in the old list with the data of the
              * station in new list.
