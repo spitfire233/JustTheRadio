@@ -65,6 +65,11 @@ public interface RadioDAO {
     @Query("DELETE FROM RadioRemoteKey")
     void clearKey();
     /**
+     * Resets primary keys for the cached {@link RadioStation} table.
+     */
+    @Query("DELETE FROM sqlite_sequence WHERE name = 'RadioStation'")
+    void resetPrimaryKeys();
+    /**
      * Saves a loaded page and its remote key in a single transaction, so the cache and the key
      * can never get out of sync (e.g. if the app is killed halfway through).
      * On refresh, the old stations and the old key are removed first.
@@ -78,6 +83,7 @@ public interface RadioDAO {
         if (refresh) {
             clearCache();
             clearKey();
+            resetPrimaryKeys();
         }
         insertAll(page);
         insertOrReplace(radioRemoteKey);
