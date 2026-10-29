@@ -108,19 +108,22 @@ public class RadioCardAdapter extends ListAdapter<FavouriteStation, RadioCardAda
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Context context = holder.radioLogoImageView.getContext(); // Get the current context
-        // Load the radio logo into the image view with Glide
-        Glide.with(context)
-                .load(getItem(position).getFaviconURL())
-                .placeholder(R.drawable.justtheradio_logo)
-                .error(R.drawable.justtheradio_logo)
-                .into(holder.getRadioLogoImageView());
-        // Set the text in the text view to the radio name
-        holder.getRadioNameTextView().setText(getItem(position).getName());
+        FavouriteStation station = getItem(position); // Get the current item
+        if (station != null) {
+            // Load the radio logo into the image view with Glide
+            Glide.with(context)
+                    .load(getItem(position).getFaviconURL())
+                    .placeholder(R.drawable.justtheradio_logo)
+                    .error(R.drawable.justtheradio_logo)
+                    .into(holder.getRadioLogoImageView());
+            // Set the text in the text view to the radio name
+            holder.getRadioNameTextView().setText(getItem(position).getName());
 
-        // Set the onClickListener to utilize the provided implementation
-        holder.getCardView().setOnClickListener(view -> {
-            if (clickListener != null)
-                clickListener.onItemClick(getItem(position));
-        });
+            // Set the onClickListener to utilize the provided implementation
+            holder.getCardView().setOnClickListener(view -> {
+                if (clickListener != null)
+                    clickListener.onItemClick(getItem(position));
+            });
+        }
     }
 }
