@@ -45,11 +45,11 @@ public class RadioCardAdapter extends ListAdapter<FavouriteStation, RadioCardAda
          */
         private final MaterialCardView cardView;
         /**
-         * The image view that contains the radio logo
+         * The image view that contains the radio station's logo
          */
         private final ImageView radioLogoImageView;
         /**
-         * The text view that displays the radio name
+         * The text view that displays the radio station's name
          */
         private final TextView radioNameTextView;
         /**
@@ -63,14 +63,14 @@ public class RadioCardAdapter extends ListAdapter<FavouriteStation, RadioCardAda
             radioNameTextView = view.findViewById(R.id.favourite_name_text_view);
         }
         /**
-         * Getter method for the radio logo {@link ImageView}
+         * Getter method for the radio station's logo {@link ImageView}
          * @return The radio logo {@link ImageView}
          */
         public ImageView getRadioLogoImageView() {
             return radioLogoImageView;
         }
         /**
-         * Getter method for the radio name {@link TextView}
+         * Getter method for the radio station's name {@link TextView}
          * @return The radio name {@link TextView}
          */
         public TextView getRadioNameTextView() {
