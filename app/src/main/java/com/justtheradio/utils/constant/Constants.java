@@ -35,5 +35,7 @@ public class Constants {
     public static final int OKHTTP_CONNECTION_TIMEOUT = 10; // Seconds
     public static final int OKHTTP_READ_TIMEOUT = 30; // Seconds
 
+    public static final String ISO_COUNTRY_REGEX = "^[A-Z]{2}$";
+
 
 }

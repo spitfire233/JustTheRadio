@@ -75,9 +75,12 @@ public class RadioViewModel extends ViewModel {
     public LiveData<Result> getSavingResultLiveData() {
         return radioRepository.getSavingResultLiveData();
     }
-
-
     public LiveData<Result> fetchCountryCodes() {
         return this.radioRepository.fetchCountryCodes();
+    }
+
+    @Override
+    protected void onCleared() {
+        radioRepository.onDestroy();
     }
 }

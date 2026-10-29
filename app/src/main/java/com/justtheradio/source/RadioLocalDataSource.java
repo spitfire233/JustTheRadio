@@ -6,6 +6,7 @@ import static com.justtheradio.utils.constant.Constants.NO_KEY_WITH_THAT_NAME_IN
 
 import android.app.Application;
 
+import androidx.annotation.Nullable;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.paging.PagingSource;
 
@@ -27,37 +28,78 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
+/**
+ * Implementation of {@link BaseRadioLocalDataSource}.
+ * Local data source that interacts with the Room database and the device cache.
+ */
 public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
-
+    /** Data access object of the Room database. */
     private final RadioDAO radioDAO;
-    private final DataStoreManagerSingleton dataStoreManager;
+    /** Manager of the DataStore */
+    private final DataStoreManagerSingleton datastore;
+    /** Holds the active subscriptions, so that they can be canceled all together. */
     private final CompositeDisposable disposables;
-
+    /**
+     * Constructor for the {@link RadioLocalDataSource} class
+     * @param application The application, used to get the datastore manager
+     * @param radioRoomDatabase The Room database from which the DAO is obtained
+     */
     public RadioLocalDataSource(Application application, RadioRoomDatabase radioRoomDatabase) {
         this.radioDAO = radioRoomDatabase.radioDAO();
-        dataStoreManager = DataStoreManagerSingleton.getInstance(application);
+        datastore = DataStoreManagerSingleton.getInstance(application);
         disposables = new CompositeDisposable();
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#saveLastTimeFetched(long)}.
+     * Saves the time of the last refresh of the cached stations in the DataStore, stored
+     * as a string.
+     *
+     * @param lastTimeUpdated The time of the refresh, as a timestamp in milliseconds
+     * @return A {@link Single} emitting the updated {@link Preferences} once the value has
+     * been saved
+     */
     @Override
     public Single<Preferences> saveLastTimeFetched(long lastTimeUpdated) {
-        return dataStoreManager.saveStringResource(LAST_TIME_UPDATED_KEY, Long.toString(lastTimeUpdated));
+        return datastore.saveStringResource(LAST_TIME_UPDATED_KEY, Long.toString(lastTimeUpdated));
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#getRadioRemoteKey()}
+     * Reads the remote key from the database.
+     * This is a blocking call and must not be made from the main thread.
+     *
+     * @return The stored {@link RadioRemoteKey}, or {@code null} if nothing has been
+     * cached yet
+     */
     @Override
+    @Nullable
     public RadioRemoteKey getRadioRemoteKey() {
         return radioDAO.getRadioRemoteKey();
     }
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#savePage(boolean, List, RadioRemoteKey)}
+     * Saves a page of stations and the remote key in the database, delegating to the DAO.
+     * This is a blocking call and must not be made from the main thread.
+     *
+     * @param isRefresh {@code true} if the page comes from a refresh, in which case the
+     *                  previously cached data is replaced; {@code false} if the page is
+     *                  appended to it
+     * @param stations  The stations of the page
+     * @param key       The key describing where the next page starts
+     */
     @Override
     public void savePage(boolean isRefresh, List<RadioStation> stations, RadioRemoteKey key) {
         radioDAO.savePage(isRefresh, stations, key);
     }
 
-
+    /**
+     * Implementation of {@link BaseRadioLocalDataSource#saveCountryPreference(String)}.
+     * The outcome is reported through the {@link com.justtheradio.source.callback.RadioCallback}
+     *
+     * @param country The country code to save
+     */
     @Override
     public void saveCountryPreference(String country) {
-        Disposable disposable = dataStoreManager.saveStringResource(CHOSEN_COUNTRY_KEY, country)
+        Disposable disposable = datastore.saveStringResource(CHOSEN_COUNTRY_KEY, country)
                 .subscribe(preferences -> this.radioCallback.onSavingCountryPreferenceSuccess(),
                         throwable -> this.radioCallback.onFailureSavingCountryPreference(new Exception(throwable)));
         disposables.add(disposable);
@@ -65,7 +107,7 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
 
     @Override
     public void getCountryPreferenceAsync() {
-        Disposable disposable = dataStoreManager.getStringResource(CHOSEN_COUNTRY_KEY)
+        Disposable disposable = datastore.getStringResource(CHOSEN_COUNTRY_KEY)
                 .subscribe(string -> {
                     if (string != null)
                         this.radioCallback.onGettingCountryPreferenceSuccess(string);
@@ -77,7 +119,7 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
 
     @Override
     public Single<String> getCountryPreference() {
-        return dataStoreManager.getStringResource(CHOSEN_COUNTRY_KEY);
+        return datastore.getStringResource(CHOSEN_COUNTRY_KEY);
     }
 
     @Override

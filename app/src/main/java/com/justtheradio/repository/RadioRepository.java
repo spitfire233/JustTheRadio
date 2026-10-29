@@ -285,4 +285,11 @@ public class RadioRepository implements RadioCallback {
         Result.Failure result = new Result.Failure(exception.getMessage());
         savingMutableLiveData.postValue(result);
     }
+    /**
+     * Called when the holder of this class gets destroyed. It triggers the cleanup of the disposables
+     * of the local data source to prevent memory leaks
+     */
+    public void onDestroy() {
+        local.onDestroy();
+    }
 }
