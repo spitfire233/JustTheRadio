@@ -15,7 +15,7 @@ import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.BaseRadioLocalDataSource;
 import com.justtheradio.utils.constant.RadioBrowserConstants;
-import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
+import com.justtheradio.utils.datastore.DataStoreManager;
 import com.justtheradio.utils.radio.RadioStationMapper;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
     /**
      * Instance of the datastore manager. Used to access local device cache
      */
-    private final DataStoreManagerSingleton datastore;
+    private final DataStoreManager datastore;
     /**
      * Remote data source. Used to communicate with the Radio Browser API
      */
@@ -52,7 +52,7 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
      * @param remote The remote data source used to communicate with the Radio Browser API
      * @param local The local data source used to communicate with the local Room database
      */
-    public RadioRemoteMediator(DataStoreManagerSingleton datastore,
+    public RadioRemoteMediator(DataStoreManager datastore,
                                BaseRadioBrowserRemoteDataSource remote,
                                BaseRadioLocalDataSource local) {
         this.datastore = datastore;

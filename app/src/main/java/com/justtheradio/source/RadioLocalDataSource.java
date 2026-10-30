@@ -16,7 +16,7 @@ import com.justtheradio.model.radio.BaseRadioStation;
 import com.justtheradio.model.radio.FavouriteStation;
 import com.justtheradio.model.radio.RadioRemoteKey;
 import com.justtheradio.model.radio.RadioStation;
-import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
+import com.justtheradio.utils.datastore.DataStoreManager;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +36,7 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     /** Data access object of the Room database. */
     private final RadioDAO radioDAO;
     /** Manager of the DataStore */
-    private final DataStoreManagerSingleton datastore;
+    private final DataStoreManager datastore;
     /** Holds the active subscriptions, so that they can be canceled all together. */
     private final CompositeDisposable disposables;
     /**
@@ -46,7 +46,7 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
      */
     public RadioLocalDataSource(Application application, RadioRoomDatabase radioRoomDatabase) {
         this.radioDAO = radioRoomDatabase.radioDAO();
-        datastore = DataStoreManagerSingleton.getInstance(application);
+        datastore = DataStoreManager.getInstance(application);
         disposables = new CompositeDisposable();
     }
     /**
