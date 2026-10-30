@@ -1,8 +1,8 @@
 package com.justtheradio.source;
 
-import static com.justtheradio.utils.constant.Constants.CHOSEN_COUNTRY_KEY;
-import static com.justtheradio.utils.constant.Constants.LAST_TIME_UPDATED_KEY;
-import static com.justtheradio.utils.constant.Constants.NO_KEY_WITH_THAT_NAME_IN_DATASTORE;
+import static com.justtheradio.utils.constant.LocalCacheConstants.CHOSEN_COUNTRY_KEY;
+import static com.justtheradio.utils.constant.LocalCacheConstants.LAST_TIME_UPDATED_KEY;
+import static com.justtheradio.utils.constant.LocalCacheConstants.NO_KEY_WITH_THAT_NAME_IN_DATASTORE;
 
 import android.app.Application;
 

@@ -1,13 +1,13 @@
 package com.justtheradio.utils.network;
 
-import static com.justtheradio.utils.constant.Constants.BLOCKED_URL_ERROR;
-import static com.justtheradio.utils.constant.Constants.IMAGE_TOO_LARGE_ERROR;
-import static com.justtheradio.utils.constant.Constants.MAX_IMAGE_BYTES;
-import static com.justtheradio.utils.constant.Constants.NOT_AN_IMAGE_ERROR;
+import static com.justtheradio.utils.constant.NetworkConstants.BLOCKED_URL_ERROR;
+import static com.justtheradio.utils.constant.NetworkConstants.IMAGE_TOO_LARGE_ERROR;
+import static com.justtheradio.utils.constant.NetworkConstants.MAX_IMAGE_BYTES;
+import static com.justtheradio.utils.constant.NetworkConstants.NOT_AN_IMAGE_ERROR;
 
 import androidx.annotation.NonNull;
 
-import com.justtheradio.utils.constant.Constants;
+import com.justtheradio.utils.constant.NetworkConstants;
 import com.justtheradio.utils.security.SecurityUtils;
 
 import java.io.IOException;
@@ -70,7 +70,7 @@ public class ImageInterceptor implements Interceptor {
             if (n > 0) {
                 total += n;
                 if (total > MAX_IMAGE_BYTES)
-                    throw new IOException(Constants.IMAGE_TOO_LARGE_ERROR + n);
+                    throw new IOException(NetworkConstants.IMAGE_TOO_LARGE_ERROR + n);
             }
             return n;
         }

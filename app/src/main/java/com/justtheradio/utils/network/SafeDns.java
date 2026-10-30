@@ -1,6 +1,6 @@
 package com.justtheradio.utils.network;
 
-import static com.justtheradio.utils.constant.Constants.BLOCKED_PRIVATE_ADDRESS_ERROR;
+import static com.justtheradio.utils.constant.NetworkConstants.BLOCKED_PRIVATE_ADDRESS_ERROR;
 
 import com.justtheradio.utils.security.SecurityUtils;
 

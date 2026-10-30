@@ -1,9 +1,9 @@
 package com.justtheradio.repository;
 
 
-import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_INITAL_LOADING_SIZE;
-import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_PAGING_LIMIT;
-import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_PREFETCH_DISTANCE;
+import static com.justtheradio.utils.constant.RadioBrowserConstants.RADIO_BROWSER_INITIAL_LOADING_SIZE;
+import static com.justtheradio.utils.constant.RadioBrowserConstants.RADIO_BROWSER_PAGING_LIMIT;
+import static com.justtheradio.utils.constant.RadioBrowserConstants.RADIO_BROWSER_PREFETCH_DISTANCE;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -99,7 +99,7 @@ public class RadioRepository implements RadioCallback {
                 RADIO_BROWSER_PAGING_LIMIT,
                 RADIO_BROWSER_PREFETCH_DISTANCE,
                 true, // Enable placeholders
-                RADIO_BROWSER_INITAL_LOADING_SIZE
+                RADIO_BROWSER_INITIAL_LOADING_SIZE
         );
     }
     /**

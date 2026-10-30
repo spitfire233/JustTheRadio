@@ -1,8 +1,7 @@
 package com.justtheradio.utils.glide;
 
-import static com.justtheradio.utils.constant.Constants.BLOCKED_PRIVATE_ADDRESS_ERROR;
-import static com.justtheradio.utils.constant.Constants.GLIDE_CONNECTION_TIMEOUT;
-import static com.justtheradio.utils.constant.Constants.GLIDE_READ_CONNECTION_TIMEOUT;
+import static com.justtheradio.utils.constant.NetworkConstants.GLIDE_CONNECTION_TIMEOUT;
+import static com.justtheradio.utils.constant.NetworkConstants.GLIDE_READ_CONNECTION_TIMEOUT;
 
 import android.content.Context;
 
@@ -16,15 +15,10 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
 import com.justtheradio.utils.network.ImageInterceptor;
 import com.justtheradio.utils.network.SafeDns;
-import com.justtheradio.utils.security.SecurityUtils;
 
 import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Dns;
 import okhttp3.OkHttpClient;
 
 @GlideModule

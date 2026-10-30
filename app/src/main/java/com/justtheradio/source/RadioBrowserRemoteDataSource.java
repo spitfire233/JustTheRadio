@@ -1,7 +1,7 @@
 package com.justtheradio.source;
 
 
-import static com.justtheradio.utils.constant.Constants.ERROR_ENDPOINT_NOT_FOUND;
+import static com.justtheradio.utils.constant.RadioBrowserConstants.ERROR_ENDPOINT_NOT_FOUND;
 import static com.justtheradio.utils.constant.Constants.ISO_COUNTRY_REGEX;
 
 import com.justtheradio.exceptions.EndpointNotFoundException;

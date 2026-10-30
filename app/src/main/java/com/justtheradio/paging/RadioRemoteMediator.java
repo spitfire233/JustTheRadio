@@ -1,7 +1,7 @@
 package com.justtheradio.paging;
 
-import static com.justtheradio.utils.constant.Constants.LAST_TIME_UPDATED_KEY;
-import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_EXPIRED_THRESHOLD;
+import static com.justtheradio.utils.constant.LocalCacheConstants.LAST_TIME_UPDATED_KEY;
+import static com.justtheradio.utils.constant.RadioBrowserConstants.RADIO_BROWSER_EXPIRED_THRESHOLD;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.OptIn;
@@ -14,6 +14,7 @@ import com.justtheradio.model.radio.RadioRemoteKey;
 import com.justtheradio.model.radio.RadioStation;
 import com.justtheradio.source.BaseRadioBrowserRemoteDataSource;
 import com.justtheradio.source.BaseRadioLocalDataSource;
+import com.justtheradio.utils.constant.RadioBrowserConstants;
 import com.justtheradio.utils.datastore.DataStoreManagerSingleton;
 import com.justtheradio.utils.radio.RadioStationMapper;
 
@@ -64,7 +65,7 @@ public class RadioRemoteMediator extends RxRemoteMediator<Integer, RadioStation>
      * <ul>
      *   <li>If no remote key is stored, the cache is empty: launch an initial refresh.</li>
      *   <li>Otherwise compare the time of the last fetch with
-     *   {@link com.justtheradio.utils.constant.Constants#RADIO_BROWSER_EXPIRED_THRESHOLD RADIO_BROWSER_EXPIRED_THRESHOLD}:
+     *   {@link RadioBrowserConstants#RADIO_BROWSER_EXPIRED_THRESHOLD RADIO_BROWSER_EXPIRED_THRESHOLD}:
      *   if the cache is stale, refresh; if it is still fresh, skip the refresh and show cached data immediately.
      *   </li>
      * </ul>

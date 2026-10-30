@@ -1,6 +1,6 @@
 package com.justtheradio.utils.datastore;
 
-import static com.justtheradio.utils.constant.Constants.DATASTORE_NAME;
+import static com.justtheradio.utils.constant.LocalCacheConstants.DATASTORE_NAME;
 
 import android.app.Application;
 

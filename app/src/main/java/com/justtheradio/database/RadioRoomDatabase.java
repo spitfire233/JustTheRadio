@@ -1,7 +1,7 @@
 package com.justtheradio.database;
 
-import static com.justtheradio.utils.constant.Constants.ROOM_DATABASE_NAME;
-import static com.justtheradio.utils.constant.Constants.ROOM_DATABASE_VERSION;
+import static com.justtheradio.utils.constant.LocalCacheConstants.ROOM_DATABASE_NAME;
+import static com.justtheradio.utils.constant.LocalCacheConstants.ROOM_DATABASE_VERSION;
 
 import android.content.Context;
 

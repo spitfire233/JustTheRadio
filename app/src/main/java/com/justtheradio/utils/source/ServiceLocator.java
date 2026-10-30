@@ -1,8 +1,7 @@
 package com.justtheradio.utils.source;
 
-import static com.justtheradio.utils.constant.Constants.AGENT;
-import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_PAGING_LIMIT;
-import static com.justtheradio.utils.constant.Constants.RADIO_BROWSER_TIMEOUT_MS;
+import static com.justtheradio.utils.constant.RadioBrowserConstants.RADIO_BROWSER_AGENT;
+import static com.justtheradio.utils.constant.RadioBrowserConstants.RADIO_BROWSER_TIMEOUT_MS;
 
 import android.app.Application;
 
@@ -51,7 +50,7 @@ public class ServiceLocator {
     public RadioRepository getRadioRepository(Application application) {
         BaseRadioBrowserRemoteDataSource radioBrowserRemoteDataSource =
                 new RadioBrowserRemoteDataSource(
-                        AGENT,
+                        RADIO_BROWSER_AGENT,
                         RADIO_BROWSER_TIMEOUT_MS
                 );
         BaseRadioLocalDataSource radioLocalDataSource =

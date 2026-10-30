@@ -1,7 +1,7 @@
 package com.justtheradio.player;
 
-import static com.justtheradio.utils.constant.Constants.OKHTTP_CONNECTION_TIMEOUT;
-import static com.justtheradio.utils.constant.Constants.OKHTTP_READ_TIMEOUT;
+import static com.justtheradio.utils.constant.NetworkConstants.OKHTTP_CONNECTION_TIMEOUT;
+import static com.justtheradio.utils.constant.NetworkConstants.OKHTTP_READ_TIMEOUT;
 
 import android.content.Intent;
 

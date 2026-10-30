@@ -1,6 +1,6 @@
 package com.justtheradio.utils.security;
 
-import static com.justtheradio.utils.constant.Constants.MAX_URL_LENGTH;
+import static com.justtheradio.utils.constant.NetworkConstants.MAX_URL_LENGTH;
 
 import org.apache.commons.validator.routines.InetAddressValidator;
 import org.apache.commons.validator.routines.UrlValidator;
