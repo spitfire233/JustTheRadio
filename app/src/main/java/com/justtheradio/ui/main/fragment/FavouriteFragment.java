@@ -41,7 +41,6 @@ public class FavouriteFragment extends Fragment {
     private RecyclerView recyclerView;
     /** Progress indicator shown until the favourites have been loaded. */
     private CircularProgressIndicator progressIndicator;
-
     /**
      * Executed on the creation of the fragment.
      * Gets the {@link RadioRepository} and creates the {@link RadioViewModel} and the
@@ -68,7 +67,6 @@ public class FavouriteFragment extends Fragment {
                 new PlayerViewModelFactory()
         ).get(PlayerViewModel.class);
     }
-
     /**
      * Inflates the layout of the fragment and finds the views that compose the UI.
      *
@@ -90,9 +88,9 @@ public class FavouriteFragment extends Fragment {
         progressIndicator = view.findViewById(R.id.favourites_progress_indicator);
         return view;
     }
-
     /**
-     *
+     * Executed after the fragment view has been created.
+     * Setups the adapter and the observes the user favourites.
      *
      * @param view The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
@@ -101,22 +99,22 @@ public class FavouriteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // Initialize the adapter
         RadioCardAdapter radioCardAdapter = new RadioCardAdapter(
                 station -> playerViewModel.setRadioStation(station)
         );
-
+        // Set the recycler view layout manager and adpater
         recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         recyclerView.setAdapter(radioCardAdapter);
-
+        // Observe the favourite stations from the database and notify the adapter of every
+        // insertion/deletion
         radioViewModel.getFavouriteStations().observe(getViewLifecycleOwner(), stations -> {
-            radioCardAdapter.submitList(stations);
+            radioCardAdapter.submitList(stations); // Notify the adapter
             boolean isEmpty = stations.isEmpty();
+            // Set up the UI based on the received the list
             noFavouritesTextView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
             recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
             progressIndicator.setVisibility(View.GONE);
         });
     }
-
-
 }
