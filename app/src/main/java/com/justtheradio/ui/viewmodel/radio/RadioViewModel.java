@@ -80,7 +80,7 @@ public class RadioViewModel extends ViewModel {
     }
 
     @Override
-    protected void onCleared() {
+    public void onCleared() {
         radioRepository.onDestroy();
     }
 }
