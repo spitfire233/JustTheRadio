@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +11,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.button.MaterialButton;
 import com.justtheradio.R;
-import com.justtheradio.repository.RadioRepository;
 import com.justtheradio.ui.intro.IntroActivity;
-import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
-import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
-import com.justtheradio.utils.source.ServiceLocator;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -28,8 +23,6 @@ public class SettingsFragment extends Fragment {
 
     /** Reconfiguring button. */
     private MaterialButton reconfigureButton;
-    /** ViewModel used for clearing the whole cache */
-    private RadioViewModel radioViewModel;
 
     /**
      * Required public constructor for the {@link SettingsFragment} class.
@@ -45,14 +38,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Initialize view model
-        RadioRepository repository = ServiceLocator.getInstance().getRadioRepository(
-                requireActivity().getApplication()
-        );
-        radioViewModel = new ViewModelProvider(
-                requireActivity(),
-                new RadioViewModelFactory(repository)
-        ).get(RadioViewModel.class);
     }
 
     /**
