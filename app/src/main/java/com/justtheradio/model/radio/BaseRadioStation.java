@@ -19,7 +19,7 @@ public abstract class BaseRadioStation {
     /** URL of the audio stream. */
     private String URL;
 
-    /** Setter method for the station's {@link uuid}
+    /** Setter method for the station's {@link UUID}
      * @param uuid the unique identifier of the station, never null
      */
     public void setUUID(@NonNull UUID uuid) {

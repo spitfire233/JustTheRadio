@@ -18,11 +18,8 @@ import io.reactivex.rxjava3.core.Flowable;
 /**
  * Data Access Object to interact with the local room database. This DAO provides methods to
  * retrieve information for the cached radio stations and the remote key used for paging.
- * To know more about the paging mechanism, refer to the {@link
- * <a href="https://developer.android.com/topic/libraries/architecture/paging/v3-network-db">
- *     official documentation
- * </a>
- * }
+ * To know more about the paging mechanism, refer to the official android paging documentation
+ *
  */
 @Dao
 public interface RadioDAO {
