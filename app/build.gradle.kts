@@ -34,8 +34,21 @@ android {
     }
 
     testOptions {
-        unitTests.all {
-            it.jvmArgs("-javaagent:${mockitoAgent.asPath}")
+        unitTests {
+            isIncludeAndroidResources = true
+            all {
+                it.jvmArgs(
+                    "-javaagent:${mockitoAgent.asPath}",
+                    "--enable-native-access=ALL-UNNAMED",
+                    "--add-opens=java.base/jdk.internal.access=ALL-UNNAMED",
+                    "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                    "--add-opens=java.base/java.util=ALL-UNNAMED",
+                    "--add-opens=java.base/java.io=ALL-UNNAMED",
+                    "--add-opens=java.base/java.net=ALL-UNNAMED",
+                    "--add-opens=java.base/java.nio=ALL-UNNAMED",
+                    "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+                )
+            }
         }
     }
 }
@@ -88,6 +101,9 @@ dependencies {
     testImplementation(libs.espresso.contrib)
     testImplementation(libs.core.testing)
     testImplementation(libs.mockito.core)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.core)
+
     add("mockitoAgent", libs.mockito.core.get().toString()) {
         isTransitive = false
     }
