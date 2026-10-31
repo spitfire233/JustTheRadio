@@ -149,8 +149,7 @@ public class RadioViewModel extends ViewModel {
      * Called when the ViewModel is no longer used. Notifies the repository so that it can
      * release its resources.
      */
-    @Override
-    public void onCleared() {
-        repository.onDestroy();
+    public void clear() {
+        repository.clear();
     }
 }

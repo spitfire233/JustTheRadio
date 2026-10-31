@@ -207,11 +207,12 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     }
     /**
      * Implementation of {@link BaseRadioLocalDataSource#onDestroy()}
-     * Cancels the pending DataStore subscriptions, so that no callback is invoked after the
-     * data source is no longer needed.
+     * Cancels the pending DataStore subscriptions and wipes completely the Room database.
      */
     @Override
     public void onDestroy() {
-        this.disposables.clear();
+        assert RadioRoomDatabase.getDatabaseWriteExecutor() != null;
+        RadioRoomDatabase.getDatabaseWriteExecutor().execute(radioDAO::clearDatabase);
+        disposables.clear();
     }
 }

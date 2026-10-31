@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
             future = null;
         }
         playerView.setPlayer(null);
-        radioViewModel.onCleared();
+        radioViewModel.clear();
         super.onStop();
     }
 }

@@ -1,66 +1,95 @@
 package com.justtheradio.ui.main.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.button.MaterialButton;
 import com.justtheradio.R;
+import com.justtheradio.repository.RadioRepository;
+import com.justtheradio.ui.intro.IntroActivity;
+import com.justtheradio.ui.viewmodel.radio.RadioViewModel;
+import com.justtheradio.ui.viewmodel.radio.RadioViewModelFactory;
+import com.justtheradio.utils.source.ServiceLocator;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Simple settings screen that allows the user to reconfigure the application.
  */
 public class SettingsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
+    /** Reconfiguring button. */
+    private MaterialButton reconfigureButton;
+    /** ViewModel used for clearing the whole cache */
+    private RadioViewModel radioViewModel;
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
+     * Required public constructor for the {@link SettingsFragment} class.
      */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public SettingsFragment() { }
 
+    /**
+     * Executed when the fragment is created. Initializes the radio view model.
+     *
+     * @param savedInstanceState If the fragment is being re-created from
+     * a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        // Initialize view model
+        RadioRepository repository = ServiceLocator.getInstance().getRadioRepository(
+                requireActivity().getApplication()
+        );
+        radioViewModel = new ViewModelProvider(
+                requireActivity(),
+                new RadioViewModelFactory(repository)
+        ).get(RadioViewModel.class);
     }
 
+    /**
+     * Executed on the creation of the view for this fragment. Initializes the UI components.
+     * Inflates the layout of the fragment and finds the views that compose the UI.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return The root view of the inflated layout
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        reconfigureButton = view.findViewById(R.id.reconfiguring_button);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return view;
+    }
+
+    /**
+     *
+     * @param view The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        reconfigureButton.setOnClickListener(v -> {
+            startActivity(new Intent(requireActivity(), IntroActivity.class));
+            requireActivity().finish();
+        });
     }
 }

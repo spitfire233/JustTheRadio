@@ -25,4 +25,5 @@
     <string name="successfully_removed_radio_station">Successfully removed %s from favourites</string>
     <string name="error_while_modifying_station_saved_state">There was an error while performing this operation!</string>
     <string name="no_favourites_yet_text_string">No favourites yet</string>
+    <string name="reconfigure_application_button_string">Reconfigure application</string>
 </resources>

@@ -89,6 +89,16 @@ public interface RadioDAO {
         insertOrReplace(radioRemoteKey);
     }
     /**
+     * Deletes the entire Room database and resets the primary keys.
+     */
+    @Transaction
+    default void clearDatabase() {
+        clearCache();
+        clearKey();
+        clearFavourites();
+        resetPrimaryKeys();
+    }
+    /**
      * Observes the UUIDs of all favourite stations.
      * Emits a new list every time the favourites change.
      *
@@ -119,4 +129,9 @@ public interface RadioDAO {
      */
     @Query("DELETE FROM FavouriteStation WHERE UUID = :UUID")
     void deleteFavourite(UUID UUID);
+    /**
+     * Removes every favourite station in the database.
+     */
+    @Query("DELETE FROM FavouriteStation")
+    void clearFavourites();
 }
