@@ -13,6 +13,7 @@ import androidx.media3.common.C;
 import androidx.media3.common.ForwardingPlayer;
 import androidx.media3.common.MediaItem;
 import androidx.media3.common.Player;
+import androidx.media3.common.TrackSelectionParameters;
 import androidx.media3.common.util.UnstableApi;
 import androidx.media3.datasource.DataSource;
 import androidx.media3.datasource.DefaultDataSource;
@@ -131,6 +132,13 @@ public class PlayerSessionService extends MediaSessionService {
                     super.setPlayWhenReady(false);
             }
         };
+        livePlayer.setTrackSelectionParameters(new TrackSelectionParameters
+                .Builder()
+                .setTrackTypeDisabled(C.TRACK_TYPE_VIDEO, true) // Disable video stream
+                .setTrackTypeDisabled(C.TRACK_TYPE_IMAGE, true) // Disable image stream
+                .setTrackTypeDisabled(C.TRACK_TYPE_CAMERA_MOTION, true) // Disable camera motion stream
+                .build()
+        );
         session = new MediaSession.Builder(this, livePlayer).build();
     }
     /**
