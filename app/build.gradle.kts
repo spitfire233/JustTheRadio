@@ -38,7 +38,6 @@ android {
             isIncludeAndroidResources = true
             all {
                 it.jvmArgs(
-                    "-javaagent:${mockitoAgent.asPath}",
                     "--enable-native-access=ALL-UNNAMED",
                     "--add-opens=java.base/jdk.internal.access=ALL-UNNAMED",
                     "--add-opens=java.base/java.lang=ALL-UNNAMED",
@@ -52,8 +51,6 @@ android {
         }
     }
 }
-
-val mockitoAgent = configurations.create("mockitoAgent")
 
 ksp {
     arg("room.generateKotlin", "false")
@@ -103,9 +100,5 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.robolectric)
     testImplementation(libs.core)
-
-    add("mockitoAgent", libs.mockito.core.get().toString()) {
-        isTransitive = false
-    }
     androidTestImplementation(libs.ext.junit)
 }
