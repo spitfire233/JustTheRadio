@@ -1,6 +1,7 @@
 package com.justtheradio.utils.datastore;
 
 import static com.justtheradio.utils.constant.LocalCacheConstants.DATASTORE_NAME;
+import static com.justtheradio.utils.constant.LocalCacheConstants.NO_KEY_WITH_THAT_NAME_IN_DATASTORE;
 
 import android.app.Application;
 
@@ -9,6 +10,8 @@ import androidx.datastore.preferences.core.Preferences;
 import androidx.datastore.preferences.core.PreferencesKeys;
 import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder;
 import androidx.datastore.rxjava3.RxDataStore;
+
+import java.util.NoSuchElementException;
 
 import io.reactivex.rxjava3.core.Single;
 
@@ -77,7 +80,12 @@ public class DataStoreManager {
     public Single<String> getStringResource(String key) {
         Preferences.Key<String> resourceKey = PreferencesKeys.stringKey(key);
         return rxDataStore.data()
-                .map(prefs -> prefs.get(resourceKey))
-                .firstOrError();
+                .firstOrError()
+                .map(prefs -> {
+                    String value = prefs.get(resourceKey);
+                    if (value == null)
+                        throw new NoSuchElementException(NO_KEY_WITH_THAT_NAME_IN_DATASTORE);
+                    return value;
+                });
     }
 }

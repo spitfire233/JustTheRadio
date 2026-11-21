@@ -113,14 +113,8 @@ public class RadioLocalDataSource extends BaseRadioLocalDataSource  {
     @Override
     public void getCountryPreferenceAsync() {
         Disposable disposable = datastore.getStringResource(CHOSEN_COUNTRY_KEY)
-                .subscribe(string -> {
-                    if (string != null)
-                        this.radioCallback.onGettingCountryPreferenceSuccess(string);
-                    else
-                        this.radioCallback.onFailureGettingCountryPreference(
-                                new Exception(NO_KEY_WITH_THAT_NAME_IN_DATASTORE)
-                        );
-                }, throwable -> this.radioCallback.onFailureGettingCountryPreference(
+                .subscribe(string -> this.radioCallback.onGettingCountryPreferenceSuccess(string),
+                        throwable -> this.radioCallback.onFailureGettingCountryPreference(
                         new Exception(throwable))
                 );
         disposables.add(disposable);

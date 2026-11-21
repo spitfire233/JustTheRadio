@@ -16,6 +16,7 @@ public class PlayerViewModelFactory implements ViewModelProvider.Factory {
      * @param <T>        The type of the ViewModel
      * @return A new {@link PlayerViewModel}
      */
+    @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         return (T) new PlayerViewModel();
