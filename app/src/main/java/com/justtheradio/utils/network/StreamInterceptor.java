@@ -31,7 +31,7 @@ public class StreamInterceptor implements Interceptor {
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         HttpUrl url = chain.request().url();
-        if (SecurityUtils.isValidUrl(url.host(), false)) {
+        if (SecurityUtils.isLocalHost(url.host())) {
             throw new IOException(BLOCKED_URL_ERROR + url.host());
         }
         return chain.proceed(chain.request());
