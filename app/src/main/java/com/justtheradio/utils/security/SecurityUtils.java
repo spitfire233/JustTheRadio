@@ -58,7 +58,7 @@ public final class SecurityUtils {
             URI uri = new URI(url);
             // Reject URLs with credentials in them and URLs pointing to local hosts
             if (uri.getUserInfo() != null || isLocalHost(uri.getHost())) return false;
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException e) { // Defensive code
             return false; // In case of error, assume is not valid
         }
         return true;
